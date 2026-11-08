@@ -2695,6 +2695,47 @@ tr.ver-sub-row td{font-size:11px!important;padding-top:3px!important;padding-bot
   background:#fff;border:1px dashed var(--line-2);color:#78716c}
 .sub-add:hover{border-color:rgba(181,146,79,.7);color:#8a6c2e;border-style:solid}
 .sub-x{margin-left:8px;font-size:10px;font-weight:800;border:none;background:transparent;color:#b91c1c;cursor:pointer}
+/* 문항별 채점 */
+.err-cell{display:flex;align-items:center;gap:6px;min-width:0}
+.err-cell .errors-input{flex:1;min-width:0}
+.grade-btn{flex:none;font-size:11.5px;font-weight:800;padding:5px 10px;border-radius:8px;cursor:pointer;
+  border:1px solid rgba(181,146,79,.55);background:#fff;color:#8a6c2e;white-space:nowrap}
+.grade-btn:hover:not(:disabled){background:rgba(232,207,149,.18)}
+.grade-btn.done{background:rgba(5,150,105,.1);border-color:rgba(5,150,105,.4);color:#047857}
+.grade-btn:disabled{opacity:.35;cursor:not-allowed}
+.gm-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.gm-who{font-size:14px}
+.gm-vers{display:flex;gap:6px;flex-wrap:wrap}
+.gm-sum{display:flex;align-items:center;gap:16px;padding:12px 16px;border-radius:12px;margin-bottom:12px;
+  background:linear-gradient(135deg,#1b2a4a,#2d4270);color:#fff;flex-wrap:wrap}
+.gm-score{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:800;color:#f0dcae;line-height:1}
+.gm-score span{font-size:14px;color:rgba(255,255,255,.7)}
+.gm-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px}
+.gm-tag{padding:2px 9px;border-radius:999px;font-weight:800;font-size:11.5px}
+.gm-tag.bad{background:rgba(248,113,113,.22);color:#fecaca}
+.gm-tag.warn{background:rgba(251,191,36,.22);color:#fde68a}
+.gm-tag.ok{background:rgba(52,211,153,.22);color:#a7f3d0}
+.gm-wrong{color:rgba(255,255,255,.85)}
+.gm-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.gm-quick{flex:1;min-width:220px;font-family:'JetBrains Mono',monospace;letter-spacing:2px}
+.gm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:8px;max-height:52vh;overflow-y:auto;padding:2px}
+.gm-card{border:1px solid var(--line-2,#e7e5e4);border-radius:10px;padding:8px 10px;background:#fff}
+.gm-card.ok{border-color:rgba(5,150,105,.45);background:rgba(5,150,105,.05)}
+.gm-card.bad{border-color:rgba(185,28,28,.45);background:rgba(185,28,28,.05)}
+.gm-card.part{border-color:rgba(180,83,9,.5);background:rgba(180,83,9,.06)}
+.gm-head{display:flex;gap:8px;align-items:baseline;font-size:12px;margin-bottom:6px}
+.gm-head b{font-size:13px}
+.gm-head span{color:var(--ink-3,#78716c)}
+.gm-ans{margin-left:auto;font-weight:700;color:#1b2a4a !important;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gm-row{display:flex;gap:4px;align-items:center}
+.gm-c{flex:1;min-width:0;padding:5px 0;border-radius:7px;border:1px solid var(--line-2,#e7e5e4);background:#fff;
+  font-size:14px;cursor:pointer;line-height:1}
+.gm-c.on{background:#1b2a4a;color:#fff;border-color:#1b2a4a}
+.gm-c.x{font-size:12px;color:#b91c1c}
+.gm-c.x.on{background:#b91c1c;color:#fff;border-color:#b91c1c}
+.gm-pts{width:70px;padding:5px 8px;font-size:14px}
+.gm-mini{font-size:11px;font-weight:700;padding:5px 8px;border-radius:7px;border:1px solid var(--line-2,#e7e5e4);background:#fff;cursor:pointer}
+.gm-note{font-size:10.5px;color:#b45309;margin-top:4px;font-weight:700}
 .ver-cell{display:flex;align-items:center;gap:6px;min-width:0}
 .ver-cell .version-select{flex:1;min-width:0}
 .ver-dup{font-size:9.5px;font-weight:800;color:#b91c1c;background:rgba(185,28,28,.1);
@@ -2744,8 +2785,8 @@ const SELECTABLE_GRADES = ['중1', '중2', '중3', '고1', '고2', '고3'];
 
 // 학년별 시험지 버전 (이름·개수 모두 설정에서 편집)
 const DEFAULT_VERSIONS = {
-  '중1': ['표준 (V1)', '난이도 ↓ (V2)'],
-  '중2': ['표준 (V1)', '난이도 ↓ (V2)'],
+  '중1': ['V1 (원과 부채꼴~통계)', 'V2 (다각형~통계)', 'V3 (정비례~입체도형)'],
+  '중2': ['V1 (도형의 닮음~확률)', 'V2 (도형의 닮음~확률)', 'V3 (평행선~확률)'],
   '중3': ['표준 (V1)', '난이도 ↓ (V2)'],
   '고1': ['표준 (V1)', '난이도 ↓ (V2)'],
   '고2': ['표준 (V1)', '난이도 ↓ (V2)'],
@@ -3582,7 +3623,8 @@ function commitDrafts() {
   keys.forEach(k => {
     const d = ui.scoreDraft[k];
     const sid = d._sid, round = d._round, sub = !!d._sub;
-    const next = Object.assign({}, (sub ? getSubRoundData(sid, round) : getRoundData(sid, round)) || {});
+    const prev = (sub ? getSubRoundData(sid, round) : getRoundData(sid, round)) || {};
+    const next = Object.assign({}, prev);
     if ('absent' in d) next.absent = d.absent;
     if (next.absent === true) {
       next.score = ''; next.errors = '';
@@ -3592,6 +3634,11 @@ function commitDrafts() {
       next.absent = false;
     }
     if ('version' in d) next.version = d.version;
+    // 문항별 채점 기록: 채점 화면에서 온 값만 유지, 점수·오답을 손으로 고치면 채점 기록과 어긋나므로 지운다
+    // (점수·오답을 손으로 고치면 marks: null 이 함께 들어온다)
+    if ('marks' in d) { if (d.marks) next.marks = d.marks; else delete next.marks; }
+    else if ('version' in d && d.version !== (prev.version || '')) delete next.marks;
+    if (next.absent === true) delete next.marks;
     next.at = Date.now();   // 입력 시각
     if (!state.scores[sid]) state.scores[sid] = {};
     if (sub) {
@@ -4564,7 +4611,7 @@ function renderSettings() {
     }, '💾 설정 저장'),
     el('button', {
       className: 'btn btn-ghost',
-      onClick: () => confirmDialog('설정을 기본값(8회 · 중1·중2·고1·고2 · 학년당 2버전)으로 되돌릴까요?', () => {
+      onClick: () => confirmDialog('설정을 기본값(8회 · 중1·중2·고1·고2 · 중1·중2는 V1~V3, 고등은 2버전)으로 되돌릴까요?', () => {
         const keepHash = (state.config && state.config.gateHash) || '';
         const keepAdmin = (state.config && state.config.adminHash) || '';
         state.config = defaultConfig(); state.config.gateHash = keepHash; state.config.adminHash = keepAdmin;
@@ -5635,6 +5682,226 @@ function renderRoundQuickStats(round) {
   );
 }
 
+// ============================================================
+// 문항별 채점
+//   · 시험지(문항 분류 Excel)의 문항형식 · 정답 · 배점으로 채점
+//   · 객관식: 학생이 고른 번호(또는 X)를 누르면 자동 정오 판정
+//   · 서술형: 부분 점수 입력 — 만점이 아니면 오답 처리
+//   · 결과(점수 · 오답 번호)는 점수 입력 줄에 채워지고 [저장]으로 반영
+//   · 문항별 기록은 rd.marks 에 "④|X|③|…|4.5" 형식으로 보관
+// ============================================================
+const CHOICES = ['①', '②', '③', '④', '⑤'];
+
+// 정답·배점이 모두 들어간 시험지만 채점 대상
+function gradablePaper(grade, round, versionLabel) {
+  if (!versionLabel) return null;
+  const vKey = versionKeyFromLabel(grade, versionLabel);
+  const p = vKey && state.testPapers[grade] ? state.testPapers[grade]['r' + round + '_' + vKey] : null;
+  if (!p || !Array.isArray(p.problems) || !p.problems.length) return null;
+  if (!p.problems.every(q => q && q.answer && Number(q.points) > 0)) return null;
+  return p;
+}
+
+function isEssay(q) { return q.format === '서술형' || !/^[①②③④⑤](\s*,\s*[①②③④⑤])*$/.test(String(q.answer || '').trim()); }
+function answerSet(q) { return (String(q.answer || '').match(/[①②③④⑤]/g) || []).sort().join(''); }
+
+// 한 문항의 정오·득점 판정 (mark: 객관식 '④'·'②④'·'X'·'-'·'' / 서술형 숫자 문자열 또는 '')
+function judgeMark(q, mark) {
+  const pts = Number(q.points) || 0;
+  if (mark == null || mark === '') return { graded: false, correct: false, earned: 0 };
+  if (isEssay(q)) {
+    const v = Math.max(0, Math.min(pts, parseFloat(mark)));
+    if (isNaN(v)) return { graded: false, correct: false, earned: 0 };
+    return { graded: true, correct: v >= pts, partial: v > 0 && v < pts, earned: v };
+  }
+  const chosen = String(mark).replace(/[^①②③④⑤]/g, '').split('').sort().join('');
+  const ok = !!chosen && chosen === answerSet(q);
+  return { graded: true, correct: ok, earned: ok ? pts : 0 };
+}
+
+function decodeMarks(str, n) {
+  const arr = String(str || '').split('|');
+  return Array.from({ length: n }, (_, i) => (arr[i] != null ? arr[i] : ''));
+}
+
+function openGradingModal(s, round, sub, ctx) {
+  const rd = mergedRoundData(s.id, round, sub) || {};
+  const versions = getVersionsForGrade(s.grade).filter(v => !!gradablePaper(s.grade, round, v));
+  let ver = rd.version && versions.includes(rd.version) ? rd.version : (versions.length === 1 ? versions[0] : '');
+  let paper = null, probs = [], marks = [];
+
+  function load() {
+    paper = gradablePaper(s.grade, round, ver);
+    probs = paper ? paper.problems.slice().sort((a, b) => a.no - b.no) : [];
+    const reuse = rd.marks && (rd.version || '') === ver;
+    marks = decodeMarks(reuse ? rd.marks : '', probs.length);
+  }
+  load();
+
+  const body = el('div', { className: 'gm' });
+
+  function summary() {
+    let total = 0, earned = 0, wrong = [], ungraded = 0;
+    probs.forEach((q, i) => {
+      const j = judgeMark(q, marks[i]);
+      total += Number(q.points) || 0;
+      earned += j.earned;
+      if (!j.graded) ungraded++;
+      else if (!j.correct) wrong.push(q.no);
+    });
+    return { total, earned: Math.round(earned * 10) / 10, wrong, ungraded };
+  }
+
+  function paint() {
+    body.innerHTML = '';
+    // 버전 선택
+    body.appendChild(el('div', { className: 'gm-top' },
+      el('div', { className: 'gm-who' },
+        el('b', null, s.name), ` · ${s.grade} · ${round}회${sub ? ' · 추가 응시' : ''}`),
+      el('div', { className: 'gm-vers' },
+        ...versions.map(v => el('button', {
+          className: 'chip' + (v === ver ? ' active' : ''),
+          onClick: () => { if (v === ver) return; ver = v; load(); paint(); }
+        }, v)))
+    ));
+    if (!paper) {
+      body.appendChild(el('div', { className: 'notice notice-warn' }, '이 학생이 응시한 시험지 버전을 먼저 고르세요.'));
+      body.appendChild(el('div', { className: 'modal-actions' }, el('button', { className: 'btn btn-ghost', onClick: closeModal }, '닫기')));
+      return;
+    }
+    const sm = summary();
+    const sumBar = el('div', { className: 'gm-sum' },
+      el('div', { className: 'gm-score' }, String(sm.earned), el('span', null, ' / ' + sm.total + '점')),
+      el('div', { className: 'gm-meta' },
+        el('span', { className: 'gm-tag bad' }, '오답 ' + sm.wrong.length),
+        sm.ungraded ? el('span', { className: 'gm-tag warn' }, '미채점 ' + sm.ungraded) : el('span', { className: 'gm-tag ok' }, '채점 완료'),
+        el('span', { className: 'gm-wrong' }, sm.wrong.length ? '오답: ' + sm.wrong.join(', ') : '')
+      )
+    );
+    body.appendChild(sumBar);
+
+    // 빠른 입력: 객관식 답을 한 줄로 (1~5, 무응답은 0 또는 -)
+    const objIdx = probs.map((q, i) => isEssay(q) ? -1 : i).filter(i => i >= 0);
+    const quick = el('input', {
+      className: 'input gm-quick', placeholder: `객관식 ${objIdx.length}문항 답을 순서대로 (예: 43521… / 무응답 0)`,
+      inputMode: 'numeric'
+    });
+    quick.addEventListener('input', () => {
+      const digits = quick.value.replace(/[^0-5\-]/g, '').split('');
+      digits.forEach((d, k) => {
+        if (k >= objIdx.length) return;
+        marks[objIdx[k]] = (d === '0' || d === '-') ? '-' : CHOICES[parseInt(d, 10) - 1];
+      });
+      paintCards(); paintSummaryOnly();
+    });
+    body.appendChild(el('div', { className: 'gm-tools' },
+      quick,
+      el('button', { className: 'btn btn-sm btn-ghost', title: '아직 채점하지 않은 문항을 모두 정답(서술형은 만점)으로', onClick: () => {
+        probs.forEach((q, i) => { if (marks[i] === '' || marks[i] == null) marks[i] = isEssay(q) ? String(q.points) : answerSet(q); });
+        paintCards(); paintSummaryOnly();
+      } }, '나머지 모두 정답'),
+      el('button', { className: 'btn btn-sm btn-ghost', onClick: () => { marks = marks.map(() => ''); quick.value = ''; paintCards(); paintSummaryOnly(); } }, '초기화')
+    ));
+
+    const grid = el('div', { className: 'gm-grid' });
+    body.appendChild(grid);
+
+    function paintSummaryOnly() {
+      const n = summary();
+      sumBar.querySelector('.gm-score').firstChild.textContent = String(n.earned);
+      const meta = sumBar.querySelector('.gm-meta');
+      meta.children[0].textContent = '오답 ' + n.wrong.length;
+      meta.children[1].className = 'gm-tag ' + (n.ungraded ? 'warn' : 'ok');
+      meta.children[1].textContent = n.ungraded ? '미채점 ' + n.ungraded : '채점 완료';
+      meta.children[2].textContent = n.wrong.length ? '오답: ' + n.wrong.join(', ') : '';
+    }
+
+    function paintCards() {
+      grid.innerHTML = '';
+      probs.forEach((q, i) => {
+        const j = judgeMark(q, marks[i]);
+        const card = el('div', { className: 'gm-card ' + (!j.graded ? '' : j.correct ? 'ok' : (j.partial ? 'part' : 'bad')) });
+        card.appendChild(el('div', { className: 'gm-head' },
+          el('b', null, q.no + '번'),
+          el('span', null, q.points + '점'),
+          el('span', { className: 'gm-ans', title: '정답' }, q.answer)
+        ));
+        if (isEssay(q)) {
+          const inp = el('input', {
+            className: 'input gm-pts', type: 'number', step: '0.5', min: '0', max: String(q.points),
+            value: marks[i] === '' ? '' : marks[i], placeholder: '점수'
+          });
+          inp.addEventListener('input', () => {
+            let v = inp.value === '' ? '' : String(Math.max(0, Math.min(Number(q.points), parseFloat(inp.value) || 0)));
+            marks[i] = v;
+            const jj = judgeMark(q, v);
+            card.className = 'gm-card ' + (!jj.graded ? '' : jj.correct ? 'ok' : (jj.partial ? 'part' : 'bad'));
+            paintSummaryOnly();
+          });
+          card.appendChild(el('div', { className: 'gm-row' },
+            inp,
+            el('button', { className: 'gm-mini', onClick: () => { marks[i] = String(q.points); paintCards(); paintSummaryOnly(); } }, '만점'),
+            el('button', { className: 'gm-mini', onClick: () => { marks[i] = '0'; paintCards(); paintSummaryOnly(); } }, '0점')
+          ));
+          if (j.partial) card.appendChild(el('div', { className: 'gm-note' }, '부분 점수 → 오답 처리'));
+        } else {
+          const multi = answerSet(q).length > 1;
+          const chosen = String(marks[i] || '');
+          card.appendChild(el('div', { className: 'gm-row' },
+            ...CHOICES.map(c => el('button', {
+              className: 'gm-c' + (chosen.includes(c) ? ' on' : ''),
+              onClick: () => {
+                let cur = String(marks[i] || '').replace(/[^①②③④⑤]/g, '');
+                if (multi) cur = cur.includes(c) ? cur.replace(c, '') : cur + c;
+                else cur = cur === c ? '' : c;
+                marks[i] = cur;
+                paintCards(); paintSummaryOnly();
+              }
+            }, c)),
+            el('button', {
+              className: 'gm-c x' + (chosen === 'X' || chosen === '-' ? ' on' : ''), title: '오답(학생 답 모름) · 무응답',
+              onClick: () => { marks[i] = (chosen === 'X' || chosen === '-') ? '' : 'X'; paintCards(); paintSummaryOnly(); }
+            }, '✕')
+          ));
+          if (multi) card.appendChild(el('div', { className: 'gm-note' }, '정답이 여러 개 — 모두 골라야 정답'));
+        }
+        grid.appendChild(card);
+      });
+    }
+    paintCards();
+
+    body.appendChild(el('div', { className: 'modal-actions' },
+      el('button', { className: 'btn btn-ghost', onClick: closeModal }, '취소'),
+      el('button', {
+        className: 'btn btn-orange',
+        onClick: () => {
+          const n = summary();
+          if (n.ungraded) { showToast(`채점하지 않은 문항이 ${n.ungraded}개 있습니다. [나머지 모두 정답]을 누르거나 표시해 주세요.`, 'error'); return; }
+          const enc = marks.map(m => String(m == null ? '' : m)).join('|');
+          const errStr = n.wrong.join(', ');
+          setDraft(s.id, round, { absent: false, score: String(n.earned), errors: errStr, version: ver, marks: enc }, sub);
+          if (ctx) {
+            ctx.scoreInput.value = String(n.earned); ctx.scoreInput.disabled = false;
+            ctx.scoreInput.classList.remove('absent'); ctx.scoreInput.placeholder = '점수';
+            ctx.errorsInput.value = errStr; ctx.errorsInput.disabled = false;
+            ctx.versionSelect.value = ver;
+            if (ctx.absentBtn) { ctx.absentBtn.className = 'absent-toggle'; ctx.absentBtn.textContent = '결시'; }
+            ctx.row.classList.remove('is-absent');
+            markRowDirty(ctx.row);
+            if (ctx.onDone) ctx.onDone();
+          }
+          closeModal();
+          showToast(`${s.name} ${n.earned}점 · 오답 ${n.wrong.length}개 — 아래 [저장]을 눌러 반영하세요`, 'success');
+        }
+      }, '채점 결과 넣기')
+    ));
+    setTimeout(() => quick.focus(), 60);
+  }
+  paint();
+
+  openModal({ title: '✓ 문항별 채점', size: 'lg', body: body });
+}
+
 function renderScoreTable(students, round) {
   // 모든 학년이 버전을 가지므로 항상 버전 컬럼 표시
   const headerColumns = ['학년', '학생/학교', '담당', '점수', '결시', '버전', '오답 문항'];
@@ -5662,7 +5929,7 @@ function renderScoreTable(students, round) {
       disabled: absent,
       placeholder: absent ? '결시' : '점수',
       // 입력 중에는 화면을 다시 그리지 않고 초안에만 담아둔다
-      onInput: e => { setDraft(s.id, round, { score: e.target.value }, sub); markRowDirty(row); }
+      onInput: e => { setDraft(s.id, round, { score: e.target.value, marks: null }, sub); markRowDirty(row); paintGradeBtn(); }
     });
     // Enter → 다음 점수 칸으로 이동 (연속 입력 편의)
     scoreInput.addEventListener('keydown', e => {
@@ -5681,7 +5948,7 @@ function renderScoreTable(students, round) {
       value: rd.errors || '',
       disabled: absent,
       placeholder: '예: 5,12,18',
-      onInput: e => { setDraft(s.id, round, { errors: e.target.value }, sub); markRowDirty(row); }
+      onInput: e => { setDraft(s.id, round, { errors: e.target.value, marks: null }, sub); markRowDirty(row); paintGradeBtn(); }
     });
 
     const absentBtn = el('button', {
@@ -5700,6 +5967,7 @@ function renderScoreTable(students, round) {
         scoreInput.classList.toggle('absent', absent);
         scoreInput.placeholder = absent ? '결시' : '점수';
         markRowDirty(row);
+        paintGradeBtn();
       }
     }, absent ? '✓ 결시' : '결시');
 
@@ -5718,11 +5986,32 @@ function renderScoreTable(students, round) {
         setDraft(s.id, round, { version: e.target.value }, sub);
         dupWarn.style.display = (e.target.value && e.target.value === otherVersion) ? 'inline-block' : 'none';
         markRowDirty(row);
+        paintGradeBtn();
       }
     },
       el('option', { value: '' }, '버전 선택...'),
       ...versions.map(v => el('option', { value: v, selected: curVersion === v }, v))
     );
+
+    // 채점 버튼 — 정답·배점이 들어간 시험지가 있으면 문항별로 채점
+    const gradeBtn = el('button', {
+      className: 'grade-btn',
+      onClick: () => openGradingModal(s, round, sub, {
+        row: row, scoreInput: scoreInput, errorsInput: errorsInput, versionSelect: versionSelect,
+        absentBtn: absentBtn, onDone: () => { absent = false; paintGradeBtn(); }
+      })
+    }, '채점');
+    function paintGradeBtn() {
+      const cur = mergedRoundData(s.id, round, sub) || {};
+      const graded = !!cur.marks && !isAbsent(cur);
+      const anyPaper = getVersionsForGrade(s.grade).some(v => !!gradablePaper(s.grade, round, v));
+      gradeBtn.disabled = isAbsent(cur) || !anyPaper;
+      gradeBtn.classList.toggle('done', graded);
+      gradeBtn.textContent = graded ? '✓ 채점됨' : '채점';
+      gradeBtn.title = !anyPaper ? '이 회차에 정답·배점이 들어간 시험지가 없습니다 ([시험지 관리]에서 문항 분류 Excel 가져오기)'
+        : (graded ? '문항별 채점 결과 보기·수정' : '문항별로 채점해 점수와 오답을 자동으로 채웁니다');
+    }
+    paintGradeBtn();
 
     const firstCell = sub
       ? el('div', { className: 'sub-mark', title: '추가 응시 — 다른 버전 시험지' }, '└ 추가')
@@ -5743,7 +6032,7 @@ function renderScoreTable(students, round) {
       scoreInput,
       absentBtn,
       el('div', { className: 'ver-cell' }, versionSelect, dupWarn),
-      errorsInput
+      el('div', { className: 'err-cell' }, errorsInput, gradeBtn)
     ].forEach(node => row.appendChild(node));
 
     if ((ui.scoreDraft || {})[draftKey(s.id, round, sub)]) row.classList.add('dirty');
@@ -8513,7 +8802,7 @@ function openPaperViewModal(grade, round, version) {
         tbl.appendChild(el('div', {
           style: {
             display: 'grid',
-            gridTemplateColumns: '40px 1fr 90px 70px',
+            gridTemplateColumns: '40px 1fr 90px 70px 64px 40px',
             gap: '8px',
             padding: '8px 10px',
             fontSize: '11px',
@@ -8527,7 +8816,9 @@ function openPaperViewModal(grade, round, version) {
           el('div', null, '번호'),
           el('div', null, '단원'),
           el('div', null, '유형'),
-          el('div', null, '난이도')
+          el('div', null, '난이도'),
+          el('div', null, '정답'),
+          el('div', null, '배점')
         ));
         
         problems.forEach(p => {
@@ -8539,7 +8830,7 @@ function openPaperViewModal(grade, round, version) {
           tbl.appendChild(el('div', {
             style: {
               display: 'grid',
-              gridTemplateColumns: '40px 1fr 90px 70px',
+              gridTemplateColumns: '40px 1fr 90px 70px 64px 40px',
               gap: '8px',
               padding: '8px 10px',
               fontSize: '12px',
@@ -8565,7 +8856,9 @@ function openPaperViewModal(grade, round, version) {
               }, p.summary) : null
             ),
             el('div', { style: { fontSize: '11px' } }, typeText),
-            el('div', { style: { color: 'var(--orange)', fontWeight: 700, letterSpacing: '0.5px' } }, diffText)
+            el('div', { style: { color: 'var(--orange)', fontWeight: 700, letterSpacing: '0.5px' } }, diffText),
+            el('div', { style: { fontSize: '11.5px', fontWeight: 700, wordBreak: 'keep-all' }, title: p.format || '' }, p.answer || '—'),
+            el('div', { style: { fontSize: '11.5px', fontFamily: 'JetBrains Mono, monospace' } }, p.points ? String(p.points) : '—')
           ));
         });
         
@@ -8652,6 +8945,9 @@ function detectColumnMap(headers) {
     else if (/^난이도$/.test(norm)) map.difficulty = idx;
     else if (/사고단계|인지단계|Bloom|블룸/.test(norm)) map.cognitive = idx;
     else if (/^비고$|^메모$|^참고$/.test(norm)) map.memo = idx;
+    else if (/^문항형식$|^형식$|^문제형식$/.test(norm)) map.format = idx;   // 객관식 / 서술형 (채점용)
+    else if (/^정답$|^답$/.test(norm)) map.answer = idx;                   // 채점용 정답
+    else if (/^배점$|^점수$/.test(norm)) map.points = idx;                  // 채점용 배점
   });
   return map;
 }
@@ -8674,8 +8970,12 @@ function parseSheetToProblems(rows, colMap) {
       geomType: colMap.geomType != null ? (row[colMap.geomType] || '') : '',
       difficulty: normalizeDifficulty(colMap.difficulty != null ? row[colMap.difficulty] : ''),
       cognitive: colMap.cognitive != null ? (row[colMap.cognitive] || '') : '',
-      memo: colMap.memo != null ? (row[colMap.memo] || '') : ''
+      memo: colMap.memo != null ? (row[colMap.memo] || '') : '',
+      format: colMap.format != null ? String(row[colMap.format] || '').trim() : '',
+      answer: colMap.answer != null ? String(row[colMap.answer] || '').trim() : '',
+      points: colMap.points != null ? (parseFloat(row[colMap.points]) || 0) : 0
     };
+    if (!p.format && p.answer) p.format = /^[①②③④⑤](\s*,\s*[①②③④⑤])*$/.test(p.answer) ? '객관식' : '서술형';
     // 빈 값(NaN, "—", 등) 정리
     Object.keys(p).forEach(k => {
       if (typeof p[k] === 'string') {
