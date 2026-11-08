@@ -2739,7 +2739,7 @@ const TERM_ID = '2026-2-final';
 // 기본 설정값 — 앱 내 [설정] 페이지에서 언제든 변경 가능
 // ============================================================
 const DEFAULT_ROUNDS = 8;
-const DEFAULT_GRADES = ['중1', '중2', '중3', '고1', '고2'];
+const DEFAULT_GRADES = ['중1', '중2', '고1', '고2'];   // 중3은 기말 종료로 제외
 const SELECTABLE_GRADES = ['중1', '중2', '중3', '고1', '고2', '고3'];
 
 // 학년별 시험지 버전 (이름·개수 모두 설정에서 편집)
@@ -4564,7 +4564,7 @@ function renderSettings() {
     }, '💾 설정 저장'),
     el('button', {
       className: 'btn btn-ghost',
-      onClick: () => confirmDialog('설정을 기본값(8회 · 중1~고2 · 학년당 2버전)으로 되돌릴까요?', () => {
+      onClick: () => confirmDialog('설정을 기본값(8회 · 중1·중2·고1·고2 · 학년당 2버전)으로 되돌릴까요?', () => {
         const keepHash = (state.config && state.config.gateHash) || '';
         const keepAdmin = (state.config && state.config.adminHash) || '';
         state.config = defaultConfig(); state.config.gateHash = keepHash; state.config.adminHash = keepAdmin;
