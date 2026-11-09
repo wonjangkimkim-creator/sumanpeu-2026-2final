@@ -6080,9 +6080,9 @@ function noteTextHTML(t) {
 }
 
 async function buildNoteHTML(targets, o) {
+  // 학원 오답노트 양식: 표지 → (빈 면) → 문제 쪽(2단 x 2줄, 한 칸에 한 문제 + 넉넉한 풀이 공간) → 정답 및 해설(2단)
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const CH = ['①', '②', '③', '④', '⑤'];
-  // 필요한 자료를 한 번에 받아오기
   const need = new Set();
   targets.forEach(t => t.items.forEach(it => {
     if (!it.vKey) return;
@@ -6099,101 +6099,171 @@ async function buildNoteHTML(targets, o) {
     part.forEach((k, j) => { res[k] = vals[j]; });
   }
 
-  const today = dateStr();
-  let body = '';
+  const d = new Date();
+  const md = (d.getMonth() + 1) + '/' + d.getDate();
+  const logo = (typeof KLADI_LOGO !== 'undefined') ? KLADI_LOGO : '';
+  let html = '';
+
   targets.forEach(({ s, items }) => {
-    let probs = '', sols = '';
-    items.forEach((it, idx) => {
+    // 범위 이름(버전 라벨의 괄호 안) 모으기
+    const ranges = Array.from(new Set(items.map(it => {
+      const m = String(it.version || '').match(/\(([^)]+)\)/); return m ? m[1] : '';
+    }).filter(Boolean)));
+    const rounds = Array.from(new Set(items.map(it => it.round))).sort((a, b) => a - b);
+
+    // ---- 표지 + 뒷면 ----
+    html += `<div class="pg cover" data-s="${esc(s.id)}">
+      <div class="slogan"><div>귀중한 학습의 시간을 만들어주는</div><div class="r">진정한 배움의 터, <b>클라디학원</b></div></div>
+      <div class="biglogo">KLADI</div>
+      <div class="ct">
+        <div class="c1">${esc(s.grade)} 수학</div>
+        <div class="c2">${esc(ranges.join(' · ') || '수만프')}/${items.length}</div>
+        <div class="c3"><b>수만프(오답)</b> ${md}${rounds.length ? ' · ' + rounds.join(',') + '회' : ''}</div>
+        <div class="c4">${esc((s.school || '').replace(/학교$/, ''))}${esc(s.grade.replace(/[^0-9]/g, ''))} ${esc(s.name)} <small>[${esc(s.teacher || '')}]</small></div>
+      </div></div>`;
+    html += `<div class="pg blank"></div>`;
+
+    // ---- 문제 칸 ----
+    const cells = [];
+    items.forEach(it => {
       const b = it.vKey ? `${s.grade}/${it.vKey}/r${it.round}` : '';
-      const qimg = b ? res[`img/${b}/q${it.no}`] : null;
-      const simg = b ? res[`img/${b}/s${it.no}`] : null;
-      const vars = b && o.withVar ? res[`var/${b}/${it.no}`] : null;
       const q = it.q || {};
-      const tag = `${it.round}회 · ${esc(it.vKey ? versionDisplay(it.vKey.replace('v', ''), it.version) : '버전 미입력')} · ${it.no}번`;
-      const meta = [q.unit && q.unit.replace(/^[ⅠⅡⅢⅣⅤⅥⅦ]+\.\s*/, ''), q.subUnit, q.difficulty ? '난이도 ' + q.difficulty : '', q.points ? q.points + '점' : ''].filter(Boolean).map(esc).join(' · ');
-      let markTxt = '';
+      const qimg = b ? res[`img/${b}/q${it.no}`] : null;
+      const vars = b && o.withVar ? res[`var/${b}/${it.no}`] : null;
+      let mark = '';
       if (o.withMark && it.mark) {
-        if (/^[①②③④⑤]+$/.test(it.mark)) markTxt = '내가 고른 답: ' + it.mark;
-        else if (it.mark === '-') markTxt = '무응답';
-        else if (it.mark === 'X') markTxt = '';
-        else if (!isNaN(parseFloat(it.mark))) markTxt = `받은 점수: ${it.mark} / ${q.points || '?'}점`;
+        if (/^[①②③④⑤]+$/.test(it.mark)) mark = '내가 고른 답 ' + it.mark;
+        else if (it.mark === '-') mark = '무응답';
+        else if (!isNaN(parseFloat(it.mark)) && it.mark !== 'X') mark = `받은 점수 ${it.mark}/${q.points || '?'}`;
       }
-      probs += `<section class="item">
-        <div class="ih"><span class="no">${idx + 1}</span><b>${tag}</b><span class="meta">${meta}</span></div>
-        <div class="orig">${qimg ? `<img src="${qimg}" alt="">` : `<div class="miss">문제 이미지가 아직 없습니다${it.vKey ? '' : ' (시험지 버전 미입력)'}</div>`}
-          ${markTxt ? `<div class="mymark">${esc(markTxt)}</div>` : ''}</div>`;
-      if (Array.isArray(vars) && vars.length) {
-        probs += `<div class="vars"><div class="vh">유사 문제로 다시 연습하기</div>` + vars.map((v, k) => `
-          <div class="var"><div class="vno">${idx + 1}-${k + 1}</div><div class="vb">
-            <div class="vq">${noteTextHTML(v.q)}</div>
-            ${v.fig ? `<div class="vfig">${v.fig}</div>` : ''}
-            ${Array.isArray(v.choices) ? `<div class="vc">${v.choices.map((c, ci) => `<span>${CH[ci]} ${noteTextHTML(c)}</span>`).join('')}</div>` : '<div class="work"></div>'}
-          </div></div>`).join('') + `</div>`;
-      }
-      probs += `</section>`;
-      if (o.withSol) {
-        sols += `<section class="sol"><div class="ih"><span class="no">${idx + 1}</span><b>${tag}</b><span class="meta">정답 ${esc(q.answer || '')}</span></div>
-          ${simg ? `<img src="${simg}" alt="">` : '<div class="miss">해설 이미지가 아직 없습니다</div>'}
-          ${Array.isArray(vars) && vars.length ? vars.map((v, k) => `<div class="vsol"><b>${idx + 1}-${k + 1}</b> 정답 ${noteTextHTML(v.answer)}<div>${noteTextHTML(v.sol)}</div></div>`).join('') : ''}
-        </section>`;
-      }
+      const tag = `${it.round}회 V${(it.vKey || '?').replace('v', '')} · ${it.no}번`;
+      cells.push(`<div class="cell"><div class="chd"><span class="pill o">원문제</span><b>${esc(tag)}</b>${q.difficulty ? `<span class="lv">${esc(q.difficulty)}</span>` : ''}${mark ? `<span class="mk">${esc(mark)}</span>` : ''}</div>
+        ${qimg ? `<img class="qi" src="${qimg}" alt="">` : `<div class="miss">문제 이미지 없음${it.vKey ? '' : ' (버전 미입력)'}</div>`}</div>`);
+      if (Array.isArray(vars)) vars.forEach((v, k) => {
+        cells.push(`<div class="cell var"><div class="chd"><span class="pill v">유사 ${k + 1}</span><b>${esc(tag)}-${k + 1}</b></div>
+          <div class="vq">${noteTextHTML(v.q)}</div>
+          ${v.fig ? `<div class="vfig">${v.fig}</div>` : ''}
+          ${Array.isArray(v.choices) ? `<div class="vc">${v.choices.map((c, ci) => `<span>${CH[ci]} ${noteTextHTML(c)}</span>`).join('')}</div>` : ''}</div>`);
+      });
     });
-    body += `<div class="student">
-      <header class="sh"><div><div class="kick">KLADI · 수만프 오답 노트</div><h1>${esc(s.name)} <small>${esc(s.grade)} · ${esc(s.school || '')}</small></h1></div>
-        <div class="sm">${o.from}~${o.to}회 · 오답 <b>${items.length}</b>문항<br>담당 ${esc(s.teacher || '-')} · ${today}</div></header>
-      ${probs || '<p class="miss">오답 문항이 없습니다.</p>'}
-      ${o.withSol && sols ? `<div class="solhead">정답 및 해설 — ${esc(s.name)}</div>${sols}` : ''}
-    </div>`;
+    for (let i = 0; i < cells.length; i += 4) {
+      const four = cells.slice(i, i + 4);
+      while (four.length < 4) four.push('<div class="cell empty"></div>');
+      html += `<div class="pg qp">${'<div class="hd"><span class="tab">오답노트</span></div>'}<div class="grid">${four.join('')}</div><div class="ft"></div></div>`;
+    }
+
+    // ---- 정답 및 해설 블록 (페이지 나눔은 창에서 높이를 재서 처리) ----
+    if (o.withSol) {
+      const blocks = items.map(it => {
+        const b = it.vKey ? `${s.grade}/${it.vKey}/r${it.round}` : '';
+        const q = it.q || {};
+        const simg = b ? res[`img/${b}/s${it.no}`] : null;
+        const vars = b && o.withVar ? res[`var/${b}/${it.no}`] : null;
+        const tag = `${it.round}회 V${(it.vKey || '?').replace('v', '')} · ${it.no}번`;
+        return `<div class="sb"><div class="sbh"><b>${esc(tag)}</b><span>정답 ${esc(q.answer || '')}</span></div>
+          ${simg ? `<img class="si" src="${simg}" alt="">` : '<div class="miss">해설 이미지 없음</div>'}
+          ${Array.isArray(vars) ? vars.map((v, k) => `<div class="vs"><b>${esc(tag)}-${k + 1}</b> &nbsp;정답 ${noteTextHTML(v.answer)}<div>${noteTextHTML(v.sol)}</div></div>`).join('') : ''}</div>`;
+      });
+      html += `<div class="solsrc" data-name="${esc(s.name)}">${blocks.join('')}</div>`;
+    }
   });
 
-  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>오답 노트 (${targets.length}명)</title>
+  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>오답노트 (${targets.length}명)</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"><\/script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"><\/script>
 <style>
-@page{size:A4;margin:12mm}
+@page{size:A4;margin:0}
 *{box-sizing:border-box}
-body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;color:#1f1b14;margin:0;background:#eee;font-size:10.5pt;line-height:1.6;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{margin:0;padding:0}
+body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;color:#111;background:#888;font-size:10pt;line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .bar{position:sticky;top:0;background:#1b2a4a;color:#fff;padding:10px 16px;display:flex;gap:12px;align-items:center;z-index:5}
 .bar button{background:#c9a463;color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:700;font-size:14px;cursor:pointer}
-.student{background:#fff;max-width:210mm;margin:12px auto;padding:12mm;break-after:page;page-break-after:always}
-.student:last-child{break-after:auto;page-break-after:auto}
-.sh{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #1b2a4a;padding-bottom:8px;margin-bottom:10px}
-.kick{font-size:8.5pt;letter-spacing:.15em;color:#b5924f;font-weight:700}
-h1{margin:2px 0 0;font-size:19pt}h1 small{font-size:10pt;color:#78716c;font-weight:400}
-.sm{text-align:right;font-size:9pt;color:#57534e}
-.item{border:1px solid #e7e2d6;border-radius:10px;padding:10px 12px;margin:10px 0}
-.item .ih,.item .orig{break-inside:avoid;page-break-inside:avoid}
-.item .ih{break-after:avoid;page-break-after:avoid}
-.ih{display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:10pt}
-.ih .no{width:22px;height:22px;border-radius:50%;background:#1b2a4a;color:#f0dcae;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:9pt;flex:none}
-.ih .meta{margin-left:auto;font-size:8.5pt;color:#78716c}
-.orig img{display:block;max-width:100%;margin:0 0 0 6mm}
-.mymark{display:inline-block;margin-top:4px;font-size:8.5pt;color:#b91c1c;border:1px solid rgba(185,28,28,.35);border-radius:6px;padding:1px 7px}
-.vars{margin-top:8px;border-top:1px dashed #d6cfbf;padding-top:6px}
-.vh{font-size:9pt;font-weight:800;color:#8a6c2e;margin-bottom:4px}
-.var{display:flex;gap:8px;margin:7px 0;break-inside:avoid}
-.vno{flex:none;font-weight:800;color:#1b2a4a;font-size:9.5pt;min-width:28px}
-.vb{flex:1}
-.vfig{margin:6px 0}.vfig svg{width:200px;max-width:100%;height:auto;max-height:55mm}
-.vc{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:4px}
-.vc>span{min-width:120px}
-.vh{break-after:avoid;page-break-after:avoid}
-.work{height:22mm;border:1px dashed #e0d9c8;border-radius:6px;margin-top:6px}
-.vt{border-collapse:collapse;margin:4px 0}.vt td{border:1px solid #bbb;padding:2px 8px;text-align:center;font-size:9.5pt}
-.solhead{break-before:page;page-break-before:always;font-size:14pt;font-weight:800;color:#1b2a4a;border-bottom:3px solid #b5924f;padding-bottom:6px;margin-bottom:6px}
-.sol{border-bottom:1px solid #eee;padding:8px 0;break-inside:avoid}
-.sol img{display:block;max-width:100%;margin-left:6mm}
-.vsol{margin:6px 0 0 30px;font-size:9.5pt;border-left:3px solid #e8dcc0;padding-left:8px}
-.miss{color:#b45309;font-size:9pt;padding:6px 0}
-@media print{body{background:#fff}.bar{display:none}.student{margin:0;padding:0;max-width:none}}
+.pg{width:210mm;height:297mm;background:#fff;margin:10px auto;position:relative;overflow:hidden;padding:14mm 13mm 16mm;break-after:page;page-break-after:always}
+/* 표지 */
+.cover .slogan{position:absolute;top:30mm;left:22mm;right:22mm;font-size:15pt;letter-spacing:.06em;color:#222}
+.cover .slogan .r{text-align:right;margin-right:26mm;margin-top:3mm}
+.cover .biglogo{position:absolute;top:118mm;left:0;right:0;text-align:center;font-family:'Arial Black','Segoe UI',Arial,sans-serif;font-weight:900;font-size:62pt;letter-spacing:.08em}
+.cover .ct{position:absolute;right:20mm;bottom:28mm;text-align:right;font-family:'Batang','바탕',serif}
+.cover .c1{font-size:28pt}.cover .c2{font-size:17pt;margin-top:3mm}.cover .c3{font-size:15pt;margin-top:3mm}.cover .c4{font-size:16pt;margin-top:3mm}
+.cover .c4 small{font-size:8pt;vertical-align:4pt}
+/* 문제 쪽 */
+.hd{height:11mm;border-bottom:2.2pt solid #111;display:flex;align-items:flex-end;padding-bottom:1.6mm}
+.tab{font-weight:800;font-size:12.5pt;border:1.6pt solid #111;border-radius:999px;padding:0 4mm}
+.pg.odd .hd{justify-content:flex-end}
+.grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;height:calc(297mm - 14mm - 16mm - 11mm - 14mm);margin-top:3mm;position:relative}
+.grid::before{content:'';position:absolute;left:50%;top:0;bottom:0;border-left:.6pt solid #999}
+.cell{padding:2mm 4mm 0;overflow:hidden}
+.cell:nth-child(odd){padding-left:0}.cell:nth-child(even){padding-left:5mm}
+.chd{display:flex;align-items:center;gap:2mm;margin-bottom:2mm;font-size:9pt}
+.pill{font-size:7.5pt;font-weight:800;border-radius:999px;padding:.3mm 2.2mm;color:#fff}
+.pill.o{background:#1b2a4a}.pill.v{background:#b5924f}
+.lv{font-size:7.5pt;color:#b45309;border:.6pt solid #e0b97a;border-radius:3px;padding:0 1.2mm}
+.mk{margin-left:auto;font-size:7.5pt;color:#c0392b;border:.6pt solid #e7a39b;border-radius:3px;padding:0 1.5mm}
+.qi{display:block;max-width:100%;max-height:105mm}
+.vq{font-size:10pt}
+.vfig{margin:2mm 0}.vfig svg{width:150px;max-width:100%;height:auto;max-height:42mm}
+.vc{display:flex;flex-wrap:wrap;gap:1mm 5mm;margin-top:1.5mm;font-size:9.5pt}
+.vc>span{min-width:25mm}
+.vt{border-collapse:collapse;margin:1mm 0}.vt td{border:.6pt solid #999;padding:.4mm 2mm;text-align:center;font-size:9pt}
+.ft{position:absolute;left:13mm;right:13mm;bottom:9mm;border-top:1.6pt solid #111;padding-top:1.6mm;display:flex;justify-content:center;align-items:center;gap:6mm;font-size:10pt;font-weight:700;letter-spacing:.2em}
+.ft .pn{position:absolute;font-weight:400;letter-spacing:0}
+.pg.odd .ft .pn{right:0}.pg.even .ft .pn{left:0}
+.ft img{height:5mm}
+/* 해설 쪽 */
+.sp .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 9mm;height:calc(297mm - 14mm - 16mm - 11mm - 14mm);margin-top:3mm;position:relative}
+.sp .cols::before{content:'';position:absolute;left:50%;top:0;bottom:0;border-left:.6pt solid #999}
+.sp .col{overflow:hidden}
+.sb{margin-bottom:4mm}
+.sbh{display:flex;justify-content:space-between;font-size:9pt;border-bottom:.6pt solid #ccc;margin-bottom:1.5mm;color:#1b2a4a}
+.sbh span{color:#b91c1c;font-weight:700}
+.si{display:block;max-width:100%}
+.vs{font-size:8.8pt;border-left:2pt solid #e8dcc0;padding-left:2mm;margin-top:2mm}
+.miss{color:#b45309;font-size:8.5pt}
+.solsrc{display:none}
+.stitle{font-weight:800;font-size:11pt;margin:0 0 2mm}
+@media print{body{background:#fff}.bar{display:none}.pg{margin:0}}
 </style></head><body>
-<div class="bar"><b>오답 노트 · ${targets.length}명</b><span style="opacity:.8;font-size:13px">인쇄 창에서 「PDF로 저장」을 고르면 파일로 저장됩니다</span><button onclick="window.print()">🖨 인쇄 / PDF 저장</button></div>
-${body}
+<div class="bar"><b>오답노트 · ${targets.length}명</b><span style="opacity:.8;font-size:13px">양면 인쇄를 권장합니다 · 인쇄 창에서 「PDF로 저장」을 고르면 파일로 저장됩니다</span><button onclick="window.print()">🖨 인쇄 / PDF 저장</button></div>
+${html}
 <script>
-// 잘라낸 이미지는 2배 해상도 → 원래 시험지와 같은 크기로 표시
-document.querySelectorAll('.orig img,.sol img').forEach(function(i){var f=function(){if(i.naturalWidth)i.style.width=(i.naturalWidth/2)+'pt';};if(i.complete)f();else i.addEventListener('load',f);});
-window.addEventListener('load',function(){try{renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});}catch(e){}});
+(function(){
+  var LOGO = ${JSON.stringify(logo)};
+  // 잘라낸 해설 이미지는 2배 해상도 → 원래 크기 기준으로 표시 (단 너비 안에서)
+  function natural(i){var f=function(){if(i.naturalWidth)i.style.width=Math.min(i.naturalWidth/2, 999)+'pt';};if(i.complete)f();else i.addEventListener('load',f);}
+  document.querySelectorAll('.si').forEach(natural);
+  try{renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});}catch(e){}
+
+  function newSolPage(after, name){
+    var pg=document.createElement('div'); pg.className='pg sp';
+    pg.innerHTML='<div class="hd"><span class="tab">정답 및 해설</span></div><div class="cols"><div class="col"></div><div class="col"></div></div><div class="ft"></div>';
+    after.parentNode.insertBefore(pg, after.nextSibling);
+    return pg;
+  }
+  function paginate(){
+    document.querySelectorAll('.solsrc').forEach(function(src){
+      var blocks=[].slice.call(src.children), pg=newSolPage(src.previousElementSibling||src, src.getAttribute('data-name'));
+      var cols=pg.querySelectorAll('.col'), ci=0, last=pg;
+      blocks.forEach(function(b){
+        var col=cols[ci]; col.appendChild(b);
+        if(col.scrollHeight>col.clientHeight+1 && col.children.length>1){
+          col.removeChild(b); ci++;
+          if(ci>1){ last=pg; pg=newSolPage(pg); cols=pg.querySelectorAll('.col'); ci=0; }
+          cols[ci].appendChild(b);
+        }
+      });
+      src.parentNode.removeChild(src);
+    });
+    // 쪽 번호 · 머리글 방향 · 바닥글
+    var n=0;
+    document.querySelectorAll('.pg').forEach(function(pg){
+      n++; pg.classList.add(n%2?'odd':'even');
+      var ft=pg.querySelector('.ft');
+      if(ft){ ft.innerHTML=(LOGO?'<img src="'+LOGO+'" alt="">':'Kladi')+'<span>☎ 594-3222</span><span class="pn">'+n+'</span>'; }
+    });
+  }
+  if(document.readyState==='complete') setTimeout(paginate,50); else window.addEventListener('load',function(){setTimeout(paginate,50);});
+})();
 <\/script>
 </body></html>`;
 }
