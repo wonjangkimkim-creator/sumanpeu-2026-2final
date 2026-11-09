@@ -2834,6 +2834,12 @@ function getVersionLabelsForGrade(grade) {
   return o;
 }
 
+// 버전 표시: 이름이 이미 'V1 …'로 시작하면 그대로, 아니면 'V1 · 이름'
+function versionDisplay(n, label) {
+  const s = String(label || '');
+  return new RegExp('^V\\s*' + n + '\\b', 'i').test(s) ? s : ('V' + n + ' · ' + s);
+}
+
 // 예전(1학기) 버전 라벨 호환 매핑
 const LEGACY_VERSION_LABELS = {
   '방정식~행렬': 'v1', '부등식~행렬': 'v2', '방정식과 부등식+행렬': 'v3',
@@ -3023,7 +3029,8 @@ function loadState() {
         if (!q || typeof q !== 'object') {
           return { no: i+1, book: '', unit: '', subUnit: '', soUnit: '', type: '', difficulty: '', memo: '' };
         }
-        return {
+        // 기본 항목만 비어 있으면 채우고, 나머지(문항요약·정답·배점·문항형식 등)는 그대로 보존
+        return Object.assign({}, q, {
           no: q.no || (i+1),
           book: q.book || '',
           unit: q.unit || '',
@@ -3032,7 +3039,7 @@ function loadState() {
           type: q.type || '',
           difficulty: q.difficulty || '',
           memo: q.memo || ''
-        };
+        });
       });
     }
     
@@ -8617,7 +8624,7 @@ function renderPapers() {
           '엑셀의 각 시트를 어느 학년 · 회차 · 버전에 매핑할지 모달에서 선택합니다.',
           el('br'),
           el('strong', null, '버전: '),
-          GRADES.map(g => g + ': ' + getVersionsForGrade(g).map((l, i) => 'V' + (i+1) + '(' + l + ')').join(' / ')).join('  |  '),
+          GRADES.map(g => g + ': ' + getVersionsForGrade(g).map((l, i) => versionDisplay(i + 1, l)).join(' / ')).join('  |  '),
           el('br'),
           el('strong', null, '버전 이름·개수 변경: '),
           '[설정] 페이지에서 학년별로 편집할 수 있습니다.'
@@ -8667,7 +8674,7 @@ function renderPaperCard(grade, round, version) {
 
   // 카드 제목: 학년별 버전 라벨
   const titleText = version
-    ? `V${version.replace('v','')} · ${versionLabels[version]}`
+    ? versionDisplay(version.replace('v',''), versionLabels[version])
     : `${grade} · ${round}회`;
   
   const titleSize = version ? '13px' : '15px';
@@ -8756,7 +8763,7 @@ function openPaperViewModal(grade, round, version) {
   
   // 제목 생성
   const titleParts = [`${grade} · ${round}회`];
-  if (version) titleParts.push(`V${version.replace('v','')} (${versionLabels[version]})`);
+  if (version) titleParts.push(versionDisplay(version.replace('v',''), versionLabels[version]));
   
   openModal({
     title: `📋 ${titleParts.join(' · ')} 시험지 상세`,
@@ -9200,7 +9207,7 @@ async function openExcelImportModal(file) {
           versionSelect.innerHTML = '';
           const labels = getVersionsForGrade(m.grade);
           getVersionKeysForGrade(m.grade).forEach((k, i) => {
-            versionSelect.appendChild(el('option', { value: k, selected: m.versionKey === k }, `V${i + 1} · ${labels[i]}`));
+            versionSelect.appendChild(el('option', { value: k, selected: m.versionKey === k }, versionDisplay(i + 1, labels[i])));
           });
           if (!m.versionKey) {
             versionSelect.appendChild(el('option', { value: '', selected: true },
