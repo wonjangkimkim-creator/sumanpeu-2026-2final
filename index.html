@@ -2752,6 +2752,204 @@ tr.ver-sub-row td{font-size:11px!important;padding-top:3px!important;padding-bot
 .sub-inline{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;color:#8a6c2e;
   margin-top:1px;white-space:nowrap}
 
+/* ============================================================
+   REDESIGN v3 — 상단 메뉴 + 펼침 메뉴 · 대시보드 · 남색/KLADI 주황
+   ============================================================ */
+:root {
+  --navy: #0b1f3f; --navy-2: #14305e; --navy-3: #07142b;
+  --accent: #ff6a1a; --accent-2: #ffb23f; --accent-soft: rgba(255,106,26,.12);
+  --blue: #2f6bff; --blue-soft: #eaf0ff;
+  --gold: #ff6a1a; --gold-2: #ffb23f; --gold-3: #d9530c; --gold-soft: rgba(255,106,26,.12);
+  --bg-page: #f5f7fa; --line: #e3e8ef; --line-2: #e3e8ef; --ink-3: #5d6878; --ink-mute: #8a93a3;
+  --ring: 0 0 0 3px rgba(47,107,255,.18);
+  --gnb-h: 64px;
+}
+body { background: #fff !important; background-image: none !important; }
+
+/* ---------- 상단 메뉴 ---------- */
+.gnb { position: sticky; top: 0; z-index: 300; background: var(--navy); color: #fff; box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 8px 24px rgba(7,20,43,.18); }
+.gnb-inner { max-width: 1360px; margin: 0 auto; height: var(--gnb-h); display: flex; align-items: center; gap: 8px; padding: 0 28px; }
+.gnb-brand { display: flex; align-items: center; gap: 12px; cursor: pointer; margin-right: 26px; flex: none; }
+.gnb-brand img { height: 26px; background: #fff; padding: 5px 9px; border-radius: 8px; }
+.gnb-brand .t1 { font-size: 14px; font-weight: 800; letter-spacing: -.2px; line-height: 1.1; }
+.gnb-brand .t2 { font-size: 9.5px; letter-spacing: 3px; color: var(--accent-2); font-weight: 700; }
+.gnb-menu { display: flex; align-items: stretch; height: 100%; gap: 4px; flex: 1; }
+.gnb-group { position: relative; display: flex; align-items: stretch; }
+.gnb-top { background: none; border: 0; color: rgba(255,255,255,.78); font-size: 15px; font-weight: 700; padding: 0 16px; cursor: pointer; letter-spacing: -.2px; position: relative; font-family: inherit; }
+.gnb-top:hover, .gnb-group:hover .gnb-top, .gnb-group.open .gnb-top { color: #fff; }
+.gnb-group.on .gnb-top { color: #fff; }
+.gnb-group.on .gnb-top::after { content: ''; position: absolute; left: 16px; right: 16px; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--accent); }
+.gnb-home.on { color: #fff; }
+.gnb-right { display: flex; align-items: center; gap: 8px; flex: none; }
+.gnb-ic { width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.06); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.gnb-ic:hover { background: rgba(255,255,255,.14); }
+.gnb-ic svg { width: 18px; height: 18px; }
+.gnb-burger { display: none; }
+
+/* 펼침 메뉴 */
+.mega { position: absolute; left: 0; top: 100%; min-width: 760px; display: none; grid-template-columns: 1fr 1fr 250px; background: #fff; color: var(--ink); border-radius: 0 0 16px 16px; border-top: 3px solid var(--accent); box-shadow: 0 22px 48px rgba(7,20,43,.26); overflow: hidden; }
+.gnb-group:hover .mega, .gnb-group:focus-within .mega, .gnb-group.open .mega { display: grid; }
+.gnb-group.right .mega { left: auto; right: -200px; }
+.mega-col { padding: 18px 18px 16px; }
+.mega-col + .mega-col { border-left: 1px solid var(--line); }
+.mega-h { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: var(--ink-mute); margin-bottom: 8px; }
+.mega-it { display: flex; gap: 12px; align-items: flex-start; padding: 10px 10px; border-radius: 12px; cursor: pointer; border: 0; background: none; width: 100%; text-align: left; font-family: inherit; color: inherit; }
+.mega-it:hover { background: #f3f6fb; }
+.mega-it.on { background: var(--blue-soft); }
+.mega-ico { width: 38px; height: 38px; border-radius: 11px; flex: none; display: flex; align-items: center; justify-content: center; background: var(--blue-soft); color: var(--blue); }
+.mega-ico svg { width: 20px; height: 20px; }
+.mega-it b { display: block; font-size: 14px; font-weight: 800; letter-spacing: -.2px; }
+.mega-it span { display: block; font-size: 12px; color: var(--ink-3); margin-top: 2px; line-height: 1.45; }
+.mega-promo { background: radial-gradient(140% 120% at 100% 0%, #2a4f95 0%, var(--navy) 65%); color: #fff; padding: 20px 20px 18px; display: flex; flex-direction: column; }
+.mega-promo .k { font-size: 10.5px; font-weight: 800; letter-spacing: 2px; color: var(--accent-2); }
+.mega-promo b { font-size: 18px; margin: 6px 0 6px; letter-spacing: -.4px; line-height: 1.3; }
+.mega-promo p { font-size: 12.5px; color: #c7d2e6; line-height: 1.6; margin: 0 0 12px; }
+.mega-promo button { margin-top: auto; align-self: flex-start; background: var(--accent); color: #fff; border: 0; border-radius: 999px; padding: 8px 14px; font-size: 12.5px; font-weight: 800; cursor: pointer; font-family: inherit; }
+
+/* ---------- 본문 ---------- */
+.main { margin: 0 auto !important; max-width: 1360px !important; padding: 34px 28px 90px !important; }
+.save-bar { left: 50% !important; }
+.page-header { position: relative; margin: -34px -28px 30px; padding: 30px 28px 26px; background: linear-gradient(180deg, #f2f5fa, #fff); border-bottom: 1px solid var(--line); }
+.page-header { flex-wrap: wrap; }
+.page-crumb { flex: 0 0 100%; width: 100%; font-size: 12.5px; color: var(--ink-mute); font-weight: 600; margin-bottom: 8px; letter-spacing: -.1px; }
+.page-crumb b { color: var(--accent); font-weight: 800; }
+.page-title { font-size: 34px !important; font-weight: 800; letter-spacing: -1.4px !important; color: var(--ink) !important; margin-bottom: 8px !important; }
+.page-subtitle { font-size: 14px !important; color: var(--ink-3) !important; line-height: 1.65; max-width: 980px; }
+.card, .table-wrap, .grade-snap { border-radius: 16px !important; border: 1px solid var(--line) !important; box-shadow: none !important; }
+.card-title { color: var(--ink) !important; font-size: 16px; letter-spacing: -.3px; }
+.card-title-accent { background: var(--accent) !important; }
+.stat-card { border-radius: 16px !important; border: 1px solid var(--line) !important; box-shadow: none !important; background: #fff !important; }
+.stat-card::before { background: var(--accent) !important; }
+.stat-card.navy::before { background: var(--navy-2) !important; }
+.stat-card.green::before { background: #18a058 !important; }
+.stat-card.pink::before { background: var(--blue) !important; }
+.stat-value { color: var(--ink) !important; }
+.stat-label { color: var(--ink-3) !important; opacity: 1 !important; }
+.chip { border-color: var(--line) !important; }
+.chip.active { background: var(--navy) !important; border-color: var(--navy) !important; color: #fff !important; }
+.btn:not(.btn-ghost):not(.btn-orange):not(.btn-danger) { background: var(--navy-2); }
+.btn-orange { background: var(--accent) !important; box-shadow: none !important; }
+.btn-orange:hover { background: #e85a0f !important; }
+table.dt th { color: var(--ink-3) !important; opacity: 1 !important; background: #f6f8fb; }
+.main table th { background: #f6f8fb !important; color: var(--ink-3) !important; }
+.score-row.header { background: #f6f8fb !important; color: var(--ink-3) !important; }
+.score-grid { border-color: var(--line) !important; border-radius: 16px !important; }
+.score-row:not(.header):hover { background: #fafbfd; }
+.chip:not(.active) { background: #fff !important; color: var(--ink-3) !important; }
+.chip:not(.active):hover { border-color: var(--blue) !important; color: var(--blue) !important; }
+.filter-bar, .card { background: #fff !important; }
+.input, .select, select.input, .score-input, .errors-input, .version-select { background-color: #fff !important; border-color: var(--line) !important; }
+.grade-snap::after { background: linear-gradient(90deg, var(--accent), transparent) !important; }
+.grade-snap-bar > div { background: linear-gradient(90deg, var(--blue), #6f9bff) !important; }
+.grade-btn { border-color: rgba(255,106,26,.55); color: #d9530c; }
+.grade-btn:hover:not(:disabled) { background: var(--accent-soft); }
+.quote-card { background: radial-gradient(130% 160% at 100% 0%, #2a4f95 0%, var(--navy) 60%) !important; border: 0 !important; border-radius: 18px !important; }
+.quote-card::before { background: var(--accent) !important; }
+.quote-label, .quote-by { color: var(--accent-2) !important; }
+.quote-card { padding: 14px 22px 12px 26px !important; margin-bottom: 18px !important; }
+.quote-card::after { display: none; }
+.quote-head { margin-bottom: 4px !important; }
+.quote-text { font-size: 15px !important; line-height: 1.5 !important; }
+.quote-phase { margin-top: 8px !important; padding-top: 8px !important; font-size: 12px !important; }
+.input:focus, .select:focus, input:focus, select:focus, textarea:focus { box-shadow: var(--ring) !important; border-color: var(--blue) !important; }
+
+/* ---------- 홈 대시보드 ---------- */
+.dash-hero { position: relative; margin: -34px -28px 0; padding: 48px 56px 40px; min-height: 330px; color: #fff; overflow: hidden;
+  background: radial-gradient(110% 150% at 88% 0%, #2a4f95 0%, var(--navy) 58%, var(--navy-3) 100%); }
+.dash-hero .ring { position: absolute; right: -120px; top: -150px; width: 720px; height: 720px; border-radius: 50%; opacity: .5;
+  background: repeating-radial-gradient(circle, rgba(255,255,255,.16) 0 1px, transparent 1px 44px); pointer-events: none; }
+.dash-hero .orb { position: absolute; right: 120px; top: 10px; width: 380px; height: 380px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255,106,26,.5), rgba(255,106,26,0) 66%); }
+.dash-hero > * { position: relative; z-index: 1; }
+.dash-ey { font-size: 13px; font-weight: 800; letter-spacing: 3px; color: var(--accent-2); }
+.dash-h { font-size: 46px; font-weight: 800; letter-spacing: -2px; line-height: 1.15; margin: 12px 0 12px; }
+.dash-h em { font-style: normal; color: var(--accent-2); }
+.dash-p { font-size: 15px; color: #c7d2e6; margin-bottom: 24px; }
+.dash-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.dash-cta button { border-radius: 999px; padding: 12px 22px; font-size: 14.5px; font-weight: 800; cursor: pointer; border: 0; font-family: inherit; }
+.dash-cta .pri { background: var(--accent); color: #fff; } .dash-cta .pri:hover { background: #e85a0f; }
+.dash-cta .gho { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.5); } .dash-cta .gho:hover { background: rgba(255,255,255,.1); }
+.dash-kpis { position: absolute !important; right: 56px; bottom: 40px; display: flex; gap: 12px; }
+.dash-kpi { background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.18); border-radius: 16px; padding: 14px 18px; min-width: 138px; backdrop-filter: blur(4px); }
+.dash-kpi small { display: block; font-size: 12px; color: #b8c4da; font-weight: 600; }
+.dash-kpi b { font-size: 28px; font-weight: 800; letter-spacing: -1px; }
+.dash-kpi b span { font-size: 14px; color: #b8c4da; margin-left: 2px; letter-spacing: 0; }
+.dash-sec { margin-top: 44px; }
+.dash-st { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 16px; gap: 12px; }
+.dash-st h3 { font-size: 24px; font-weight: 800; letter-spacing: -.8px; margin: 0; }
+.dash-st span { font-size: 13px; color: var(--ink-3); }
+.qgrid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+.qcard { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: #fff; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; text-align: left; padding: 0; font-family: inherit; color: inherit; }
+.qcard:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(11,31,63,.12); }
+.qcard .im { height: 104px; display: flex; align-items: center; justify-content: center; color: var(--navy-2); }
+.qcard .im svg { width: 38px; height: 38px; transition: transform .25s ease; }
+.qcard:hover .im svg { transform: scale(1.12); }
+.qcard .tx { padding: 14px 16px 16px; }
+.qcard .lb { font-size: 11.5px; font-weight: 800; color: var(--ink-mute); letter-spacing: .5px; }
+.qcard .nm { font-size: 17px; font-weight: 800; letter-spacing: -.4px; margin: 3px 0 5px; }
+.qcard .ds { font-size: 12.5px; color: var(--ink-3); line-height: 1.5; min-height: 37px; }
+.qcard .go { font-size: 12.5px; font-weight: 800; color: var(--blue); margin-top: 8px; }
+.qi1 { background: linear-gradient(135deg,#e9f0ff,#d3e1ff); } .qi2 { background: linear-gradient(135deg,#fff1e6,#ffdcc2); } .qi3 { background: linear-gradient(135deg,#e8f7ef,#c9ecd9); }
+.qi4 { background: linear-gradient(135deg,#f3ecff,#ded1ff); } .qi5 { background: linear-gradient(135deg,#fff7df,#ffe9a8); } .qi6 { background: linear-gradient(135deg,#eef1f5,#d9e0e9); }
+.dash-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+.dpanel { border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; background: #fff; }
+.dpanel-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+.dpanel-h b { font-size: 17px; font-weight: 800; letter-spacing: -.4px; } .dpanel-h span { font-size: 12.5px; color: var(--ink-3); }
+.ggrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.gbox { background: var(--bg-page); border-radius: 14px; padding: 14px 16px; cursor: pointer; }
+.gbox:hover { background: #edf1f7; }
+.gbox small { display: block; font-size: 12.5px; color: var(--ink-3); font-weight: 700; }
+.gbox b { font-size: 28px; font-weight: 800; letter-spacing: -1px; } .gbox b span { font-size: 13px; color: var(--ink-3); margin-left: 2px; letter-spacing: 0; }
+.gbox .pg { height: 6px; background: #e1e7ef; border-radius: 4px; margin-top: 10px; overflow: hidden; } .gbox .pg i { display: block; height: 100%; background: var(--blue); border-radius: 4px; }
+.gbox .mt { font-size: 11.5px; color: var(--ink-mute); margin-top: 6px; }
+.todo { display: flex; align-items: center; gap: 12px; padding: 12px 2px; border-bottom: 1px dashed var(--line); font-size: 14px; cursor: pointer; }
+.todo:last-child { border-bottom: 0; } .todo:hover { color: var(--blue); }
+.todo .d { width: 9px; height: 9px; border-radius: 50%; flex: none; } .todo .d.r { background: #e5484d; } .todo .d.o { background: var(--accent); } .todo .d.b { background: var(--blue); } .todo .d.g { background: #18a058; }
+.todo em { margin-left: auto; font-style: normal; font-size: 12.5px; font-weight: 800; color: var(--blue); white-space: nowrap; }
+.dash-band { margin-top: 44px; border-radius: 22px; padding: 30px 36px; color: #fff; display: flex; align-items: center; gap: 24px; cursor: pointer;
+  background: linear-gradient(100deg, #ff6a1a 0%, #ff8f3d 42%, #14305e 42.2%, #0b1f3f 100%); }
+.dash-band b { font-size: 24px; font-weight: 800; letter-spacing: -.8px; } .dash-band p { margin: 6px 0 0; font-size: 14px; color: #ffe8d9; }
+.dash-band .r { margin-left: auto; text-align: right; font-size: 13px; color: #c7d2e6; } .dash-band .r b { display: block; font-size: 19px; color: #fff; margin-top: 4px; }
+
+/* 전폭 배너 · 화면 머리 (내용은 1360px 안에 정렬) */
+html, body { overflow-x: clip; }
+.page-header, .dash-hero {
+  margin-left: calc(50% - 50vw) !important; margin-right: calc(50% - 50vw) !important;
+  padding-left: max(28px, calc(50vw - 652px)) !important; padding-right: max(28px, calc(50vw - 652px)) !important;
+}
+.dash-hero { padding-top: 52px !important; padding-bottom: 44px !important; }
+.dash-kpis { right: max(28px, calc(50vw - 652px)) !important; }
+.page.active { transform: none !important; }
+@media (max-width: 1180px) { .qgrid { grid-template-columns: repeat(3, 1fr); } .dash-kpis { position: static !important; margin-top: 26px; } }
+@media (max-width: 900px) {
+  .gnb-inner { padding: 0 14px; gap: 6px; }
+  .gnb-brand .t1, .gnb-brand .t2 { display: none; }
+  .gnb-brand { margin-right: 4px; }
+  .gnb-burger { display: flex; }
+  .gnb-right { margin-left: auto; }
+  .gnb-menu { display: none; position: fixed; left: 0; right: 0; top: var(--gnb-h); bottom: 0; background: #fff; flex-direction: column; overflow-y: auto; padding: 8px 0 40px; height: auto; gap: 0; }
+  .gnb.mopen .gnb-menu { display: flex; }
+  .gnb-group { flex-direction: column; border-bottom: 1px solid var(--line); }
+  .gnb-top { color: var(--ink) !important; font-size: 17px; font-weight: 800; padding: 16px 18px 6px; text-align: left; pointer-events: none; }
+  .gnb-group.on .gnb-top::after { display: none; }
+  .gnb-group.on .gnb-top { color: var(--accent) !important; }
+  .mega, .gnb-group:hover .mega, .gnb-group.open .mega { position: static; display: block; min-width: 0; box-shadow: none; border-top: 0; border-radius: 0; }
+  .mega-col { padding: 0 8px 8px; } .mega-col + .mega-col { border-left: 0; }
+  .mega-h { display: none; }
+  .mega-promo { display: none; }
+  .dash-kpis { flex-wrap: wrap; } .dash-kpi { flex: 1 1 100px; min-width: 0; padding: 12px 14px; } .dash-kpi b { font-size: 22px; }
+  .main { padding: 24px 16px 80px !important; }
+  .page-header { margin: -24px -16px 22px; padding: 22px 16px 18px; }
+  .page-title { font-size: 26px !important; }
+  .dash-hero { margin: -24px -16px 0; padding: 32px 22px 28px; }
+  .dash-h { font-size: 32px; }
+  .qgrid { grid-template-columns: repeat(2, 1fr); }
+  .dash-row { grid-template-columns: 1fr; }
+  .dash-band { flex-direction: column; align-items: flex-start; background: linear-gradient(160deg, #ff6a1a, #14305e 70%); }
+  .dash-band .r { margin-left: 0; text-align: left; }
+}
+@media print { .gnb { display: none !important; } .page-header { margin: 0 0 20px; background: none; } }
+
 </style>
 </head>
 <body>
@@ -3730,6 +3928,7 @@ function confirmDialog(msg, onYes) {
 // ============================================================
 
 const ROUTES = {
+  'dash': { label: '홈', icon: '', render: () => renderDashboard() },
   'home': { label: '관리자', icon: '🏛', render: () => isAdmin() ? renderHome() : renderAdminLock() },
   'students': { label: '학생 관리', icon: '👥', render: renderStudents },
   'scores': { label: '점수 입력', icon: '✏️', render: renderScores },
@@ -3750,7 +3949,7 @@ function navigate(page) {
 }
 
 function defaultLandingPage() {
-  return isAdmin() ? 'home' : 'scores';
+  return 'dash';
 }
 
 function checkSharedReport() {
@@ -3780,6 +3979,12 @@ function render() {
   const route = ROUTES[ui.currentPage] || ROUTES.home;
   const pageEl = el('div', { className: 'page active' });
   pageEl.appendChild(route.render());
+  // 화면 머리에 위치 표시(시험 운영 › 점수 입력)
+  const ph = pageEl.querySelector('.page-header');
+  const grp = navGroupOf(ui.currentPage);
+  if (ph && grp && !ph.querySelector('.page-crumb')) {
+    ph.insertBefore(el('div', { className: 'page-crumb' }, el('b', null, grp.label), '  ›  ' + navItemLabel(ui.currentPage)), ph.firstChild);
+  }
   main.appendChild(pageEl);
   app.appendChild(main);
   window.scrollTo(0, 0);
@@ -3942,7 +4147,189 @@ function runEntryAnimations(root) {
   });
 }
 
+// ============================================================
+// 상단 메뉴 (업무별 4묶음 + 펼침 메뉴)
+// ============================================================
+const NAV_ICONS = {
+  scores: '<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>',
+  gaps: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/><path d="M11 8v3.2"/><circle cx="11" cy="13.8" r=".6" fill="currentColor"/>',
+  papers: '<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 16h5"/>',
+  stats: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  notes: '<path d="M5 4h11a3 3 0 013 3v13H8a3 3 0 01-3-3z"/><path d="M5 17a3 3 0 013-3h11"/><path d="M9 8h6"/>',
+  'teacher-report': '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+  'parent-report': '<path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/>',
+  students: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2c3 .2 5.5 2.6 5.5 5.8"/>',
+  home: '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/>',
+  settings: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>',
+  save: '<path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3"/><rect x="8" y="13" width="8" height="6"/>',
+  help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 .5c0 1.5-2.5 2-2.5 3.5"/><circle cx="12" cy="17" r=".7" fill="currentColor"/>',
+  menu: '<path d="M4 7h16M4 12h16M4 17h16"/>'
+};
+function navIcon(key) {
+  const span = el('span');
+  span.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + (NAV_ICONS[key] || '') + '</svg>';
+  return span.firstChild;
+}
+const NAV_GROUPS = [
+  { key: 'ops', label: '시험 운영', cols: [
+    { h: '입력', items: [
+      { k: 'scores', name: '점수 입력 · 채점', desc: '답만 입력하면 배점대로 자동 채점' },
+      { k: 'gaps', name: '미입력 점검', desc: '빠진 학생 · 회차를 한 번에 확인' } ] },
+    { h: '시험지', items: [
+      { k: 'papers', name: '시험지 · 배점', desc: '버전별 정답 · 배점 · 문항 분류' } ] } ],
+    promo: () => { const d = dashData(); return d.round ? { k: d.round + '회차 진행 중', t: '입력 ' + d.pct + '% 완료', p: '미입력 ' + d.missing + '명이 남아 있습니다.', b: '미입력 점검 바로가기 →', go: () => { ui.gapTab = 'rounds'; navigate('gaps'); } } : { k: '시작 전', t: '1회차 입력 대기', p: '점수 입력에서 시작하세요.', b: '점수 입력 →', go: () => navigate('scores') }; } },
+  { key: 'ana', label: '학습 분석', cols: [
+    { h: '결과', items: [
+      { k: 'stats', name: '회차 통계', desc: '학년별 · 선생님별 평균, 공통 오답' } ] },
+    { h: '지도', items: [
+      { k: 'notes', name: '오답 노트', desc: '틀린 문제 + 유사문제 3개 + 해설 출력' } ] } ],
+    promo: () => ({ k: 'NEW', t: '오답 노트 + 유사문제', p: '틀린 문제마다 숫자를 바꾼 연습 문제 3개와 해설을 붙여 출력합니다.', b: '오답 노트 만들기 →', go: () => navigate('notes') }) },
+  { key: 'rep', label: '리포트', cols: [
+    { h: '선생님', items: [
+      { k: 'teacher-report', name: '선생님 리포트', desc: '담당 학생 분석 · 인쇄' } ] },
+    { h: '학부모', items: [
+      { k: 'parent-report', name: '학부모 리포트', desc: '학생별 리포트 · 링크 · 이미지 저장' } ] } ],
+    promo: () => ({ k: 'TIP', t: '링크로 바로 전달', p: '학부모 리포트는 비밀번호 없이 열리는 링크로 보낼 수 있습니다.', b: '학부모 리포트 →', go: () => navigate('parent-report') }) },
+  { key: 'adm', label: '관리', right: true, cols: [
+    { h: '학생', items: [
+      { k: 'students', name: '학생 관리', desc: '명단 · 사전 입력 · 일괄 추가' } ] },
+    { h: '운영', items: [
+      { k: 'home', name: '관리자', desc: '전체 현황 · 선생님별 평균 (비밀번호)' },
+      { k: 'settings', name: '설정', desc: '회차 · 학년 · 시험지 버전 구성' } ] } ],
+    promo: () => ({ k: '데이터', t: '백업 · 복원', p: '오른쪽 위 저장 아이콘에서 전체 데이터를 JSON으로 내려받을 수 있습니다.', b: '백업 열기 →', go: () => openBackupModal() }) }
+];
+function navGroupOf(page) { return NAV_GROUPS.find(g => g.cols.some(c => c.items.some(i => i.k === page))); }
+function navItemLabel(page) { for (const g of NAV_GROUPS) for (const c of g.cols) for (const i of c.items) if (i.k === page) return i.name; return (ROUTES[page] || {}).label || ''; }
+
 function renderTopbar() {
+  const closeAll = () => document.querySelectorAll('.gnb-group.open').forEach(n => n.classList.remove('open'));
+  const groups = NAV_GROUPS.map(g => {
+    const node = el('div', { className: 'gnb-group' + (navGroupOf(ui.currentPage) === g ? ' on' : '') + (g.right ? ' right' : '') });
+    const top = el('button', { className: 'gnb-top', onClick: (e) => {
+      e.stopPropagation();
+      const was = node.classList.contains('open'); closeAll(); if (!was) node.classList.add('open');
+    } }, g.label);
+    const pr = g.promo();
+    const mega = el('div', { className: 'mega' },
+      ...g.cols.map(c => el('div', { className: 'mega-col' },
+        el('div', { className: 'mega-h' }, c.h),
+        ...c.items.map(i => el('button', { className: 'mega-it' + (ui.currentPage === i.k ? ' on' : ''), onClick: (e) => { e.stopPropagation(); closeAll(); navigate(i.k); } },
+          el('div', { className: 'mega-ico' }, navIcon(i.k)),
+          el('div', null, el('b', null, (i.k === 'home' && !isAdmin() ? '🔒 ' : '') + i.name), el('span', null, i.desc))
+        ))
+      )),
+      el('div', { className: 'mega-promo' },
+        el('div', { className: 'k' }, pr.k), el('b', null, pr.t), el('p', null, pr.p),
+        el('button', { onClick: (e) => { e.stopPropagation(); closeAll(); pr.go(); } }, pr.b))
+    );
+    node.appendChild(top); node.appendChild(mega);
+    return node;
+  });
+  if (!window._gnbCloser) { window._gnbCloser = true; document.addEventListener('click', closeAll); }
+  return el('header', { className: 'gnb' },
+    el('div', { className: 'gnb-inner' },
+      el('div', { className: 'gnb-brand', onClick: () => navigate('dash') },
+        el('img', { src: KLADI_LOGO, alt: 'Kladi' }),
+        el('div', null, el('div', { className: 't1' }, '클라디수학학원'), el('div', { className: 't2' }, '수만프 관리'))
+      ),
+      el('nav', { className: 'gnb-menu' }, ...groups),
+      el('div', { className: 'gnb-right' },
+        el('button', { className: 'gnb-ic', title: '데이터 백업/복원', onClick: openBackupModal }, navIcon('save')),
+        el('button', { className: 'gnb-ic', title: '도움말', onClick: openHelpModal }, navIcon('help')),
+        el('button', { className: 'gnb-ic gnb-burger', title: '메뉴', onClick: (e) => { e.stopPropagation(); const h = document.querySelector('.gnb'); if (h) h.classList.toggle('mopen'); } }, navIcon('menu'))
+      )
+    )
+  );
+}
+
+// ============================================================
+// 홈 대시보드
+// ============================================================
+function dashData() {
+  const eligible = state.students.filter(s => GRADES.includes(s.grade));
+  const has = (s, r) => { const rd = getRoundData(s.id, r); return rd && ((rd.score != null && rd.score !== '') || isAbsent(rd)); };
+  let round = 0;
+  for (let r = ROUNDS; r >= 1; r--) if (eligible.some(s => has(s, r))) { round = r; break; }
+  const r = round || 1;
+  const byGrade = GRADES.map(g => {
+    const list = eligible.filter(s => s.grade === g);
+    const done = list.filter(s => has(s, r));
+    const sc = done.map(s => getRoundData(s.id, r)).filter(rd => rd && !isAbsent(rd) && rd.score !== '' && rd.score != null).map(rd => Number(rd.score)).filter(v => !isNaN(v));
+    const absent = done.filter(s => isAbsent(getRoundData(s.id, r))).length;
+    const wrong = done.filter(s => { const rd = getRoundData(s.id, r); return rd && rd.errors && String(rd.errors).trim(); }).length;
+    return { g, n: list.length, done: done.length, absent, wrong, avg: sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null, taken: sc.length };
+  });
+  const total = eligible.length, done = byGrade.reduce((a, x) => a + x.done, 0);
+  return { round, r, total, done, missing: total - done, pct: total ? Math.round(done / total * 100) : 0, byGrade,
+    wrong: byGrade.reduce((a, x) => a + x.wrong, 0) };
+}
+
+function renderDashboard() {
+  const d = dashData();
+  const wrap = el('div', { className: 'dash' });
+  const gradesTxt = d.byGrade.filter(x => x.done).map(x => x.g).join(' · ') || GRADES.join(' · ');
+  const hero = el('section', { className: 'dash-hero' },
+    el('div', { className: 'ring' }), el('div', { className: 'orb' }),
+    el('div', { className: 'dash-ey' }, PROGRAM + (d.round ? ' · ' + d.round + '회차 진행 중' : ' · 시작 전')),
+    el('div', { className: 'dash-h' }, d.round ? gradesTxt + ' ' + d.round + '회 입력' : '1회차 입력을', el('br'), el('em', null, d.round ? countUp(el('span'), d.pct) : '시작하세요'), d.round ? el('span', null, '% 완료') : null),
+    el('div', { className: 'dash-p' }, '입력 ' + d.done + '명 · 미입력 ' + d.missing + '명 · 오답 노트 대상 ' + d.wrong + '명'),
+    el('div', { className: 'dash-cta' },
+      el('button', { className: 'pri', onClick: () => { if (d.round) ui.scoreFilters = Object.assign({}, ui.scoreFilters || {}, { round: d.r }); navigate('scores'); } }, '점수 입력 계속하기'),
+      el('button', { className: 'gho', onClick: () => { ui.gapTab = 'rounds'; navigate('gaps'); } }, '미입력 ' + d.missing + '명 보기')
+    ),
+    el('div', { className: 'dash-kpis' },
+      el('div', { className: 'dash-kpi' }, el('small', null, '입력 학생'), el('b', null, d.done, el('span', null, '/ ' + d.total))),
+      ...d.byGrade.filter(x => x.avg != null).slice(0, 2).map(x => el('div', { className: 'dash-kpi' }, el('small', null, x.g + ' 평균'), el('b', null, x.avg.toFixed(1), el('span', null, '점'))))
+    )
+  );
+  wrap.appendChild(hero);
+
+  const Q = [
+    ['scores', '시험 운영', '점수 입력', '답만 입력하면 배점대로 자동 채점', 'qi1'],
+    ['gaps', '시험 운영', '미입력 점검', '빠진 학생 · 회차를 한 번에 확인', 'qi2'],
+    ['stats', '학습 분석', '회차 통계', '평균 · 분포 · 공통 오답', 'qi3'],
+    ['notes', '학습 분석', '오답 노트', '틀린 문제 + 유사문제 3개 + 해설', 'qi4'],
+    ['parent-report', '리포트', '학부모 리포트', '링크로 보내는 성적 리포트', 'qi5'],
+    ['papers', '시험 운영', '시험지 · 배점', '버전별 정답 · 배점 확인', 'qi6']
+  ];
+  wrap.appendChild(el('section', { className: 'dash-sec' },
+    el('div', { className: 'dash-st' }, el('h3', null, '바로가기'), el('span', null, '자주 쓰는 메뉴')),
+    el('div', { className: 'qgrid' }, ...Q.map(q => el('button', { className: 'qcard', onClick: () => navigate(q[0]) },
+      el('div', { className: 'im ' + q[4] }, navIcon(q[0])),
+      el('div', { className: 'tx' }, el('div', { className: 'lb' }, q[1]), el('div', { className: 'nm' }, q[2]), el('div', { className: 'ds' }, q[3]), el('div', { className: 'go' }, '바로가기 →'))
+    )))
+  ));
+
+  const todos = [];
+  d.byGrade.forEach(x => { if (x.done && x.n && x.taken / x.n < 0.5) todos.push(['r', x.g + ' ' + d.r + '회 응시율 ' + Math.round(x.taken / x.n * 100) + '% — 평균 해석 주의', '통계 →', () => navigate('stats')]); });
+  if (d.missing) todos.push(['o', '미입력 ' + d.missing + '명 (' + d.r + '회 · ' + d.byGrade.filter(x => x.n - x.done > 0).map(x => x.g + ' ' + (x.n - x.done)).join(' · ') + ')', '점검 →', () => { ui.gapTab = 'rounds'; navigate('gaps'); }]);
+  if (d.wrong) todos.push(['b', '오답이 있는 학생 ' + d.wrong + '명 — 오답 노트 출력', '노트 →', () => navigate('notes')]);
+  if (!todos.length) todos.push(['g', '확인할 항목이 없습니다', '', () => {}]);
+
+  wrap.appendChild(el('section', { className: 'dash-sec dash-row' },
+    el('div', { className: 'dpanel' },
+      el('div', { className: 'dpanel-h' }, el('b', null, '학년별 ' + d.r + '회 현황'), el('span', null, '입력률 · 평균')),
+      el('div', { className: 'ggrid' }, ...d.byGrade.map(x => el('div', { className: 'gbox', onClick: () => { ui.scoreFilters = Object.assign({}, ui.scoreFilters || {}, { round: d.r, grade: x.g }); navigate('scores'); } },
+        el('small', null, x.g + ' · ' + x.n + '명'),
+        el('b', null, x.avg != null ? x.avg.toFixed(1) : '–', x.avg != null ? el('span', null, '점') : null),
+        el('div', { className: 'pg' }, el('i', { style: { width: (x.n ? Math.round(x.done / x.n * 100) : 0) + '%' } })),
+        el('div', { className: 'mt' }, '입력 ' + x.done + '/' + x.n + (x.absent ? ' · 결시 ' + x.absent : ''))
+      )))
+    ),
+    el('div', { className: 'dpanel' },
+      el('div', { className: 'dpanel-h' }, el('b', null, '오늘 확인할 것'), el('span', null, todos.length + '건')),
+      ...todos.map(t => el('div', { className: 'todo', onClick: t[3] }, el('i', { className: 'd ' + t[0] }), el('span', null, t[1]), t[2] ? el('em', null, t[2]) : null))
+    )
+  ));
+
+  wrap.appendChild(el('section', { className: 'dash-band', onClick: () => navigate('notes') },
+    el('div', null, el('b', null, '오답 노트 + 유사문제 3개'), el('p', null, '틀린 문제마다 숫자를 바꾼 연습 문제와 해설을 자동으로 붙여 출력합니다.')),
+    el('div', { className: 'r' }, '중1 · 중2 전 회차 준비 완료', el('b', null, '오답 노트 만들기 →'))
+  ));
+  return wrap;
+}
+
+function renderTopbarOld() {
   return el('div', { className: 'topbar' },
     el('div', { className: 'topbar-inner' },
       el('div', { className: 'brand', onClick: () => navigate('home') },
