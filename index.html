@@ -6,7 +6,7 @@
 <title>Kladi 수만프 관리 시스템 · 2026 2학기 기말 | 클라디수학학원</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Serif+KR:wght@500;700;900&family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Kaushan+Script&family=Noto+Serif+KR:wght@500;700;900&family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <!-- Chart.js 4.4.0 (내장) -->
 <script>
 /*!
@@ -2921,6 +2921,35 @@ html, body { overflow-x: clip; }
 .dash-kpis { right: max(28px, calc(50vw - 652px)) !important; }
 .page.active { transform: none !important; }
 @media (max-width: 1180px) { .qgrid { grid-template-columns: repeat(3, 1fr); } .dash-kpis { position: static !important; margin-top: 26px; } }
+/* 홈 슬로건 — Challenge · Raise · Make (붓글씨) */
+.dash-hero { min-height: 486px; }
+.dash-slogan { position: absolute !important; top: 40px; right: max(28px, calc(50vw - 652px)); width: 560px; height: 250px; pointer-events: none; user-select: none;
+  font-family: 'Kaushan Script', 'Brush Script MT', cursive; font-weight: 400; line-height: 1; transform: rotate(-5deg); transform-origin: right center; }
+.dash-slogan span { position: absolute; display: block; white-space: nowrap; font-size: 76px; letter-spacing: 1px; padding: 0 14px 10px 6px;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-mask-image: repeating-linear-gradient(97deg, #000 0 5px, rgba(0,0,0,.78) 5px 6px, #000 6px 11px, rgba(0,0,0,.9) 11px 12px);
+          mask-image: repeating-linear-gradient(97deg, #000 0 5px, rgba(0,0,0,.78) 5px 6px, #000 6px 11px, rgba(0,0,0,.9) 11px 12px);
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.28));
+  animation: sloganIn .9s cubic-bezier(.2,.8,.2,1) both; }
+.dash-slogan .w1 { left: 0; top: 0; background-image: linear-gradient(100deg, #ffffff 30%, #ffd8bf 100%); animation-delay: .1s; }
+.dash-slogan .w2 { left: 170px; top: 78px; font-size: 84px; background-image: linear-gradient(100deg, #ff5a0a 0%, #ff8a2b 55%, #ffc078 100%); animation-delay: .38s; }
+.dash-slogan .w3 { left: 300px; top: 160px; background-image: linear-gradient(100deg, #dfe8ff 0%, #ffffff 60%); animation-delay: .66s; }
+.dash-slogan .sw { position: absolute; left: 286px; top: 236px; width: 250px; height: 22px; animation: sloganIn .7s ease-out .95s both; }
+@keyframes sloganIn { from { clip-path: inset(-20% 100% -20% 0); transform: translateX(-18px) skewX(-8deg); opacity: .2; }
+  to { clip-path: inset(-20% -10% -20% 0); transform: none; opacity: 1; } }
+.dash-hero.still .dash-slogan span, .dash-hero.still .dash-slogan .sw { animation: none; }
+@media (prefers-reduced-motion: reduce) { .dash-slogan span, .dash-slogan .sw { animation: none; } }
+@media (max-width: 1180px) {
+  .dash-hero { min-height: 0; }
+  .dash-slogan { position: relative !important; top: auto; right: auto; width: 440px; height: 196px; margin: 26px 0 0 4px; transform: rotate(-4deg); transform-origin: left center; }
+  .dash-slogan span { font-size: 58px; } .dash-slogan .w2 { left: 130px; top: 60px; font-size: 64px; } .dash-slogan .w3 { left: 230px; top: 124px; }
+  .dash-slogan .sw { left: 220px; top: 182px; width: 190px; }
+}
+@media (max-width: 900px) {
+  .dash-slogan { width: 300px; height: 150px; margin-top: 18px; }
+  .dash-slogan span { font-size: 42px; padding-bottom: 6px; } .dash-slogan .w2 { left: 88px; top: 44px; font-size: 48px; } .dash-slogan .w3 { left: 160px; top: 92px; }
+  .dash-slogan .sw { left: 152px; top: 136px; width: 130px; height: 14px; }
+}
 @media (max-width: 900px) {
   .gnb-inner { padding: 0 14px; gap: 6px; }
   .gnb-brand .t1, .gnb-brand .t2 { display: none; }
@@ -4165,6 +4194,11 @@ const NAV_ICONS = {
   help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 .5c0 1.5-2.5 2-2.5 3.5"/><circle cx="12" cy="17" r=".7" fill="currentColor"/>',
   menu: '<path d="M4 7h16M4 12h16M4 17h16"/>'
 };
+function svgEl(markup) {
+  const span = el('span');
+  span.innerHTML = markup;
+  return span.firstChild;
+}
 function navIcon(key) {
   const span = el('span');
   span.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + (NAV_ICONS[key] || '') + '</svg>';
@@ -4277,11 +4311,15 @@ function renderDashboard() {
       el('button', { className: 'pri', onClick: () => { if (d.round) ui.scoreFilters = Object.assign({}, ui.scoreFilters || {}, { round: d.r }); navigate('scores'); } }, '점수 입력 계속하기'),
       el('button', { className: 'gho', onClick: () => { ui.gapTab = 'rounds'; navigate('gaps'); } }, '미입력 ' + d.missing + '명 보기')
     ),
+    el('div', { className: 'dash-slogan', 'aria-label': 'Challenge, Raise, Make' },
+      el('span', { className: 'w1' }, 'Challenge'), el('span', { className: 'w2' }, 'Raise'), el('span', { className: 'w3' }, 'Make'),
+      svgEl('<svg class="sw" viewBox="0 0 250 22" preserveAspectRatio="none"><path d="M4 15 C 60 4, 140 3, 246 9 C 170 9, 90 13, 30 20 Z" fill="#ff6a1a" opacity=".9"/></svg>')),
     el('div', { className: 'dash-kpis' },
       el('div', { className: 'dash-kpi' }, el('small', null, '입력 학생'), el('b', null, d.done, el('span', null, '/ ' + d.total))),
       ...d.byGrade.filter(x => x.avg != null).slice(0, 2).map(x => el('div', { className: 'dash-kpi' }, el('small', null, x.g + ' 평균'), el('b', null, x.avg.toFixed(1), el('span', null, '점'))))
     )
   );
+  if (prefersReducedMotion()) hero.classList.add('still');
   wrap.appendChild(hero);
 
   const Q = [
