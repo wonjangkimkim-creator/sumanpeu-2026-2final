@@ -4287,11 +4287,15 @@ function dashData() {
   const r = round || 1;
   const byGrade = GRADES.map(g => {
     const list = eligible.filter(s => s.grade === g);
+    // 학년마다 자기 학년의 최근 입력 회차 기준 (다른 학년이 먼저 다음 회차를 시작해도 평균이 사라지지 않게)
+    let gr = 0;
+    for (let k = ROUNDS; k >= 1; k--) if (list.some(s => has(s, k))) { gr = k; break; }
+    const r = gr || round || 1;
     const done = list.filter(s => has(s, r));
     const sc = done.map(s => getRoundData(s.id, r)).filter(rd => rd && !isAbsent(rd) && rd.score !== '' && rd.score != null).map(rd => Number(rd.score)).filter(v => !isNaN(v));
     const absent = done.filter(s => isAbsent(getRoundData(s.id, r))).length;
     const wrong = done.filter(s => { const rd = getRoundData(s.id, r); return rd && rd.errors && String(rd.errors).trim(); }).length;
-    return { g, n: list.length, done: done.length, absent, wrong, avg: sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null, taken: sc.length };
+    return { g, r, n: list.length, done: done.length, absent, wrong, avg: sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null, taken: sc.length };
   });
   const total = eligible.length, done = byGrade.reduce((a, x) => a + x.done, 0);
   return { round, r, total, done, missing: total - done, pct: total ? Math.round(done / total * 100) : 0, byGrade,
@@ -4305,7 +4309,7 @@ function renderDashboard() {
   const hero = el('section', { className: 'dash-hero' },
     el('div', { className: 'ring' }), el('div', { className: 'orb' }),
     el('div', { className: 'dash-ey' }, PROGRAM + (d.round ? ' · ' + d.round + '회차 진행 중' : ' · 시작 전')),
-    el('div', { className: 'dash-h' }, d.round ? gradesTxt + ' ' + d.round + '회 입력' : '1회차 입력을', el('br'), el('em', null, d.round ? countUp(el('span'), d.pct) : '시작하세요'), d.round ? el('span', null, '% 완료') : null),
+    el('div', { className: 'dash-h' }, d.round ? (new Set(d.byGrade.filter(x => x.done).map(x => x.r)).size > 1 ? d.byGrade.filter(x => x.done).map(x => x.g + ' ' + x.r + '회').join(' · ') : gradesTxt + ' ' + d.round + '회') + ' 입력' : '1회차 입력을', el('br'), el('em', null, d.round ? countUp(el('span'), d.pct) : '시작하세요'), d.round ? el('span', null, '% 완료') : null),
     el('div', { className: 'dash-p' }, '입력 ' + d.done + '명 · 미입력 ' + d.missing + '명 · 오답 노트 대상 ' + d.wrong + '명'),
     el('div', { className: 'dash-cta' },
       el('button', { className: 'pri', onClick: () => { if (d.round) ui.scoreFilters = Object.assign({}, ui.scoreFilters || {}, { round: d.r }); navigate('scores'); } }, '점수 입력 계속하기'),
@@ -4316,7 +4320,7 @@ function renderDashboard() {
       svgEl('<svg class="sw" viewBox="0 0 250 22" preserveAspectRatio="none"><path d="M4 15 C 60 4, 140 3, 246 9 C 170 9, 90 13, 30 20 Z" fill="#ff6a1a" opacity=".9"/></svg>')),
     el('div', { className: 'dash-kpis' },
       el('div', { className: 'dash-kpi' }, el('small', null, '입력 학생'), el('b', null, d.done, el('span', null, '/ ' + d.total))),
-      ...d.byGrade.filter(x => x.avg != null).slice(0, 2).map(x => el('div', { className: 'dash-kpi' }, el('small', null, x.g + ' 평균'), el('b', null, x.avg.toFixed(1), el('span', null, '점'))))
+      ...d.byGrade.filter(x => x.avg != null).slice(0, 2).map(x => el('div', { className: 'dash-kpi' }, el('small', null, x.g + ' ' + x.r + '회 평균'), el('b', null, x.avg.toFixed(1), el('span', null, '점'))))
     )
   );
   if (prefersReducedMotion()) hero.classList.add('still');
@@ -4339,16 +4343,16 @@ function renderDashboard() {
   ));
 
   const todos = [];
-  d.byGrade.forEach(x => { if (x.done && x.n && x.taken / x.n < 0.5) todos.push(['r', x.g + ' ' + d.r + '회 응시율 ' + Math.round(x.taken / x.n * 100) + '% — 평균 해석 주의', '통계 →', () => navigate('stats')]); });
-  if (d.missing) todos.push(['o', '미입력 ' + d.missing + '명 (' + d.r + '회 · ' + d.byGrade.filter(x => x.n - x.done > 0).map(x => x.g + ' ' + (x.n - x.done)).join(' · ') + ')', '점검 →', () => { ui.gapTab = 'rounds'; navigate('gaps'); }]);
+  d.byGrade.forEach(x => { if (x.done && x.n && x.taken / x.n < 0.5) todos.push(['r', x.g + ' ' + x.r + '회 응시율 ' + Math.round(x.taken / x.n * 100) + '% — 평균 해석 주의', '통계 →', () => navigate('stats')]); });
+  if (d.missing) todos.push(['o', '미입력 ' + d.missing + '명 (' + d.byGrade.filter(x => x.n - x.done > 0).map(x => x.g + ' ' + x.r + '회 ' + (x.n - x.done)).join(' · ') + ')', '점검 →', () => { ui.gapTab = 'rounds'; navigate('gaps'); }]);
   if (d.wrong) todos.push(['b', '오답이 있는 학생 ' + d.wrong + '명 — 오답 노트 출력', '노트 →', () => navigate('notes')]);
   if (!todos.length) todos.push(['g', '확인할 항목이 없습니다', '', () => {}]);
 
   wrap.appendChild(el('section', { className: 'dash-sec dash-row' },
     el('div', { className: 'dpanel' },
-      el('div', { className: 'dpanel-h' }, el('b', null, '학년별 ' + d.r + '회 현황'), el('span', null, '입력률 · 평균')),
-      el('div', { className: 'ggrid' }, ...d.byGrade.map(x => el('div', { className: 'gbox', onClick: () => { ui.scoreFilters = Object.assign({}, ui.scoreFilters || {}, { round: d.r, grade: x.g }); navigate('scores'); } },
-        el('small', null, x.g + ' · ' + x.n + '명'),
+      el('div', { className: 'dpanel-h' }, el('b', null, '학년별 최근 회차 현황'), el('span', null, '입력률 · 평균')),
+      el('div', { className: 'ggrid' }, ...d.byGrade.map(x => el('div', { className: 'gbox', onClick: () => { ui.scoreFilters = Object.assign({}, ui.scoreFilters || {}, { round: x.r, grade: x.g }); navigate('scores'); } },
+        el('small', null, x.g + ' · ' + x.r + '회 · ' + x.n + '명'),
         el('b', null, x.avg != null ? x.avg.toFixed(1) : '–', x.avg != null ? el('span', null, '점') : null),
         el('div', { className: 'pg' }, el('i', { style: { width: (x.n ? Math.round(x.done / x.n * 100) : 0) + '%' } })),
         el('div', { className: 'mt' }, '입력 ' + x.done + '/' + x.n + (x.absent ? ' · 결시 ' + x.absent : ''))
