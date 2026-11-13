@@ -2911,6 +2911,63 @@ table.dt th { color: var(--ink-3) !important; opacity: 1 !important; background:
   background: linear-gradient(100deg, #ff6a1a 0%, #ff8f3d 42%, #14305e 42.2%, #0b1f3f 100%); }
 .dash-band b { font-size: 24px; font-weight: 800; letter-spacing: -.8px; } .dash-band p { margin: 6px 0 0; font-size: 14px; color: #ffe8d9; }
 .dash-band .r { margin-left: auto; text-align: right; font-size: 13px; color: #c7d2e6; } .dash-band .r b { display: block; font-size: 19px; color: #fff; margin-top: 4px; }
+/* 성적 향상 사례 — 갤러리 · 재생 창 · 점수 입력 화면 띠 */
+.cg-sub { font-size: 13px; color: var(--ink-3); margin-top: 4px; }
+.cg-nav { display: flex; gap: 6px; align-items: center; }
+.cg-nav button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: #fff; font-size: 20px; line-height: 1; cursor: pointer; color: var(--navy); font-family: inherit; }
+.cg-nav button:hover { border-color: var(--accent); color: var(--accent); }
+.cg-nav .all { width: auto; border-radius: 999px; padding: 0 14px; font-size: 13px; font-weight: 800; white-space: nowrap; }
+.cg-row { display: grid; grid-auto-flow: column; grid-auto-columns: 196px; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 2px 10px; scrollbar-width: thin; }
+.cg { position: relative; display: block; width: 100%; aspect-ratio: 9 / 14; border: 0; padding: 0; border-radius: 18px; overflow: hidden; cursor: pointer; background: var(--navy); scroll-snap-align: start; text-align: left; font-family: inherit; color: #fff; box-shadow: 0 8px 22px rgba(11,31,63,.14); transition: transform .2s ease, box-shadow .2s ease; }
+.cg:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(11,31,63,.24); }
+.cg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.35); transition: transform .35s ease; }
+.cg:hover img { transform: scale(1.42); }
+.cg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,31,63,0) 35%, rgba(11,31,63,.55) 60%, rgba(8,20,42,.95) 100%); }
+.cg-badge { position: absolute; z-index: 1; left: 10px; top: 10px; background: var(--accent); color: #fff; font-size: 12.5px; font-weight: 800; padding: 3px 10px; border-radius: 999px; box-shadow: 0 4px 10px rgba(255,106,26,.4); }
+.cg-badge.gold { background: linear-gradient(100deg, #ff6a1a, #ffb547); }
+.cg-play { position: absolute; z-index: 1; left: 50%; top: 40%; transform: translate(-50%, -50%); width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.22); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: .9; transition: background .2s; }
+.cg-play svg { width: 22px; height: 22px; margin-left: 3px; color: #fff; }
+.cg:hover .cg-play { background: var(--accent); }
+.cg-tx { position: absolute; z-index: 1; left: 12px; right: 12px; bottom: 12px; display: flex; flex-direction: column; gap: 2px; }
+.cg-tx small { font-size: 12px; color: #c7d2e6; font-weight: 700; }
+.cg-tx b { font-size: 22px; font-weight: 900; letter-spacing: -.6px; }
+.cg-tx em { font-style: normal; font-size: 12.5px; line-height: 1.4; color: #fff; opacity: .9; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+.cg-ed { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.cp-ov { position: fixed; inset: 0; z-index: 3000; background: rgba(5,12,26,.82); display: flex; align-items: center; justify-content: center; padding: 20px; animation: cpIn .2s ease; }
+@keyframes cpIn { from { opacity: 0; } to { opacity: 1; } }
+.cp-box { position: relative; display: flex; gap: 22px; align-items: flex-end; max-height: 100%; }
+.cp-frame { height: min(82vh, 760px); aspect-ratio: 9 / 16; border-radius: 18px; overflow: hidden; background: #000; box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+.cp-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.cp-info { width: 250px; color: #fff; display: flex; flex-direction: column; gap: 8px; padding-bottom: 8px; font-size: 14px; line-height: 1.55; }
+.cp-info b { font-size: 20px; letter-spacing: -.5px; }
+.cp-info a { color: #ffb48a; font-weight: 700; font-size: 13px; text-decoration: none; }
+.cp-badge { align-self: flex-start; background: var(--accent); border-radius: 999px; padding: 3px 12px; font-weight: 800; font-size: 13px; }
+.cp-x { position: absolute; right: -14px; top: -14px; width: 38px; height: 38px; border-radius: 50%; border: 0; background: #fff; color: var(--navy); font-size: 22px; cursor: pointer; box-shadow: 0 6px 16px rgba(0,0,0,.3); }
+.cs-strip { border: 1px solid #ffd9c2; background: linear-gradient(100deg, #fff6ef, #fff 60%); border-radius: 16px; padding: 14px 16px 12px; margin: 14px 0; }
+.cs-h { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.cs-h b { font-size: 15px; font-weight: 800; color: var(--navy); } .cs-h b::before { content: '▶ '; color: var(--accent); font-size: 12px; }
+.cs-h span { font-size: 12.5px; color: var(--ink-3); }
+.cs-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
+.cs { flex: 0 0 auto; display: flex; gap: 10px; align-items: center; width: 250px; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 6px; cursor: pointer; text-align: left; font-family: inherit; color: inherit; transition: border-color .15s, box-shadow .15s; }
+.cs:hover { border-color: var(--accent); box-shadow: 0 6px 16px rgba(255,106,26,.15); }
+.cs-th { position: relative; flex: none; width: 50px; height: 78px; border-radius: 9px; overflow: hidden; background: var(--navy); }
+.cs-th img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.35); }
+.cs-th i { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-style: normal; font-size: 14px; background: rgba(11,31,63,.25); }
+.cs-tx { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.cs-tx small { font-size: 11.5px; color: var(--ink-3); font-weight: 700; }
+.cs-tx b { font-size: 16px; font-weight: 900; color: var(--navy); letter-spacing: -.4px; }
+.cs-tx b span { font-size: 11px; font-weight: 800; color: #fff; background: var(--accent); border-radius: 999px; padding: 1px 7px; margin-left: 6px; vertical-align: 2px; }
+.cs-tx em { font-style: normal; font-size: 12px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 900px) {
+  .cg-row { grid-auto-columns: 150px; } .cg-tx b { font-size: 18px; }
+  .cg-nav button:not(.all) { display: none; }
+  .cp-box { flex-direction: column; align-items: center; gap: 12px; }
+  .cp-frame { height: min(70vh, 640px); }
+  .cp-info { width: auto; max-width: 90vw; text-align: center; align-items: center; padding: 0; }
+  .cp-x { right: 4px; top: -6px; }
+}
+
 
 /* 전폭 배너 · 화면 머리 (내용은 1360px 안에 정렬) */
 html, body { overflow-x: clip; }
@@ -3968,7 +4025,8 @@ const ROUTES = {
   'teacher-report': { label: '선생님 리포트', icon: '📋', render: renderTeacherReport },
   'parent-report': { label: '학부모 리포트', icon: '💌', render: renderParentReportEntry },
   'papers': { label: '시험지 관리', icon: '📄', render: renderPapers },
-  'settings': { label: '설정', icon: '⚙️', render: renderSettings }
+  'settings': { label: '설정', icon: '⚙️', render: renderSettings },
+  'cases': { label: '성적 향상 사례', icon: '🎬', render: renderCases }
 };
 
 function navigate(page) {
@@ -4181,6 +4239,7 @@ function runEntryAnimations(root) {
 // 상단 메뉴 (업무별 4묶음 + 펼침 메뉴)
 // ============================================================
 const NAV_ICONS = {
+  cases: '<rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 9.5v5l4-2.5z" fill="currentColor"/>',
   scores: '<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>',
   gaps: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/><path d="M11 8v3.2"/><circle cx="11" cy="13.8" r=".6" fill="currentColor"/>',
   papers: '<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 16h5"/>',
@@ -4230,7 +4289,8 @@ const NAV_GROUPS = [
       { k: 'students', name: '학생 관리', desc: '명단 · 사전 입력 · 일괄 추가' } ] },
     { h: '운영', items: [
       { k: 'home', name: '관리자', desc: '전체 현황 · 선생님별 평균 (비밀번호)' },
-      { k: 'settings', name: '설정', desc: '회차 · 학년 · 시험지 버전 구성' } ] } ],
+      { k: 'settings', name: '설정', desc: '회차 · 학년 · 시험지 버전 구성' },
+      { k: 'cases', name: '성적 향상 사례', desc: '쇼츠 모음 · 사례 추가 · 수정' } ] } ],
     promo: () => ({ k: '데이터', t: '백업 · 복원', p: '오른쪽 위 저장 아이콘에서 전체 데이터를 JSON으로 내려받을 수 있습니다.', b: '백업 열기 →', go: () => openBackupModal() }) }
 ];
 function navGroupOf(page) { return NAV_GROUPS.find(g => g.cols.some(c => c.items.some(i => i.k === page))); }
@@ -4338,6 +4398,8 @@ function renderDashboard() {
   );
   if (prefersReducedMotion()) hero.classList.add('still');
   wrap.appendChild(hero);
+  const gallery = renderCaseGallery();
+  if (gallery) wrap.appendChild(gallery);
 
   const Q = [
     ['scores', '시험 운영', '점수 입력', '답만 입력하면 배점대로 자동 채점', 'qi1'],
@@ -4382,6 +4444,172 @@ function renderDashboard() {
     el('div', { className: 'r' }, '중1 · 중2 전 회차 준비 완료', el('b', null, '오답 노트 만들기 →'))
   ));
   return wrap;
+}
+
+// ============================================================
+// 성적 향상 사례 (유튜브 쇼츠) — 홈 갤러리 · 점수 입력 화면의 같은 학교 사례 · 관리
+//   · 사례 목록은 state.config.cases (없으면 DEFAULT_CASES) — 관리자가 [성적 향상 사례]에서 추가 · 수정
+//   · 학생 이름은 보여 주지 않고 학교 · 학년 · 점수만 표시
+// ============================================================
+const DEFAULT_CASES = [
+  { yt: 'l7KVrJOQ5tc', school: '경원중', grade: '중2', before: 83, after: 100, tip: '만점까지 끌어올린 마지막 점검', term: '2026 2학기 중간' },
+  { yt: 'Z9yHZLIaVww', school: '세화여중', grade: '중2', before: 58, after: 81, tip: '학교 기출과 오답노트로 만든 +23점', term: '2026 2학기 중간' },
+  { yt: 'QZjlXpumv6Q', school: '용강중', grade: '중1', before: null, after: 100, tip: '계산 실수까지 잡은 첫 시험', term: '2026 2학기 중간' },
+  { yt: 'EfMfegI53sc', school: '서운중', grade: '중2', before: 77, after: 90, tip: '중학교 첫 90점', term: '2026 2학기 중간' },
+  { yt: '5ZyxH-GO-qs', school: '서일중', grade: '중2', before: 70, after: 84, tip: '자신감으로 만든 +14점', term: '2026 2학기 중간' },
+  { yt: '27u1R9uf1dU', school: '세화여중', grade: '중1', before: null, after: 94.5, tip: '넓고 깊게 준비한 첫 시험', term: '2026 2학기 중간' },
+  { yt: 'dKN71K3iBDc', school: '서일중', grade: '중1', before: null, after: 91, tip: '심화로 완성한 첫 시험', term: '2026 2학기 중간' },
+  { yt: 'XhhGuwte2gQ', school: '경원중', grade: '중2', before: 87, after: 93, tip: '시간 관리로 만든 성적 향상', term: '2026 2학기 중간' },
+  { yt: 'TMuFlpJE3G8', school: '경원중', grade: '중2', before: 76, after: 84, tip: '성실함으로 만든 +8점', term: '2026 2학기 중간' },
+  { yt: 'xSgk8Jn-OEA', school: '원촌중', grade: '중1', before: null, after: 86.5, tip: '칭찬으로 키운 첫 시험', term: '2026 2학기 중간' },
+  { yt: 'Y0z1xJKY9GQ', school: '방배중', grade: '중2', before: null, after: 91, tip: '1·2학기 통합 범위, 90점대를 지키다', term: '2026 2학기 중간' },
+  { yt: 'i6xxsqyKgaE', school: '오산중', grade: '중3', before: 96, after: 97, tip: '보조선으로 잡은 도형 문제', term: '2026 2학기 중간' },
+  { yt: 'pooTYBLpqTg', school: '세화여고', grade: '고1', before: null, after: 73, tip: '목표 70점을 넘은 선택과 집중', subject: '확률과 통계', term: '2026 2학기 중간' }
+];
+function getCases() {
+  const c = state.config && state.config.cases;
+  return (Array.isArray(c) ? c : DEFAULT_CASES).filter(x => x && x.yt);
+}
+function normSchool(s) {
+  return String(s || '').replace(/\s/g, '').replace(/학교$/, '').replace(/여자중$/, '여중').replace(/여자고등$/, '여고').replace(/고등$/, '고');
+}
+function ytId(s) {
+  const m = String(s || '').trim().match(/(?:shorts\/|v=|youtu\.be\/|embed\/)([\w-]{11})/) || String(s || '').trim().match(/^([\w-]{11})$/);
+  return m ? m[1] : '';
+}
+function fmtPt(v) { return v == null || v === '' ? '' : (Number(v) % 1 ? Number(v).toFixed(1) : String(Number(v))); }
+function caseBadge(c) {
+  if (Number(c.after) >= 100) return '만점';
+  if (c.before != null && c.before !== '') return '+' + fmtPt(Number(c.after) - Number(c.before)) + '점';
+  return c.tag || '첫 시험';
+}
+function caseScoreText(c) {
+  return (c.before != null && c.before !== '' ? fmtPt(c.before) + '→' : '') + fmtPt(c.after) + '점';
+}
+function caseWho(c) { return c.school + ' ' + String(c.grade || '').replace(/^(중|고)(\d)$/, (m, a, b) => b + '학년') + (c.subject && c.subject !== '수학' ? ' · ' + c.subject : ''); }
+
+// 세로 영상 재생 창
+function openCasePlayer(c) {
+  const close = () => { ov.remove(); document.removeEventListener('keydown', onKey); };
+  const onKey = e => { if (e.key === 'Escape') close(); };
+  const ov = el('div', { className: 'cp-ov', onClick: e => { if (e.target === ov) close(); } },
+    el('div', { className: 'cp-box' },
+      el('div', { className: 'cp-frame' },
+        el('iframe', { src: 'https://www.youtube.com/embed/' + c.yt + '?autoplay=1&rel=0&playsinline=1&modestbranding=1', allow: 'autoplay; encrypted-media; picture-in-picture; fullscreen', allowFullscreen: true, title: caseWho(c) })),
+      el('div', { className: 'cp-info' },
+        el('span', { className: 'cp-badge' }, caseBadge(c)),
+        el('b', null, caseWho(c) + ' · ' + caseScoreText(c)),
+        el('div', null, c.tip || ''),
+        el('a', { href: 'https://youtube.com/shorts/' + c.yt, target: '_blank', rel: 'noopener' }, '유튜브에서 보기 ↗')),
+      el('button', { className: 'cp-x', onClick: close, 'aria-label': '닫기' }, '×')));
+  document.body.appendChild(ov);
+  document.addEventListener('keydown', onKey);
+}
+
+function caseCard(c) {
+  return el('button', { className: 'cg', onClick: () => openCasePlayer(c), title: caseWho(c) + ' ' + caseScoreText(c) },
+    el('img', { src: 'https://i.ytimg.com/vi/' + c.yt + '/hqdefault.jpg', alt: '', loading: 'lazy' }),
+    el('span', { className: 'cg-badge' + (Number(c.after) >= 100 ? ' gold' : '') }, caseBadge(c)),
+    el('span', { className: 'cg-play' }, svgEl('<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>')),
+    el('span', { className: 'cg-tx' },
+      el('small', null, caseWho(c)),
+      el('b', null, caseScoreText(c)),
+      el('em', null, c.tip || '')));
+}
+
+// 홈 — 성적 향상 갤러리
+function renderCaseGallery() {
+  const cases = getCases();
+  if (!cases.length) return null;
+  const row = el('div', { className: 'cg-row' }, ...cases.map(caseCard));
+  const nav = dir => () => row.scrollBy({ left: dir * Math.max(240, row.clientWidth * 0.8), behavior: 'smooth' });
+  return el('section', { className: 'dash-sec cg-sec' },
+    el('div', { className: 'dash-st' },
+      el('div', null, el('h3', null, '성적 향상 갤러리'), el('div', { className: 'cg-sub' }, '지난 시험, 우리 학원 학생들이 만든 변화 — ' + cases.length + '개의 이야기 (눌러서 재생)')),
+      el('div', { className: 'cg-nav' },
+        el('button', { onClick: nav(-1), 'aria-label': '이전' }, '‹'),
+        el('button', { onClick: nav(1), 'aria-label': '다음' }, '›'),
+        el('button', { className: 'all', onClick: () => navigate('cases') }, '전체 보기'))),
+    row);
+}
+
+// 점수 입력 화면 — 지금 보이는 학생들의 학교 · 학년과 같은 사례
+function renderCaseStrip(students) {
+  const cases = getCases();
+  if (!cases.length || !students.length) return null;
+  const keys = new Set(students.map(s => normSchool(s.school) + '|' + s.grade));
+  const grades = new Set(students.map(s => s.grade));
+  let pick = cases.filter(c => keys.has(normSchool(c.school) + '|' + c.grade));
+  let same = true;
+  if (!pick.length) { pick = cases.filter(c => grades.has(c.grade)); same = false; }
+  if (!pick.length) return null;
+  const schools = Array.from(new Set(pick.map(c => c.school + ' ' + c.grade.replace(/\D/g, '')))).slice(0, 4).join(' · ');
+  return el('div', { className: 'cs-strip' },
+    el('div', { className: 'cs-h' },
+      el('b', null, same ? '같은 학교 · 학년의 지난 시험 성적 향상' : '같은 학년의 지난 시험 성적 향상'),
+      el('span', null, same ? schools + ' — 이번 시험 준비에 참고하세요' : '같은 학교 사례가 생기면 여기에 먼저 보입니다')),
+    el('div', { className: 'cs-row' }, ...pick.slice(0, 8).map(c => el('button', { className: 'cs', onClick: () => openCasePlayer(c) },
+      el('span', { className: 'cs-th' }, el('img', { src: 'https://i.ytimg.com/vi/' + c.yt + '/hqdefault.jpg', alt: '', loading: 'lazy' }), el('i', null, '▶')),
+      el('span', { className: 'cs-tx' }, el('small', null, caseWho(c)), el('b', null, caseScoreText(c), el('span', null, caseBadge(c))), el('em', null, c.tip || ''))))));
+}
+
+// 관리 — 성적 향상 사례 (모두 볼 수 있고, 추가 · 수정 · 삭제는 관리자만)
+function renderCases() {
+  const wrap = el('div');
+  const admin = isAdmin();
+  wrap.appendChild(el('div', { className: 'page-header' },
+    el('div', { className: 'page-title' }, '성적 향상 사례'),
+    el('div', { className: 'page-subtitle' }, '학생들의 성적 향상 쇼츠 모음입니다. 카드를 누르면 재생됩니다. 여기 등록한 사례는 홈 화면 갤러리와 점수 입력 화면(같은 학교 · 학년)에 자동으로 나옵니다.' + (admin ? '' : ' 사례 추가 · 수정은 관리자 모드에서 할 수 있습니다.'))));
+  const cases = getCases();
+  wrap.appendChild(el('div', { className: 'cg-grid' }, ...cases.map((c, i) => el('div', { className: 'cg-cell' }, caseCard(c),
+    admin ? el('div', { className: 'cg-ed' },
+      el('button', { className: 'btn btn-ghost btn-sm', onClick: () => openCaseEditor(i) }, '수정'),
+      el('button', { className: 'btn btn-ghost btn-sm', onClick: () => confirmDialog('이 사례를 목록에서 뺄까요? (유튜브 영상은 그대로 남습니다)', () => { const l = getCases().slice(); l.splice(i, 1); saveCases(l); }) }, '삭제'),
+      i > 0 ? el('button', { className: 'btn btn-ghost btn-sm', onClick: () => { const l = getCases().slice(); [l[i - 1], l[i]] = [l[i], l[i - 1]]; saveCases(l); } }, '◀ 앞으로') : null) : null))));
+  if (admin) wrap.appendChild(el('div', { style: { marginTop: '18px' } }, el('button', { className: 'btn btn-orange', onClick: () => openCaseEditor(-1) }, '＋ 사례 추가')));
+  else wrap.appendChild(el('div', { className: 'notice', style: { marginTop: '18px', fontSize: '13px' } }, '사례를 추가하려면 [관리 › 관리자]에서 관리자 비밀번호로 들어온 뒤 이 화면으로 오세요.'));
+  return wrap;
+}
+function saveCases(list) {
+  state.config = state.config || defaultConfig();
+  state.config.cases = list;
+  saveState();
+  showToast('성적 향상 사례를 저장했습니다', 'success');
+  render();
+}
+function openCaseEditor(idx) {
+  const c = idx >= 0 ? Object.assign({}, getCases()[idx]) : { yt: '', school: '', grade: '중2', before: '', after: '', tip: '', term: '' };
+  const f = {};
+  const inp = (k, ph, v, w) => (f[k] = el('input', { className: 'input', placeholder: ph, value: v == null ? '' : v, style: { width: w || '100%' } }));
+  const row = (lb, ...kids) => el('div', { style: { marginBottom: '12px' } }, el('div', { className: 'text-sm', style: { fontWeight: 700, marginBottom: '5px' } }, lb), ...kids);
+  const err = el('div', { className: 'text-sm', style: { color: 'var(--red)', minHeight: '18px' } });
+  openModal({
+    title: idx >= 0 ? '사례 수정' : '사례 추가',
+    body: () => el('div', null,
+      row('유튜브 쇼츠 링크', inp('yt', 'https://youtube.com/shorts/…', c.yt ? 'https://youtube.com/shorts/' + c.yt : '')),
+      el('div', { style: { display: 'flex', gap: '10px', flexWrap: 'wrap' } },
+        row('학교 (예: 경원중)', inp('school', '경원중', c.school, '150px')),
+        row('학년', inp('grade', '중2', c.grade, '80px')),
+        row('이전 점수 (없으면 비움)', inp('before', '예: 76', c.before, '120px')),
+        row('이번 점수', inp('after', '예: 84', c.after, '110px'))),
+      row('한 줄 비결', inp('tip', '예: 오답노트로 만든 +8점', c.tip)),
+      row('시험 (선택)', inp('term', '예: 2026 2학기 기말', c.term)),
+      err,
+      el('div', { className: 'modal-actions' },
+        el('button', { className: 'btn btn-ghost', onClick: closeModal }, '취소'),
+        el('button', { className: 'btn btn-orange', onClick: () => {
+          const yt = ytId(f.yt.value);
+          const n = v => { const t = String(v).trim(); return t === '' ? null : Number(t); };
+          const item = { yt, school: f.school.value.trim(), grade: f.grade.value.trim(), before: n(f.before.value), after: n(f.after.value), tip: f.tip.value.trim(), term: f.term.value.trim() };
+          if (c.subject) item.subject = c.subject;
+          if (!yt) { err.textContent = '유튜브 링크를 확인해 주세요.'; return; }
+          if (!item.school || !item.grade || item.after == null || isNaN(item.after) || (item.before != null && isNaN(item.before))) { err.textContent = '학교 · 학년 · 이번 점수를 입력해 주세요.'; return; }
+          const l = getCases().slice();
+          if (idx >= 0) l[idx] = item; else l.unshift(item);
+          $('#modal-root').innerHTML = '';
+          saveCases(l);
+        } }, '저장')))
+  });
 }
 
 function renderTopbarOld() {
@@ -5844,6 +6072,12 @@ function renderScores() {
   ));
 
   wrap.appendChild(renderQuoteCard());
+  {
+    const sf = ui.scoreFilters || {};
+    const shown = state.students.filter(s => GRADES.includes(s.grade) && (!sf.grade || sf.grade === 'all' || s.grade === sf.grade) && (!sf.teacher || sf.teacher === 'all' || s.teacher === sf.teacher));
+    const strip = renderCaseStrip(shown);
+    if (strip) wrap.appendChild(strip);
+  }
 
   // Filter bar
   wrap.appendChild(el('div', { className: 'filter-bar' },
