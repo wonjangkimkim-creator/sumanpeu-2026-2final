@@ -2864,6 +2864,7 @@ table.dt th { color: var(--ink-3) !important; opacity: 1 !important; background:
 .dash-ey { font-size: 13px; font-weight: 800; letter-spacing: 3px; color: var(--accent-2); }
 .dash-h { font-size: 46px; font-weight: 800; letter-spacing: -2px; line-height: 1.15; margin: 12px 0 12px; }
 .dash-h em { font-style: normal; color: var(--accent-2); }
+.dash-h-g > div { white-space: nowrap; } .dash-h-g small { font-size: 22px; font-weight: 700; color: #c7d2e6; letter-spacing: -.3px; margin-left: 4px; }
 .dash-p { font-size: 15px; color: #c7d2e6; margin-bottom: 24px; }
 .dash-cta { display: flex; gap: 10px; flex-wrap: wrap; }
 .dash-cta button { border-radius: 999px; padding: 12px 22px; font-size: 14.5px; font-weight: 800; cursor: pointer; border: 0; font-family: inherit; }
@@ -4211,7 +4212,7 @@ const NAV_GROUPS = [
       { k: 'gaps', name: '미입력 점검', desc: '빠진 학생 · 회차를 한 번에 확인' } ] },
     { h: '시험지', items: [
       { k: 'papers', name: '시험지 · 배점', desc: '버전별 정답 · 배점 · 문항 분류' } ] } ],
-    promo: () => { const d = dashData(); return d.round ? { k: d.round + '회차 진행 중', t: '입력 ' + d.pct + '% 완료', p: '미입력 ' + d.missing + '명이 남아 있습니다.', b: '미입력 점검 바로가기 →', go: () => { ui.gapTab = 'rounds'; navigate('gaps'); } } : { k: '시작 전', t: '1회차 입력 대기', p: '점수 입력에서 시작하세요.', b: '점수 입력 →', go: () => navigate('scores') }; } },
+    promo: () => { const d = dashData(); return d.round ? { k: d.act.map(x => x.g + ' ' + x.r + '회').join(' · '), t: '입력 ' + d.done + ' / ' + d.total + '명', p: '미입력 ' + d.missing + '명이 남아 있습니다.', b: '미입력 점검 바로가기 →', go: () => { ui.gapTab = 'rounds'; navigate('gaps'); } } : { k: '시작 전', t: '1회차 입력 대기', p: '점수 입력에서 시작하세요.', b: '점수 입력 →', go: () => navigate('scores') }; } },
   { key: 'ana', label: '학습 분석', cols: [
     { h: '결과', items: [
       { k: 'stats', name: '회차 통계', desc: '학년별 · 선생님별 평균, 공통 오답' } ] },
@@ -4290,15 +4291,22 @@ function dashData() {
     // 학년마다 자기 학년의 최근 입력 회차 기준 (다른 학년이 먼저 다음 회차를 시작해도 평균이 사라지지 않게)
     let gr = 0;
     for (let k = ROUNDS; k >= 1; k--) if (list.some(s => has(s, k))) { gr = k; break; }
+    // 새 회차를 막 시작해 입력이 아주 적으면(3명 미만) 바로 전 회차 기준으로 표시
+    const cnt = k => list.filter(s => has(s, k)).length;
+    let early = null;
+    if (gr > 1 && cnt(gr) < 3 && cnt(gr - 1) > cnt(gr)) { early = { r: gr, n: cnt(gr) }; gr = gr - 1; }
     const r = gr || round || 1;
     const done = list.filter(s => has(s, r));
     const sc = done.map(s => getRoundData(s.id, r)).filter(rd => rd && !isAbsent(rd) && rd.score !== '' && rd.score != null).map(rd => Number(rd.score)).filter(v => !isNaN(v));
     const absent = done.filter(s => isAbsent(getRoundData(s.id, r))).length;
     const wrong = done.filter(s => { const rd = getRoundData(s.id, r); return rd && rd.errors && String(rd.errors).trim(); }).length;
-    return { g, r, n: list.length, done: done.length, absent, wrong, avg: sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null, taken: sc.length };
+    return { g, r, early, n: list.length, done: done.length, absent, wrong, avg: sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null, taken: sc.length };
   });
-  const total = eligible.length, done = byGrade.reduce((a, x) => a + x.done, 0);
-  return { round, r, total, done, missing: total - done, pct: total ? Math.round(done / total * 100) : 0, byGrade,
+  // 입력이 시작된 학년만 집계 (아직 입력이 없는 학년은 큰 숫자에서 제외)
+  const act = byGrade.filter(x => x.done);
+  const total = act.reduce((a, x) => a + x.n, 0), done = act.reduce((a, x) => a + x.done, 0);
+  if (act.length) round = Math.max(...act.map(x => x.r));
+  return { round, r: round || r, total, done, missing: total - done, pct: total ? Math.round(done / total * 100) : 0, byGrade, act,
     wrong: byGrade.reduce((a, x) => a + x.wrong, 0) };
 }
 
@@ -4308,9 +4316,14 @@ function renderDashboard() {
   const gradesTxt = d.byGrade.filter(x => x.done).map(x => x.g).join(' · ') || GRADES.join(' · ');
   const hero = el('section', { className: 'dash-hero' },
     el('div', { className: 'ring' }), el('div', { className: 'orb' }),
-    el('div', { className: 'dash-ey' }, PROGRAM + (d.round ? ' · ' + d.round + '회차 진행 중' : ' · 시작 전')),
-    el('div', { className: 'dash-h' }, d.round ? (new Set(d.byGrade.filter(x => x.done).map(x => x.r)).size > 1 ? d.byGrade.filter(x => x.done).map(x => x.g + ' ' + x.r + '회').join(' · ') : gradesTxt + ' ' + d.round + '회') + ' 입력' : '1회차 입력을', el('br'), el('em', null, d.round ? countUp(el('span'), d.pct) : '시작하세요'), d.round ? el('span', null, '% 완료') : null),
-    el('div', { className: 'dash-p' }, '입력 ' + d.done + '명 · 미입력 ' + d.missing + '명 · 오답 노트 대상 ' + d.wrong + '명'),
+    el('div', { className: 'dash-ey' }, PROGRAM + (d.round ? ' · 학년별 최근 회차 입력 현황' : ' · 시작 전')),
+    d.round
+      ? el('div', { className: 'dash-h dash-h-g' }, ...d.act.map(x => el('div', null, x.g + ' ' + x.r + '회 ', el('em', null, countUp(el('span'), x.done)), el('small', null, '/' + x.n + '명 입력'))))
+      : el('div', { className: 'dash-h' }, '1회차 입력을', el('br'), el('em', null, '시작하세요')),
+    el('div', { className: 'dash-p' }, d.round
+      ? '미입력 ' + d.act.map(x => x.g + ' ' + (x.n - x.done) + '명').join(' · ') + ' · 오답 노트 대상 ' + d.wrong + '명'
+        + d.act.filter(x => x.early).map(x => '  (' + x.g + ' ' + x.early.r + '회는 ' + x.early.n + '명 입력 — 3명부터 표시)').join('')
+      : '점수 입력에서 회차 · 학년을 고르고 [채점]으로 시작합니다'),
     el('div', { className: 'dash-cta' },
       el('button', { className: 'pri', onClick: () => { if (d.round) ui.scoreFilters = Object.assign({}, ui.scoreFilters || {}, { round: d.r }); navigate('scores'); } }, '점수 입력 계속하기'),
       el('button', { className: 'gho', onClick: () => { ui.gapTab = 'rounds'; navigate('gaps'); } }, '미입력 ' + d.missing + '명 보기')
@@ -4344,7 +4357,7 @@ function renderDashboard() {
 
   const todos = [];
   d.byGrade.forEach(x => { if (x.done && x.n && x.taken / x.n < 0.5) todos.push(['r', x.g + ' ' + x.r + '회 응시율 ' + Math.round(x.taken / x.n * 100) + '% — 평균 해석 주의', '통계 →', () => navigate('stats')]); });
-  if (d.missing) todos.push(['o', '미입력 ' + d.missing + '명 (' + d.byGrade.filter(x => x.n - x.done > 0).map(x => x.g + ' ' + x.r + '회 ' + (x.n - x.done)).join(' · ') + ')', '점검 →', () => { ui.gapTab = 'rounds'; navigate('gaps'); }]);
+  if (d.missing) todos.push(['o', '미입력 ' + d.missing + '명 (' + d.act.filter(x => x.n - x.done > 0).map(x => x.g + ' ' + x.r + '회 ' + (x.n - x.done)).join(' · ') + ')', '점검 →', () => { ui.gapTab = 'rounds'; navigate('gaps'); }]);
   if (d.wrong) todos.push(['b', '오답이 있는 학생 ' + d.wrong + '명 — 오답 노트 출력', '노트 →', () => navigate('notes')]);
   if (!todos.length) todos.push(['g', '확인할 항목이 없습니다', '', () => {}]);
 
