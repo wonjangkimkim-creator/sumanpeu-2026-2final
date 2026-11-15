@@ -3037,6 +3037,66 @@ html, body { overflow-x: clip; }
 }
 @media print { .gnb { display: none !important; } .page-header { margin: 0 0 20px; background: none; } }
 
+/* ---------- 오답 티칭 리포트 ---------- */
+.tr-hero { background: linear-gradient(120deg, #0f2742, #1f4a8a) !important; color: #fff; border: 0 !important; }
+.tr-hero-t { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
+.tr-hero-s { font-size: 13px; opacity: .8; margin-top: 4px; }
+.tr-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 16px; }
+.tr-kpi { background: rgba(255,255,255,.1); border-radius: 12px; padding: 12px 14px; }
+.tr-kpi b { display: block; font-size: 22px; font-weight: 800; color: #fff; }
+.tr-hero .tr-kpi b[style] { color: #ffb4a8 !important; }
+.tr-hero .tr-kpi:nth-child(3) b[style] { color: #ffd38a !important; }
+.tr-kpi span { font-size: 12px; opacity: .85; }
+.tr-order { display: flex; flex-direction: column; }
+.tr-orow { display: grid; grid-template-columns: 30px 52px minmax(120px, 1.6fr) 1fr 110px 90px; gap: 10px; align-items: center; padding: 9px 4px; border-bottom: 1px dashed var(--line); cursor: pointer; font-size: 13.5px; }
+.tr-orow:hover { background: var(--blue-soft); }
+.tr-rank { width: 24px; height: 24px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.tr-rank.big { width: 30px; height: 30px; font-size: 14px; background: var(--accent); }
+.tr-ounit { color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tr-bar { height: 8px; background: #e7ebf1; border-radius: 6px; overflow: hidden; } .tr-bar i { display: block; height: 100%; border-radius: 6px; }
+.tr-opct { font-family: 'JetBrains Mono', monospace; font-size: 12px; text-align: right; }
+.tr-otop { font-size: 12px; color: var(--ink-3); text-align: right; } .tr-otop.hot { color: var(--amber); font-weight: 800; }
+.tr-groups { margin-top: 12px; background: var(--amber-soft); border-radius: 10px; padding: 10px 14px; font-size: 13px; line-height: 1.8; }
+.tr-hd { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tr-no { font-size: 20px; font-weight: 800; }
+.tr-unit { font-size: 14px; color: var(--ink-3); margin-right: 4px; }
+.tr-var { font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-soft); border-radius: 999px; padding: 3px 10px; }
+.tr-sum { margin: 8px 0 0 38px; font-size: 13px; color: var(--ink-3); }
+.tr-body { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr); gap: 22px; margin-top: 14px; align-items: start; }
+.tr-img { border: 1px solid var(--line); border-radius: 10px; background: #fff; min-height: 120px; display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 12.5px; color: var(--ink-mute); }
+.tr-img img { width: 100%; display: block; }
+.tr-sol { margin-top: 8px; }
+.tr-imgmsg { padding: 20px; text-align: center; }
+.tr-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tr-stats > div { background: var(--bg-page); border-radius: 10px; padding: 10px 12px; }
+.tr-big { font-size: 26px; font-weight: 800; line-height: 1.2; }
+.tr-sub { font-size: 12px; font-weight: 700; color: var(--ink-3); margin-bottom: 6px; }
+.tr-dist { margin-top: 14px; }
+.tr-drow { display: grid; grid-template-columns: 22px 1fr 44px; gap: 8px; align-items: center; font-size: 13px; padding: 2px 0; }
+.tr-dbar { height: 12px; background: #eef1f5; border-radius: 6px; overflow: hidden; } .tr-dbar i { display: block; height: 100%; background: #9aa6b8; border-radius: 6px; }
+.tr-drow.trap .tr-dbar i { background: var(--red); } .tr-drow.trap .tr-dv { color: var(--red); font-weight: 800; }
+.tr-drow.ans .tr-dc, .tr-drow.ans .tr-dv { color: var(--green); font-weight: 800; } .tr-drow.ans .tr-dbar { background: var(--green-soft); }
+.tr-dv { font-size: 12px; text-align: right; }
+.tr-tips { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.tr-tip { font-size: 13px; line-height: 1.6; padding: 8px 12px; border-radius: 8px; border-left: 4px solid; }
+.tr-tip.r { background: var(--red-soft); border-color: var(--red); }
+.tr-tip.o { background: var(--amber-soft); border-color: var(--amber); }
+.tr-tip.g { background: var(--green-soft); border-color: var(--green); }
+.tr-tip.m { background: var(--bg-page); border-color: #b8c1cf; color: var(--ink-3); }
+.tr-people { margin-top: 14px; }
+.tr-trow { display: flex; gap: 10px; align-items: baseline; font-size: 13px; padding: 4px 0; border-top: 1px dashed var(--line); }
+.tr-trow > b { flex: none; width: 64px; }
+.tr-st { display: inline-block; margin: 2px 8px 2px 0; }
+.tr-st small { margin-left: 3px; color: var(--red); font-weight: 700; }
+.tr-st.top { font-weight: 800; }
+@media (max-width: 900px) { .tr-body { grid-template-columns: 1fr; } .tr-kpis { grid-template-columns: 1fr 1fr; } .tr-orow { grid-template-columns: 26px 46px 1fr 90px; } .tr-orow .tr-bar, .tr-orow .tr-otop { display: none; } }
+@media print {
+  .tr-noprint, .tabs, .page-header { display: none !important; }
+  .tr-card { page-break-inside: avoid; break-inside: avoid; }
+  .tr-hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .tr-tip, .tr-bar i, .tr-dbar i, .tr-rank { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
 </style>
 </head>
 <body>
@@ -4274,7 +4334,7 @@ const NAV_GROUPS = [
     promo: () => { const d = dashData(); return d.round ? { k: d.act.map(x => x.g + ' ' + x.r + '회').join(' · '), t: '입력 ' + d.done + ' / ' + d.total + '명', p: '미입력 ' + d.missing + '명이 남아 있습니다.', b: '미입력 점검 바로가기 →', go: () => { ui.gapTab = 'rounds'; navigate('gaps'); } } : { k: '시작 전', t: '1회차 입력 대기', p: '점수 입력에서 시작하세요.', b: '점수 입력 →', go: () => navigate('scores') }; } },
   { key: 'ana', label: '학습 분석', cols: [
     { h: '결과', items: [
-      { k: 'stats', name: '회차 통계', desc: '학년별 · 선생님별 평균, 공통 오답' } ] },
+      { k: 'stats', name: '회차 통계', desc: '학년별 · 선생님별 평균, 오답 티칭 리포트' } ] },
     { h: '지도', items: [
       { k: 'notes', name: '오답 노트', desc: '틀린 문제 + 유사문제 3개 + 해설 출력' } ] } ],
     promo: () => ({ k: 'NEW', t: '오답 노트 + 유사문제', p: '틀린 문제마다 숫자를 바꾼 연습 문제 3개와 해설을 붙여 출력합니다.', b: '오답 노트 만들기 →', go: () => navigate('notes') }) },
@@ -4404,7 +4464,7 @@ function renderDashboard() {
   const Q = [
     ['scores', '시험 운영', '점수 입력', '답만 입력하면 배점대로 자동 채점', 'qi1'],
     ['gaps', '시험 운영', '미입력 점검', '빠진 학생 · 회차를 한 번에 확인', 'qi2'],
-    ['stats', '학습 분석', '회차 통계', '평균 · 분포 · 공통 오답', 'qi3'],
+    ['stats', '학습 분석', '회차 통계', '평균 · 분포 · 오답 티칭 리포트', 'qi3'],
     ['notes', '학습 분석', '오답 노트', '틀린 문제 + 유사문제 3개 + 해설', 'qi4'],
     ['parent-report', '리포트', '학부모 리포트', '링크로 보내는 성적 리포트', 'qi5'],
     ['papers', '시험 운영', '시험지 · 배점', '버전별 정답 · 배점 확인', 'qi6']
@@ -7510,7 +7570,7 @@ function renderStats() {
   const wrap = el('div');
   wrap.appendChild(el('div', { className: 'page-header' },
     el('div', { className: 'page-title' }, '회차 통계'),
-    el('div', { className: 'page-subtitle' }, '학년별 · 선생님별 평균/최고/최저, 공통 오답 분석')
+    el('div', { className: 'page-subtitle' }, '학년별 · 선생님별 평균/최고/최저, 오답 티칭 리포트')
   ));
 
   wrap.appendChild(el('div', { className: 'tabs' },
@@ -7525,7 +7585,7 @@ function renderStats() {
     el('div', {
       className: 'tab' + (ui.statsTab === 'wrongs' ? ' active' : ''),
       onClick: () => { ui.statsTab = 'wrongs'; render(); }
-    }, '🔴 공통 오답 분석')
+    }, '🎯 오답 티칭 리포트')
   ));
 
   if (ui.statsTab === 'grade') wrap.appendChild(renderGradeStatsTab());
@@ -7851,68 +7911,287 @@ function renderTeacherStatsTab() {
   return container;
 }
 
-function renderWrongsTab() {
-  const container = el('div');
-  GRADES.forEach(g => {
-    const card = el('div', { className: 'card mb-18' },
-      el('div', { className: 'card-title' }, el('div', { className: 'card-title-accent' }), `${g} · 회차별 공통 오답 TOP 5`),
-      el('div', { className: 'table-wrap' },
-        el('table', { className: 'dt' },
-          el('thead', null,
-            el('tr', null,
-              el('th', null, '회차'),
-              el('th', null, '시험지 버전'),
-              el('th', null, '응시 인원'),
-              el('th', null, '공통 오답 (문항번호 · 빈도 · 단원)')
-            )
-          ),
-          el('tbody', null,
-            ...roundNumbers().flatMap(r => {
-              const used = versionsUsedInRound(g, r);
-              if (!used.length) {
-                return [el('tr', null,
-                  el('td', null, r + '회'),
-                  el('td', { className: 'muted' }, '—'),
-                  el('td', { className: 'num muted' }, '—'),
-                  el('td', { className: 'muted' }, '—')
-                )];
-              }
-              return used.map((v, vi) => {
-                const { entries, total } = commonWrongs(g, r, 5, v.label);
-                return el('tr', null,
-                  el('td', null, vi === 0 ? r + '회' : ''),
-                  el('td', null, v.label
-                    ? el('span', { className: 'badge badge-orange' }, v.label)
-                    : el('span', { className: 'badge badge-warning' }, '버전 미선택')),
-                  el('td', { className: 'num muted' }, total ? total + '명' : '—'),
-                  el('td', null,
-                    entries.length === 0 ?
-                      el('span', { className: 'muted' }, '—') :
-                      el('div', { className: 'flex gap-8 flex-wrap' },
-                        ...entries.map(([num, cnt]) => {
-                          const ratio = cnt / total;
-                          const unit = problemUnitLabel(g, r, v.label, Number(num));
-                          return el('span', {
-                            className: 'badge',
-                            title: unit || '',
-                            style: {
-                              background: ratio > 0.5 ? 'var(--red-soft)' : ratio > 0.3 ? 'var(--orange-soft)' : 'var(--bg-elevated)',
-                              color: ratio > 0.5 ? 'var(--red)' : ratio > 0.3 ? 'var(--orange-deep)' : 'var(--ink-3)',
-                              padding: '4px 10px', fontSize: '12px'
-                            }
-                          }, `${num}번 · ${cnt}/${total}명 (${Math.round(ratio*100)}%)` + (unit ? ' · ' + unit : ''));
-                        })
-                      )
-                  )
-                );
-              });
-            })
-          )
-        )
-      )
-    );
-    container.appendChild(card);
+// ============================================================
+// 🎯 오답 티칭 리포트 — 많이 틀린 문항을 선생님이 바로 수업에 쓰도록 정리
+//   문항마다: 문제 이미지 · 오답률 · 상위권 오답 · 학생이 고른 보기 분포 · 진단 · 담당별 틀린 학생
+// ============================================================
+const TR_TOP = 80; // 상위권 기준 점수
+
+function teachingData(grade, round, verLabel) {
+  const vKey = verLabel ? versionKeyFromLabel(grade, verLabel) : null;
+  const paper = getPaperForStudent(grade, round, verLabel);
+  const probs = paper && Array.isArray(paper.problems) ? paper.problems.slice().sort((a, b) => a.no - b.no) : [];
+  const takers = [];
+  state.students.filter(s => s.grade === grade).forEach(s => {
+    allRoundEntries(s.id, round).forEach(rd => {
+      if (isAbsent(rd) || (rd.version || '') !== verLabel) return;
+      const score = getScore(rd);
+      if (score == null) return;
+      takers.push({ s, score, wrong: new Set(parseErrors(rd.errors)), marks: rd.marks ? decodeMarks(rd.marks, probs.length) : null });
+    });
   });
+  const topTotal = takers.filter(t => t.score >= TR_TOP).length;
+  const nums = new Set();
+  takers.forEach(t => t.wrong.forEach(n => nums.add(n)));
+  const items = Array.from(nums).map(no => {
+    const idx = probs.findIndex(p => p.no === no);
+    const q = idx >= 0 ? probs[idx] : null;
+    const essay = q ? isEssay(q) : false;
+    const who = takers.filter(t => t.wrong.has(no))
+      .map(t => ({ s: t.s, score: t.score, mark: t.marks && idx >= 0 ? String(t.marks[idx] || '') : '' }));
+    const picks = {};
+    let unknown = 0, blank = 0, partial = 0;
+    who.forEach(w => {
+      if (essay) { const v = parseFloat(w.mark); if (!isNaN(v) && v > 0) partial++; return; }
+      if (w.mark === '-') { blank++; return; }
+      const c = w.mark.replace(/[^①②③④⑤]/g, '');
+      if (c) picks[c] = (picks[c] || 0) + 1; else unknown++;
+    });
+    return {
+      no, q, essay, who, n: who.length, total: takers.length,
+      rate: takers.length ? who.length / takers.length : 0,
+      topWrong: who.filter(w => w.score >= TR_TOP).length, topTotal,
+      picks, unknown, blank, partial
+    };
+  }).sort((a, b) => b.rate - a.rate || a.no - b.no);
+  const avgScore = takers.length ? takers.reduce((a, t) => a + t.score, 0) / takers.length : null;
+  return { vKey, takers, items, avgScore, topTotal };
+}
+
+// 데이터로 만든 수업 진단 문장 [색, 문장]
+function teachingTips(it) {
+  const tips = [];
+  const q = it.q || {};
+  const pct = Math.round(it.rate * 100);
+  if (it.topTotal >= 3 && it.topWrong / it.topTotal >= 0.4) {
+    tips.push(['r', `상위권(${TR_TOP}점 이상) ${it.topTotal}명 중 ${it.topWrong}명도 틀렸습니다. 실력보다 문제를 읽고 경우를 나누는 방식에서 막히는 문항이니 반 전체 수업으로 다뤄 주세요.`]);
+  } else if (it.topTotal >= 3 && it.topWrong === 0) {
+    tips.push(['g', `상위권은 모두 맞혔습니다. 틀린 학생만 따로 모아 짧게 짚어 주면 됩니다.`]);
+  }
+  if (q.difficulty === '하' && it.rate >= 0.4) {
+    tips.push(['r', `난이도 '하' 문항인데 ${pct}%가 틀렸습니다. 풀이 요령보다 개념 자체를 다시 확인해야 합니다.`]);
+  }
+  if (it.essay) {
+    if (it.partial) tips.push(['o', `부분 점수 ${it.partial}명, 0점 ${it.n - it.partial}명입니다. 부분 점수 학생은 풀이가 끊긴 줄을, 0점 학생은 첫 줄(조건 정리)을 확인해 주세요.`]);
+    else tips.push(['o', `서술형입니다. 답보다 풀이 과정을 직접 써 보게 하고, 어느 줄에서 막혔는지 확인해 주세요.`]);
+  } else {
+    const ent = Object.entries(it.picks).sort((a, b) => b[1] - a[1]);
+    const known = ent.reduce((a, e) => a + e[1], 0);
+    const lead = known >= 3 && ent[0][1] >= 2 && ent[0][1] / known >= 0.5 && (!ent[1] || ent[0][1] > ent[1][1]);
+    if (lead) {
+      tips.push(['o', `오답이 ${ent[0][0]}번에 몰려 있습니다(${ent[0][1]}명). 같은 실수를 한 것입니다. 정답을 알려 주기 전에 "${ent[0][0]}은 어떻게 나왔을까?"를 학생에게 먼저 설명하게 하면 실수 지점이 드러납니다.`]);
+    } else if (known >= 3) {
+      tips.push(['o', `오답 보기가 여러 개로 흩어져 있습니다. 풀이 방향을 못 잡은 경우이니 조건을 정리하는 첫 단계를 함께 해 주세요.`]);
+    }
+    if (it.blank >= 2) tips.push(['o', `${it.blank}명은 답을 비웠습니다. 시간 배분이나 시작 단계에서 막힌 것인지 확인해 주세요.`]);
+    if (it.unknown && it.unknown >= it.n / 2) {
+      tips.push(['m', `틀린 ${it.n}명 중 ${it.unknown}명은 고른 보기가 기록되지 않았습니다. 채점할 때 학생이 고른 번호를 누르면 오답 원인까지 보입니다.`]);
+    }
+  }
+  return tips;
+}
+
+function renderWrongsTab() {
+  if (!ui.trF) ui.trF = { grade: GRADES[0], round: null, ver: null, teacher: 'all', th: 40 };
+  const f = ui.trF;
+  if (!GRADES.includes(f.grade)) f.grade = GRADES[0];
+  const g = f.grade;
+  const roundsWithData = roundNumbers().filter(r => versionsUsedInRound(g, r).length);
+  if (!roundsWithData.includes(f.round)) { f.round = roundsWithData.length ? roundsWithData[roundsWithData.length - 1] : null; f.ver = null; }
+  const vers = f.round ? versionsUsedInRound(g, f.round) : [];
+  if (!vers.some(v => v.label === f.ver)) f.ver = vers.length ? vers[0].label : null;
+
+  const container = el('div', { className: 'tr' });
+  const set = (k, v) => { f[k] = v; if (k === 'grade') { f.round = null; f.ver = null; } if (k === 'round') f.ver = null; render(); };
+
+  // ---- 필터 ----
+  container.appendChild(el('div', { className: 'filter-bar tr-noprint', style: { flexWrap: 'wrap', gap: '8px' } },
+    el('div', { className: 'filter-label' }, '학년'),
+    el('div', { className: 'filter-chips' }, ...GRADES.map(x => el('button', { className: 'chip' + (g === x ? ' active' : ''), onClick: () => set('grade', x) }, x))),
+    el('div', { className: 'filter-label', style: { marginLeft: '10px' } }, '회차'),
+    el('div', { className: 'filter-chips' }, ...roundNumbers().map(r => el('button', {
+      className: 'chip' + (f.round === r ? ' active' : ''), disabled: !roundsWithData.includes(r),
+      style: roundsWithData.includes(r) ? null : { opacity: .35 }, onClick: () => set('round', r)
+    }, r + '회'))),
+    vers.length > 1 || (vers[0] && vers[0].label) ? el('div', { className: 'filter-label', style: { marginLeft: '10px' } }, '버전') : null,
+    vers.length > 1 || (vers[0] && vers[0].label) ? el('div', { className: 'filter-chips' }, ...vers.map(v => el('button', {
+      className: 'chip' + (f.ver === v.label ? ' active' : ''), onClick: () => set('ver', v.label)
+    }, (v.label || '버전 미선택') + ' · ' + v.count + '명'))) : null,
+    el('div', { className: 'filter-label', style: { marginLeft: '10px' } }, '담당'),
+    el('select', { className: 'select', style: { width: '120px' }, onChange: e => set('teacher', e.target.value) },
+      el('option', { value: 'all' }, '전체'),
+      ...getAllTeachers().filter(t => state.students.some(s => s.grade === g && s.teacher === t))
+        .map(t => el('option', { value: t, selected: f.teacher === t }, t))),
+    el('div', { className: 'filter-label', style: { marginLeft: '10px' } }, '기준'),
+    el('select', { className: 'select', style: { width: '120px' }, onChange: e => set('th', parseInt(e.target.value, 10)) },
+      ...[30, 40, 50].map(n => el('option', { value: n, selected: f.th === n }, '오답률 ' + n + '%↑'))),
+    el('button', { className: 'btn btn-ghost btn-sm', style: { marginLeft: 'auto' }, onClick: () => window.print() }, '🖨 인쇄 / PDF')
+  ));
+
+  if (!f.round) {
+    container.appendChild(el('div', { className: 'empty' }, el('div', { className: 'empty-text' }, g + ' 학년은 아직 입력된 점수가 없습니다')));
+    return container;
+  }
+
+  const d = teachingData(g, f.round, f.ver);
+  const verName = f.ver ? ' ' + f.ver : '';
+  let focus = d.items.filter(it => it.n >= 2 && it.rate * 100 >= f.th);
+  const fallback = !focus.length;
+  if (fallback) focus = d.items.filter(it => it.n >= 2).slice(0, 3);
+  focus = focus.slice(0, 10);
+  const mine = it => f.teacher === 'all' ? it.who : it.who.filter(w => w.s.teacher === f.teacher);
+  const topHit = focus.filter(it => it.topTotal >= 3 && it.topWrong / it.topTotal >= 0.4).length;
+  const mcWrong = d.items.filter(it => !it.essay);
+  const mcN = mcWrong.reduce((a, it) => a + it.n, 0);
+  const mcKnown = mcWrong.reduce((a, it) => a + it.n - it.unknown, 0);
+
+  // ---- 요약 ----
+  const hero = el('div', { className: 'card mb-18 tr-hero' },
+    el('div', { className: 'tr-hero-t' }, `${g} ${f.round}회${verName} · 오답 티칭 리포트`),
+    el('div', { className: 'tr-hero-s' }, `많이 틀린 문항을 수업 순서대로 정리했습니다${f.teacher !== 'all' ? ' · 학생 명단은 ' + f.teacher + ' 담당만 표시' : ''} · ${dateStr()} 기준`),
+    el('div', { className: 'tr-kpis' },
+      el('div', { className: 'tr-kpi' }, el('b', null, d.takers.length + '명'), el('span', null, '응시' + (d.avgScore != null ? ' · 평균 ' + fmt(d.avgScore) + '점' : ''))),
+      el('div', { className: 'tr-kpi' }, el('b', { style: { color: 'var(--red)' } }, (fallback ? 0 : focus.length) + '문항'), el('span', null, `집중 문항 (오답률 ${f.th}%↑)`)),
+      el('div', { className: 'tr-kpi' }, el('b', { style: { color: 'var(--amber)' } }, topHit + '문항'), el('span', null, `상위권(${TR_TOP}점↑)도 많이 틀린 문항`)),
+      el('div', { className: 'tr-kpi' }, el('b', null, mcN ? Math.round(mcKnown / mcN * 100) + '%' : '—'), el('span', null, '객관식 오답 중 고른 보기 기록'))
+    )
+  );
+  container.appendChild(hero);
+
+  if (!focus.length) {
+    container.appendChild(el('div', { className: 'empty' }, el('div', { className: 'empty-text' }, '2명 이상 틀린 문항이 없습니다')));
+    return container;
+  }
+
+  // ---- 수업 순서 + 단원 묶음 ----
+  const units = {};
+  focus.forEach(it => { const u = it.q ? (it.q.subUnit || it.q.unit || '') : ''; if (u) (units[u] = units[u] || []).push(it.no); });
+  const groups = Object.entries(units).filter(([, a]) => a.length >= 2);
+  container.appendChild(el('div', { className: 'card mb-18' },
+    el('div', { className: 'card-title' }, el('div', { className: 'card-title-accent' }),
+      fallback ? `오답률 ${f.th}% 이상인 문항이 없어, 가장 많이 틀린 3문항을 보여 줍니다` : '수업 우선순위'),
+    el('div', { className: 'tr-order' }, ...focus.map((it, i) => {
+      const u = it.q ? (it.q.subUnit || it.q.unit || '') : '';
+      const pct = Math.round(it.rate * 100);
+      return el('div', { className: 'tr-orow', onClick: () => { const t = document.getElementById('tr-q' + it.no); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } },
+        el('span', { className: 'tr-rank' }, i + 1),
+        el('b', { className: 'tr-ono' }, it.no + '번'),
+        el('span', { className: 'tr-ounit' }, u || '단원 정보 없음'),
+        el('span', { className: 'tr-bar' }, el('i', { style: { width: pct + '%', background: pct >= 50 ? 'var(--red)' : 'var(--amber)' } })),
+        el('span', { className: 'tr-opct' }, `${it.n}/${it.total}명 · ${pct}%`),
+        el('span', { className: 'tr-otop' + (it.topTotal >= 3 && it.topWrong / it.topTotal >= 0.4 ? ' hot' : '') }, `상위권 ${it.topWrong}/${it.topTotal}`));
+    })),
+    groups.length ? el('div', { className: 'tr-groups' }, ...groups.map(([u, a]) =>
+      el('div', null, '📌 ', el('b', null, u), ` — ${a.join(' · ')}번이 같은 단원입니다. 한 차시로 묶어 다루면 효율적입니다.`))) : null
+  ));
+
+  // ---- 문항 카드 ----
+  focus.forEach((it, i) => {
+    const q = it.q || {};
+    const pct = Math.round(it.rate * 100);
+    const base = d.vKey ? `${g}/${d.vKey}/r${f.round}` : '';
+    const imgBox = el('div', { className: 'tr-img' }, el('div', { className: 'tr-imgmsg' }, base ? '문제 불러오는 중…' : '버전 정보가 없어 문제 이미지를 표시할 수 없습니다'));
+    const solBox = el('div', { className: 'tr-img tr-sol', style: { display: 'none' } });
+    let solLoaded = false;
+    const solBtn = el('button', { className: 'btn btn-ghost btn-sm tr-noprint' }, '해설 보기');
+    solBtn.onclick = async () => {
+      const open = solBox.style.display === 'none';
+      solBox.style.display = open ? '' : 'none';
+      solBtn.textContent = open ? '해설 닫기' : '해설 보기';
+      if (open && !solLoaded) {
+        solLoaded = true;
+        solBox.textContent = '해설 불러오는 중…';
+        const src = await fetchAsset(`img/${base}/s${it.no}`);
+        solBox.textContent = '';
+        if (src) solBox.appendChild(el('img', { src, alt: it.no + '번 해설' })); else solBox.textContent = '해설 이미지가 없습니다';
+      }
+    };
+    const varTag = el('span', { className: 'tr-var', style: { display: 'none' } }, '유사문제 3개 준비됨');
+    if (base) {
+      fetchAsset(`img/${base}/q${it.no}`).then(src => {
+        imgBox.textContent = '';
+        if (src) imgBox.appendChild(el('img', { src, alt: it.no + '번 문제' }));
+        else imgBox.appendChild(el('div', { className: 'tr-imgmsg' }, '문제 이미지가 없습니다'));
+      });
+      fetchAsset(`var/${base}/${it.no}`).then(v => { if (Array.isArray(v) && v.length) { varTag.textContent = `유사문제 ${v.length}개 준비됨`; varTag.style.display = ''; } });
+    }
+
+    // 보기 분포
+    let dist = null;
+    const knownPicks = Object.values(it.picks).reduce((a, b) => a + b, 0);
+    if (!it.essay && q.answer && knownPicks > 0) {
+      const ans = answerSet(q);
+      const known = knownPicks;
+      const maxV = Math.max(1, ...Object.values(it.picks));
+      const uniqueMax = Object.values(it.picks).filter(v => v === maxV).length === 1;
+      dist = el('div', { className: 'tr-dist' },
+        el('div', { className: 'tr-sub' }, `틀린 학생이 고른 보기 (기록 ${known}명${it.unknown ? ' · 미기록 ' + it.unknown + '명' : ''}${it.blank ? ' · 무응답 ' + it.blank + '명' : ''})`),
+        ...CHOICES.map(c => {
+          const isAns = ans.includes(c);
+          const v = it.picks[c] || 0;
+          return el('div', { className: 'tr-drow' + (isAns ? ' ans' : '') + (!isAns && v === maxV && v >= 2 && uniqueMax ? ' trap' : '') },
+            el('span', { className: 'tr-dc' }, c),
+            el('span', { className: 'tr-dbar' }, el('i', { style: { width: (isAns ? 0 : v / maxV * 100) + '%' } })),
+            el('span', { className: 'tr-dv' }, isAns ? '정답' : v ? v + '명' : ''));
+        }));
+    }
+
+    // 담당별 틀린 학생
+    const byT = {};
+    mine(it).forEach(w => { (byT[w.s.teacher || '담당 없음'] = byT[w.s.teacher || '담당 없음'] || []).push(w); });
+    const markTxt = w => {
+      if (it.essay) { const v = parseFloat(w.mark); return !isNaN(v) ? v + '점' : ''; }
+      if (w.mark === '-') return '무응답';
+      const c = w.mark.replace(/[^①②③④⑤]/g, '');
+      return c || '';
+    };
+    const people = el('div', { className: 'tr-people' },
+      el('div', { className: 'tr-sub' }, f.teacher === 'all' ? `틀린 학생 ${it.n}명` : `${f.teacher} 담당 중 틀린 학생 ${mine(it).length}명`),
+      ...(Object.keys(byT).length ? Object.keys(byT).sort().map(t => el('div', { className: 'tr-trow' },
+        el('b', null, t),
+        el('span', null, ...byT[t].sort((a, b) => b.score - a.score).map(w => el('span', { className: 'tr-st' + (w.score >= TR_TOP ? ' top' : '') },
+          w.s.name, markTxt(w) ? el('small', null, markTxt(w)) : null))))) : [el('div', { className: 'muted text-sm' }, '없음')]));
+
+    const tips = teachingTips(it);
+    const noteBtn = el('button', { className: 'btn btn-ghost btn-sm tr-noprint', onClick: () => {
+      const ids = new Set(mine(it).map(w => w.s.id));
+      const picked = {};
+      state.students.filter(s => s.grade === g).forEach(s => { picked[s.id] = ids.has(s.id); });
+      ui.noteF = { grade: g, teacher: f.teacher, from: f.round, to: f.round, picked, withVar: true, withSol: true, withMark: true };
+      navigate('notes');
+    } }, `틀린 학생 ${mine(it).length}명 오답 노트 →`);
+
+    container.appendChild(el('div', { className: 'card mb-18 tr-card', id: 'tr-q' + it.no },
+      el('div', { className: 'tr-hd' },
+        el('span', { className: 'tr-rank big' }, i + 1),
+        el('b', { className: 'tr-no' }, it.no + '번'),
+        el('span', { className: 'tr-unit' }, [q.unit, q.subUnit].filter(Boolean).join(' › ') || '단원 정보 없음'),
+        q.difficulty ? el('span', { className: 'badge' }, '난이도 ' + q.difficulty) : null,
+        q.type && !/^(서술형|객관식)$/.test(q.type) ? el('span', { className: 'badge' }, q.type) : null,
+        el('span', { className: 'badge' }, it.essay ? '서술형' : '객관식'),
+        q.answer ? el('span', { className: 'badge badge-success' }, '정답 ' + q.answer) : null,
+        varTag),
+      q.summary ? el('div', { className: 'tr-sum' }, q.summary) : null,
+      el('div', { className: 'tr-body' },
+        el('div', { className: 'tr-left' }, imgBox, el('div', { className: 'flex gap-8', style: { marginTop: '8px' } }, solBtn, noteBtn), solBox),
+        el('div', { className: 'tr-right' },
+          el('div', { className: 'tr-stats' },
+            el('div', null, el('div', { className: 'tr-sub' }, '오답률'),
+              el('div', { className: 'tr-big', style: { color: pct >= 50 ? 'var(--red)' : 'var(--amber)' } }, pct + '%'),
+              el('div', { className: 'text-sm muted' }, `${it.total}명 중 ${it.n}명`)),
+            el('div', null, el('div', { className: 'tr-sub' }, `상위권(${TR_TOP}점↑) 오답`),
+              el('div', { className: 'tr-big' }, it.topTotal ? `${it.topWrong}/${it.topTotal}` : '—'),
+              el('div', { className: 'text-sm muted' }, it.topTotal ? Math.round(it.topWrong / it.topTotal * 100) + '%' : '상위권 없음'))),
+          dist,
+          tips.length ? el('div', { className: 'tr-tips' },
+            el('div', { className: 'tr-sub' }, '💡 수업 포인트'),
+            ...tips.map(([c, t]) => el('div', { className: 'tr-tip ' + c }, t))) : null,
+          people))
+    ));
+  });
+
+  container.appendChild(el('div', { className: 'notice', style: { fontSize: '12.5px' } },
+    `오답률은 ${g} ${f.round}회${verName} 응시자 기준입니다(결시 제외). 수업 포인트는 오답 분포로 자동으로 만든 문장이니 참고용으로 보세요. 학생이 고른 보기는 [채점]에서 번호를 눌러 기록한 경우에만 집계됩니다. 학생 이름이 있으니 출력물은 학원 안에서만 사용해 주세요.`));
   return container;
 }
 
