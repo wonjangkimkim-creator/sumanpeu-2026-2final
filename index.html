@@ -3037,6 +3037,98 @@ html, body { overflow-x: clip; }
 }
 @media print { .gnb { display: none !important; } .page-header { margin: 0 0 20px; background: none; } }
 
+/* ---------- 회차 통계 (메인과 같은 남색 배너 · 카드) ---------- */
+.page-header.st-hero { overflow: hidden; color: #fff; border-bottom: 0; padding-top: 34px !important; padding-bottom: 34px !important; margin-bottom: 0;
+  background: radial-gradient(110% 160% at 88% 0%, #2a4f95 0%, var(--navy) 58%, var(--navy-3) 100%); }
+.st-hero .ring { position: absolute; right: -160px; top: -260px; width: 640px; height: 640px; border-radius: 50%; opacity: .45; pointer-events: none;
+  background: repeating-radial-gradient(circle, rgba(255,255,255,.16) 0 1px, transparent 1px 44px); }
+.st-hero .orb { position: absolute; right: 140px; top: -90px; width: 320px; height: 320px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255,106,26,.42), rgba(255,106,26,0) 66%); }
+.st-hero > * { position: relative; z-index: 1; }
+.st-hero .page-crumb { color: #9fb0cc; } .st-hero .page-crumb b { color: var(--accent-2); }
+.st-hero .page-title { color: #fff !important; }
+.st-hero .page-subtitle { color: #c7d2e6 !important; font-size: 14px; }
+.st-kpis { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; flex: 0 0 100%; }
+.st-kpi { background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.18); border-radius: 16px; padding: 13px 18px; min-width: 168px; backdrop-filter: blur(4px); }
+.st-kpi small { display: block; font-size: 12px; color: #b8c4da; font-weight: 700; }
+.st-kpi b { font-size: 28px; font-weight: 800; letter-spacing: -1px; } .st-kpi b span { font-size: 14px; color: #b8c4da; margin-left: 2px; letter-spacing: 0; }
+.st-kpi .dl { font-size: 12.5px; font-weight: 800; margin-left: 8px; } .st-kpi .dl.up { color: #5ee08f; } .st-kpi .dl.dn { color: #ff8a8a; }
+.st-kpi .bar { height: 5px; border-radius: 4px; background: rgba(255,255,255,.18); margin-top: 8px; overflow: hidden; } .st-kpi .bar i { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
+.st-kpi .mt { font-size: 11.5px; color: #b8c4da; margin-top: 5px; }
+.tabs.st-tabs { border-bottom: 0; gap: 6px; margin: 22px 0 22px; flex-wrap: wrap; }
+.st-tabs .tab { border: 1px solid var(--line); border-radius: 999px; padding: 9px 18px; font-size: 14px; font-weight: 800; background: #fff; color: var(--ink-3); }
+.st-tabs .tab:hover { border-color: var(--navy-2); color: var(--navy); }
+.st-tabs .tab.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+.st-sec { margin-bottom: 30px; }
+.st-st { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.st-st h3 { font-size: 21px; font-weight: 800; letter-spacing: -.7px; margin: 0; } .st-st span { font-size: 13px; color: var(--ink-3); }
+.st-gcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.st-gc { border: 1px solid var(--line); border-radius: 18px; background: #fff; padding: 18px 20px 16px; cursor: pointer; text-align: left; font-family: inherit; color: inherit; transition: transform .18s ease, box-shadow .18s ease, border-color .18s; }
+.st-gc:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(11,31,63,.11); }
+.st-gc.on { border-color: var(--navy); box-shadow: 0 0 0 2px var(--navy) inset; }
+.st-gc.empty { cursor: default; background: var(--bg-page); } .st-gc.empty:hover { transform: none; box-shadow: none; }
+.st-gc .hd { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--ink-3); font-weight: 700; }
+.st-gc .big { font-size: 34px; font-weight: 800; letter-spacing: -1.4px; margin-top: 6px; line-height: 1.1; } .st-gc .big span { font-size: 14px; color: var(--ink-3); margin-left: 2px; letter-spacing: 0; }
+.st-chip { display: inline-block; font-size: 12px; font-weight: 800; border-radius: 999px; padding: 2px 9px; margin-left: 8px; vertical-align: 6px; letter-spacing: 0; }
+.st-chip.up { background: #e6f6ec; color: #13804a; } .st-chip.dn { background: #fdecec; color: #c0353a; } .st-chip.eq { background: #eef1f5; color: var(--ink-3); }
+.st-gc .mm { font-size: 12.5px; color: var(--ink-3); margin-top: 4px; } .st-gc .mm b { color: var(--ink); }
+.st-gc .spark { display: block; width: 100%; height: 46px; margin: 10px 0 6px; }
+.st-gc .pg { height: 6px; background: #e1e7ef; border-radius: 4px; overflow: hidden; } .st-gc .pg i { display: block; height: 100%; border-radius: 4px; }
+.st-gc .pg i.high { background: #18a058; } .st-gc .pg i.mid { background: var(--accent-2); } .st-gc .pg i.low { background: #e5484d; }
+.st-gc .ft { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--ink-mute); margin-top: 6px; }
+.st-gc .ft em { font-style: normal; font-weight: 800; color: var(--blue); }
+.st-detail { border: 1px solid var(--line); border-radius: 18px; background: #fff; padding: 18px 20px; margin-top: 14px; }
+.st-detail-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+.st-detail-h b { font-size: 16px; font-weight: 800; } .st-detail-h span { font-size: 12.5px; color: var(--ink-3); }
+.st-rt { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.st-rt th { text-align: left; font-size: 12px; color: var(--ink-mute); font-weight: 700; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.st-rt td { padding: 9px 10px; border-bottom: 1px dashed var(--line); font-variant-numeric: tabular-nums; }
+.st-rt tr:last-child td { border-bottom: 0; }
+.st-rt tr.sub td { font-size: 12.5px; color: var(--ink-3); background: #fafbfd; padding-top: 6px; padding-bottom: 6px; }
+.st-rt td.av { font-weight: 800; }
+.st-rt .rbar { display: inline-block; vertical-align: middle; width: 90px; height: 6px; border-radius: 4px; background: #e1e7ef; overflow: hidden; margin-right: 8px; }
+.st-rt .rbar i { display: block; height: 100%; } .st-rt .rbar i.high { background: #18a058; } .st-rt .rbar i.mid { background: var(--accent-2); } .st-rt .rbar i.low { background: #e5484d; }
+.st-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 14px; }
+.st-chart { border: 1px solid var(--line); border-radius: 18px; background: #fff; padding: 16px 18px 12px; }
+.st-chart .hd { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+.st-none { font-size: 13px; color: var(--ink-mute); background: var(--bg-page); border-radius: 12px; padding: 10px 14px; margin-top: 12px; }
+.st-heat-wrap { border: 1px solid var(--line); border-radius: 18px; background: #fff; overflow-x: auto; }
+.st-heat { width: 100%; border-collapse: separate; border-spacing: 4px; font-size: 13px; min-width: 640px; padding: 6px; }
+.st-heat th { font-size: 12px; color: var(--ink-mute); font-weight: 700; padding: 6px 4px; text-align: center; }
+.st-heat th.l { text-align: left; }
+.st-heat td.nm { white-space: nowrap; padding: 6px 8px; font-weight: 800; cursor: pointer; } .st-heat td.nm:hover { color: var(--blue); }
+.st-heat td.nm .badge { margin-left: 6px; }
+.st-heat td.c { text-align: center; border-radius: 10px; padding: 7px 4px; min-width: 62px; font-variant-numeric: tabular-nums; }
+.st-heat td.c b { display: block; font-size: 14.5px; font-weight: 800; } .st-heat td.c small { font-size: 11px; font-weight: 700; }
+.st-heat td.c.na { color: #c2c9d3; }
+.st-legend { display: flex; gap: 14px; align-items: center; font-size: 12px; color: var(--ink-3); padding: 4px 14px 12px; flex-wrap: wrap; }
+.st-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 4px; }
+.st-tcards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.st-tc { border: 1px solid var(--line); border-radius: 18px; background: #fff; padding: 18px 20px; }
+.st-tc .hd { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.st-tc .nm { font-size: 18px; font-weight: 800; letter-spacing: -.5px; } .st-tc .nm small { font-size: 12.5px; color: var(--ink-3); font-weight: 600; margin-left: 6px; letter-spacing: 0; }
+.st-tc .gr { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.st-tc .gr-h { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12.5px; }
+.st-tc .gr-h .st-chip { margin-left: 0; vertical-align: 0; }
+.st-tc .gr-h .at { background: #eef1f5; color: var(--ink-3); }
+.st-tc .bars { display: flex; gap: 6px; margin-top: 10px; }
+.st-tc .bars .b { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.st-tc .bars .b .col { position: relative; width: 100%; max-width: 30px; height: 52px; display: flex; align-items: flex-end; background: #f5f7fa; border-radius: 6px 6px 2px 2px; }
+.st-tc .bars .b i { display: block; width: 100%; border-radius: 6px 6px 2px 2px; background: var(--navy-2); }
+.st-tc .bars .b i.dn { background: #e5484d; } .st-tc .bars .b i.up { background: #18a058; }
+.st-tc .bars .b s { position: absolute; left: -2px; right: -2px; border-top: 2px dashed var(--accent); }
+.st-tc .bars .b u { text-decoration: none; font-size: 10.5px; color: var(--ink-mute); margin-top: 3px; }
+.st-tc .bars .b em { font-style: normal; font-size: 10.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+.st-tc .note { font-size: 11.5px; color: var(--ink-mute); margin-top: 8px; } .st-tc .note i { display: inline-block; width: 14px; border-top: 2px dashed var(--accent); vertical-align: 3px; margin-right: 4px; }
+.st-tc.empty { background: var(--bg-page); } .st-tc.empty .nm { color: var(--ink-3); }
+@media (max-width: 900px) {
+  .st-hero .page-title { font-size: 26px; }
+  .st-kpi { flex: 1 1 140px; min-width: 0; padding: 11px 14px; } .st-kpi b { font-size: 22px; }
+  .st-charts { grid-template-columns: 1fr; }
+  .st-rt .rbar { display: none; }
+}
+@media print { .page-header.st-hero { background: none; color: inherit; } .st-hero .ring, .st-hero .orb, .st-kpis { display: none; } .st-hero .page-title { color: var(--ink) !important; } }
+
 /* ---------- 오답 티칭 리포트 ---------- */
 .tr-hero { background: linear-gradient(120deg, #0f2742, #1f4a8a) !important; color: #fff; border: 0 !important; }
 .tr-hero-t { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
@@ -3130,7 +3222,7 @@ const SELECTABLE_GRADES = ['중1', '중2', '중3', '고1', '고2', '고3'];
 
 // 학년별 시험지 버전 (이름·개수 모두 설정에서 편집)
 const DEFAULT_VERSIONS = {
-  '중1': ['V1 (원과 부채꼴~통계)', 'V2 (다각형~통계)', 'V3 (정비례~입체도형)', '신반포중 V5 (2학기 전범위)'],
+  '중1': ['V1 (원과 부채꼴~통계)', 'V2 (다각형~통계)', 'V3 (정비례~입체도형)', '신반포중 V5 (2학기 전범위)', 'V6 (다면체~통계)', 'V7 (기본도형~입체도형)'],
   '중2': ['V1 (도형의 닮음~확률)', 'V2 (도형의 닮음~확률)', 'V3 (평행선~확률)', '방배중 V4 (일차함수, 경우의 수와 확률)'],
   '중3': ['표준 (V1)', '난이도 ↓ (V2)'],
   '고1': ['V1 (집합~)', 'V2 (도형의 이동, 절대부등식~)', 'V3 (명제~)'],
@@ -7568,12 +7660,29 @@ function renderGapsTeacher() {
 // ============================================================
 function renderStats() {
   const wrap = el('div');
-  wrap.appendChild(el('div', { className: 'page-header' },
-    el('div', { className: 'page-title' }, '회차 통계'),
-    el('div', { className: 'page-subtitle' }, '학년별 · 선생님별 평균/최고/최저, 오답 티칭 리포트')
+  // 남색 배너: 학년별 최근 회차 평균 · 지난 회차 대비 · 응시율
+  const kpis = GRADES.map(g => stLatest(g)).filter(Boolean).map(x => {
+    const rate = attendanceRate(x.st);
+    const d = x.prev ? x.st.avg - x.prev.st.avg : null;
+    return el('div', { className: 'st-kpi' },
+      el('small', null, x.g + ' ' + x.r + '회 평균'),
+      el('b', null, fmt(x.st.avg), el('span', null, '점'),
+        d != null ? el('span', { className: 'dl ' + (d >= 0 ? 'up' : 'dn') }, (d >= 0 ? '▲' : '▼') + Math.abs(d).toFixed(1)) : null),
+      el('div', { className: 'bar' }, el('i', { style: { width: Math.round((rate || 0) * 100) + '%' } })),
+      el('div', { className: 'mt' }, '응시 ' + x.st.count + '/' + x.st.total + '명 · ' + Math.round((rate || 0) * 100) + '%' + (x.prev ? ' · ' + x.prev.r + '회 대비' : ''))
+    );
+  });
+  wrap.appendChild(el('div', { className: 'page-header st-hero' },
+    el('div', { className: 'ring' }), el('div', { className: 'orb' }),
+    el('div', { style: { flex: '0 0 100%' } },
+      el('div', { className: 'page-title' }, '회차 통계'),
+      el('div', { className: 'page-subtitle' }, '학년별 흐름 · 선생님별 비교 · 오답 티칭 리포트')
+    ),
+    kpis.length ? el('div', { className: 'st-kpis' }, ...kpis)
+      : el('div', { className: 'st-kpis' }, el('div', { className: 'st-kpi' }, el('small', null, '응시 기록'), el('b', null, '0', el('span', null, '명'))))
   ));
 
-  wrap.appendChild(el('div', { className: 'tabs' },
+  wrap.appendChild(el('div', { className: 'tabs st-tabs' },
     el('div', {
       className: 'tab' + (ui.statsTab === 'grade' ? ' active' : ''),
       onClick: () => { ui.statsTab = 'grade'; render(); }
@@ -7595,116 +7704,123 @@ function renderStats() {
   return wrap;
 }
 
+// 학년의 가장 최근 응시 회차와 그 앞 회차 (없으면 null)
+//   한두 명만 입력된 회차는 평균이 흔들리므로 3명 이상 응시한 회차만 '최근'으로 본다 (홈 화면과 같은 기준)
+const ST_MIN = 3;
+function stLatest(g) {
+  let cur = null, prev = null;
+  for (let r = ROUNDS; r >= 1; r--) {
+    const st = gradeRoundStats(g, r);
+    if (st.count < ST_MIN) continue;
+    if (!cur) cur = { g, r, st }; else { prev = { r, st }; break; }
+  }
+  if (cur) cur.prev = prev;
+  return cur;
+}
+
+// 1~ROUNDS 회차 평균 흐름 (최고~최저 띠 + 평균선)
+function stSpark(stats) {
+  const W = 240, H = 46, n = stats.length, x = i => n > 1 ? 4 + i * (W - 8) / (n - 1) : W / 2, y = v => 4 + (100 - v) / 100 * (H - 8);
+  const pts = stats.map((s, i) => s.count ? [x(i), y(s.avg), y(s.max), y(s.min)] : null);
+  const ok = pts.filter(Boolean);
+  let band = '', line = '', dots = '';
+  if (ok.length > 1) {
+    band = '<path d="M' + ok.map(p => p[0].toFixed(1) + ' ' + p[2].toFixed(1)).join(' L') + ' L' + ok.slice().reverse().map(p => p[0].toFixed(1) + ' ' + p[3].toFixed(1)).join(' L') + ' Z" fill="rgba(47,107,255,.10)"/>';
+    line = '<path d="M' + ok.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L') + '" fill="none" stroke="#ff6a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+  }
+  dots = pts.map((p, i) => p ? '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (p === ok[ok.length - 1] ? 4 : 2.6) + '" fill="#ff6a1a" stroke="#fff" stroke-width="1.5"/>'
+    : '<circle cx="' + x(i).toFixed(1) + '" cy="' + (H - 4) + '" r="1.6" fill="#cfd6e0"/>').join('');
+  return svgEl('<svg class="spark" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none"><line x1="0" x2="' + W + '" y1="' + y(50).toFixed(1) + '" y2="' + y(50).toFixed(1) + '" stroke="#eef1f5" stroke-dasharray="3 3"/>' + band + line + dots + '</svg>');
+}
+
+function stDelta(d, unit) {
+  if (d == null) return null;
+  const c = Math.abs(d) < 0.05 ? 'eq' : d > 0 ? 'up' : 'dn';
+  return el('span', { className: 'st-chip ' + c }, (c === 'eq' ? '±' : d > 0 ? '▲' : '▼') + Math.abs(d).toFixed(1) + (unit || ''));
+}
+
 function renderGradeStatsTab() {
   const container = el('div');
+  if (!ui.stGradeOpen || !GRADES.includes(ui.stGradeOpen)) ui.stGradeOpen = (GRADES.find(g => stLatest(g)) || null);
 
-  // 학년별 회차 통계 종합표 (평균/최고/최저/인원)
-  const header = el('tr', null, el('th', null, '학년'));
-  for (let r = 1; r <= ROUNDS; r++) {
-    header.appendChild(el('th', { style: { borderLeft: '2px solid var(--line-2)' }, colSpan: 4 }, r + '회'));
-  }
-  const subHeader = el('tr', null, el('th', null, ''));
-  for (let r = 1; r <= ROUNDS; r++) {
-    ['평균','최고','최저','응시'].forEach((label, i) =>
-      subHeader.appendChild(el('th', i === 0 ? { style: { borderLeft: '2px solid var(--line-2)' } } : null, label))
+  // 학년 카드
+  const cards = GRADES.map(g => {
+    const all = []; for (let r = 1; r <= ROUNDS; r++) all.push(gradeRoundStats(g, r));
+    const last = stLatest(g);
+    if (!last) {
+      return el('div', { className: 'st-gc empty' },
+        el('div', { className: 'hd' }, el('span', { className: 'badge badge-grade-' + g }, g), el('span', null, all[0].total + '명')),
+        el('div', { className: 'big', style: { color: 'var(--ink-mute)' } }, '–'),
+        el('div', { className: 'mm' }, all.some(s => s.count) ? '응시 ' + Math.max(...all.map(s => s.count)) + '명 — ' + ST_MIN + '명부터 표시' : '아직 응시 기록 없음'));
+    }
+    const rate = attendanceRate(last.st), lv = attendanceLevel(rate);
+    const done = all.filter(s => s.count).length;
+    return el('button', { className: 'st-gc' + (ui.stGradeOpen === g ? ' on' : ''), onClick: () => { ui.stGradeOpen = ui.stGradeOpen === g ? '' : g; render(); } },
+      el('div', { className: 'hd' }, el('span', null, el('span', { className: 'badge badge-grade-' + g, style: { marginRight: '6px' } }, g), last.r + '회 평균'), el('span', null, done + '/' + ROUNDS + '회 응시')),
+      el('div', { className: 'big' }, fmt(last.st.avg), el('span', null, '점'), stDelta(last.prev ? last.st.avg - last.prev.st.avg : null)),
+      el('div', { className: 'mm' }, '최고 ', el('b', null, fmt(last.st.max, 0)), ' · 최저 ', el('b', null, fmt(last.st.min, 0)), last.prev ? ' · ' + last.prev.r + '회 ' + fmt(last.prev.st.avg) + '점' : ''),
+      stSpark(all),
+      el('div', { className: 'pg' }, el('i', { className: lv, style: { width: Math.round((rate || 0) * 100) + '%' } })),
+      el('div', { className: 'ft' }, el('span', null, '응시 ' + last.st.count + '/' + last.st.total + '명 · ' + Math.round((rate || 0) * 100) + '%'), el('em', null, ui.stGradeOpen === g ? '접기 ▴' : '회차별 보기 ▾'))
     );
-  }
-
-  const body = GRADES.map(g => {
-    const cells = [el('td', null, el('span', { className: 'badge badge-grade-' + g }, g))];
-    for (let r = 1; r <= ROUNDS; r++) {
-      const st = gradeRoundStats(g, r);
-      const rate = attendanceRate(st);
-      const level = attendanceLevel(rate);
-      cells.push(el('td', { className: 'num ' + scoreClass(st.avg), style: { borderLeft: '2px solid var(--line-2)' } }, st.avg != null ? fmt(st.avg) : '—'));
-      cells.push(el('td', { className: 'num' }, st.max != null ? fmt(st.max, 0) : '—'));
-      cells.push(el('td', { className: 'num' }, st.min != null ? fmt(st.min, 0) : '—'));
-      cells.push(el('td', { className: 'num' }, 
-        rate != null && st.count > 0 ?
-          el('span', { className: 'attendance-badge ' + level },
-            `${st.count}/${st.total}`,
-            ` · ${Math.round(rate * 100)}%`
-          ) :
-          el('span', { className: 'muted' }, '—')
-      ));
-    }
-    const hasVer = getVersionsForGrade(g).length >= 2;
-    if (hasVer) {
-      cells[0] = el('td', null,
-        el('span', { className: 'ver-expand', 'data-vergrade': g }, '\u25b8'),
-        el('span', { className: 'badge badge-grade-' + g }, g)
-      );
-    }
-    return el('tr', null, ...cells);
   });
-
-  // 학년별 버전 상세 행 (기본 숨김)
-  const bodyRows = [];
-  GRADES.forEach((g, gi) => {
-    bodyRows.push(body[gi]);
-    const vers = getVersionsForGrade(g);
-    if (vers.length < 2) return;
-    const used = {};
-    for (let r = 1; r <= ROUNDS; r++) gradeRoundVersionStats(g, r).forEach(v => { used[v.label] = true; });
-    const labels = vers.filter(v => used[v]);
-    if (used['']) labels.push('');
-    labels.forEach(lb => {
-      const tds = [el('td', { style: { paddingLeft: '26px' } },
-        el('span', { className: 'ver-tag' + (lb ? '' : ' none'), style: { display: 'inline-block', padding: '2px 6px' } }, versionTag(g, lb)),
-        el('span', { style: { marginLeft: '6px', color: '#78716c' } }, lb || '버전 미지정')
-      )];
-      for (let r = 1; r <= ROUNDS; r++) {
-        const v = gradeRoundVersionStats(g, r).find(x => x.label === lb);
-        tds.push(el('td', { className: 'num', style: { borderLeft: '2px solid var(--line-2)' } }, v && v.avg != null ? fmt(v.avg) : '—'));
-        tds.push(el('td', { className: 'num' }, v && v.max != null ? fmt(v.max, 0) : '—'));
-        tds.push(el('td', { className: 'num' }, v && v.min != null ? fmt(v.min, 0) : '—'));
-        tds.push(el('td', { className: 'num' }, v ? (v.count + '명' + (v.absent ? ' /결' + v.absent : '')) : '—'));
-      }
-      const tr = el('tr', { className: 'ver-sub-row' }, ...tds);
-      tr.style.display = 'none';
-      tr.dataset.versub = g;
-      bodyRows.push(tr);
-    });
-  });
-
-  const tableWrap = el('div', { className: 'table-wrap mb-18' },
-    el('table', { className: 'dt' },
-      el('thead', null, header, subHeader),
-      el('tbody', null, ...bodyRows)
-    )
-  );
-  tableWrap.addEventListener('click', e => {
-    const t = e.target.closest('.ver-expand');
-    if (!t) return;
-    const g = t.getAttribute('data-vergrade');
-    const open = t.textContent.indexOf('\u25be') < 0;
-    t.textContent = open ? '\u25be' : '\u25b8';
-    tableWrap.querySelectorAll('tr.ver-sub-row').forEach(tr => {
-      if (tr.dataset.versub === g) tr.style.display = open ? '' : 'none';
-    });
-  });
-  container.appendChild(tableWrap);
-  if (GRADES.some(g => getVersionsForGrade(g).length >= 2)) {
-    container.appendChild(el('div', { className: 'ver-note' },
-      '학년 왼쪽 \u25b8 를 누르면 그 학년의 시험지 버전별 평균 · 응시 인원이 펼쳐집니다. (학부모 리포트의 학년 평균은 버전 구분 없이 계산됩니다)'
-    ));
-  }
-
-  // 각 학년별 차트
-  container.appendChild(el('div', { className: 'card' },
-    el('div', { className: 'card-title' }, el('div', { className: 'card-title-accent' }), '학년별 회차별 평균 · 최고 · 최저 추이'),
-    el('div', { className: 'grid grid-2' },
-      ...GRADES.map(g => el('div', null,
-        el('div', { style: { fontWeight: 700, marginBottom: '8px', fontSize: '14px' } },
-          el('span', { className: 'badge badge-grade-' + g, style: { marginRight: '6px' } }, g)
-        ),
-        el('div', { className: 'chart-box sm' }, el('canvas', { id: 'grade-ch-' + g }))
-      ))
-    )
+  container.appendChild(el('section', { className: 'st-sec' },
+    el('div', { className: 'st-st' }, el('h3', null, '학년별 흐름'), el('span', null, '주황선 = 회차별 평균 · 파란 띠 = 최고~최저 · 막대 = 응시율')),
+    el('div', { className: 'st-gcards' }, ...cards),
+    ui.stGradeOpen ? renderGradeDetail(ui.stGradeOpen) : null
   ));
 
-  setTimeout(() => GRADES.forEach(g => renderGradeChart(g)), 60);
+  // 추이 그래프 (기록 있는 학년만)
+  const withData = GRADES.filter(g => stLatest(g));
+  const noData = GRADES.filter(g => !stLatest(g));
+  container.appendChild(el('section', { className: 'st-sec' },
+    el('div', { className: 'st-st' }, el('h3', null, '회차별 평균 · 최고 · 최저 추이'), el('span', null, '점 위에 마우스를 올리면 점수가 보입니다')),
+    withData.length ? el('div', { className: 'st-charts' }, ...withData.map(g => el('div', { className: 'st-chart' },
+      el('div', { className: 'hd' }, el('span', { className: 'badge badge-grade-' + g }, g)),
+      el('div', { className: 'chart-box sm' }, el('canvas', { id: 'grade-ch-' + g }))
+    ))) : null,
+    noData.length ? el('div', { className: 'st-none' }, noData.join(' · ') + ' — 아직 응시 기록이 없어 그래프를 표시하지 않습니다') : null
+  ));
+
+  setTimeout(() => withData.forEach(g => renderGradeChart(g)), 60);
   return container;
+}
+
+// 학년 카드를 누르면 펼쳐지는 회차별 표 (버전별 평균 포함)
+function renderGradeDetail(g) {
+  const vers = getVersionsForGrade(g);
+  const rows = [];
+  for (let r = 1; r <= ROUNDS; r++) {
+    const st = gradeRoundStats(g, r);
+    if (!st.count) continue;
+    const rate = attendanceRate(st), lv = attendanceLevel(rate);
+    rows.push(el('tr', null,
+      el('td', null, el('b', null, r + '회')),
+      el('td', { className: 'av ' + scoreClass(st.avg) }, fmt(st.avg)),
+      el('td', null, fmt(st.max, 0)),
+      el('td', null, fmt(st.min, 0)),
+      el('td', null, el('span', { className: 'rbar' }, el('i', { className: lv, style: { width: Math.round(rate * 100) + '%' } })),
+        st.count + '/' + st.total + '명 · ' + Math.round(rate * 100) + '%' + (st.absent ? ' · 결시 ' + st.absent : ''))
+    ));
+    if (vers.length >= 2) {
+      gradeRoundVersionStats(g, r).sort((a, b) => (vers.indexOf(a.label) + 99 * !a.label) - (vers.indexOf(b.label) + 99 * !b.label)).forEach(v => {
+        rows.push(el('tr', { className: 'sub' },
+          el('td', { style: { paddingLeft: '22px' } }, el('span', { className: 'ver-tag' + (v.label ? '' : ' none'), style: { display: 'inline-block', padding: '1px 6px', marginRight: '6px' } }, versionTag(g, v.label)), v.label || '버전 미지정'),
+          el('td', null, v.avg != null ? fmt(v.avg) : '—'),
+          el('td', null, v.max != null ? fmt(v.max, 0) : '—'),
+          el('td', null, v.min != null ? fmt(v.min, 0) : '—'),
+          el('td', null, v.count + '명' + (v.absent ? ' · 결시 ' + v.absent : ''))
+        ));
+      });
+    }
+  }
+  return el('div', { className: 'st-detail' },
+    el('div', { className: 'st-detail-h' }, el('b', null, g + ' 회차별 상세'), el('span', null, vers.length >= 2 ? '회차 아래 회색 줄 = 시험지 버전별 평균 (학부모 리포트의 학년 평균은 버전 구분 없이 계산)' : '')),
+    el('div', { style: { overflowX: 'auto' } }, el('table', { className: 'st-rt' },
+      el('thead', null, el('tr', null, el('th', null, '회차'), el('th', null, '평균'), el('th', null, '최고'), el('th', null, '최저'), el('th', null, '응시'))),
+      el('tbody', null, ...rows)
+    ))
+  );
 }
 
 function renderGradeChart(grade) {
@@ -7721,8 +7837,8 @@ function renderGradeChart(grade) {
   // 그라데이션 (평균선)
   const chartCtx = ctx.getContext('2d');
   const avgGradient = chartCtx.createLinearGradient(0, 0, 0, 260);
-  avgGradient.addColorStop(0, 'rgba(181, 146, 79, 0.28)');
-  avgGradient.addColorStop(1, 'rgba(181, 146, 79, 0)');
+  avgGradient.addColorStop(0, 'rgba(255, 106, 26, 0.22)');
+  avgGradient.addColorStop(1, 'rgba(255, 106, 26, 0)');
 
   _charts['g_' + grade] = new Chart(ctx, {
     type: 'line',
@@ -7732,7 +7848,7 @@ function renderGradeChart(grade) {
         {
           label: '최고',
           data: maxs,
-          borderColor: '#15803d',
+          borderColor: '#2f6bff',
           backgroundColor: 'transparent',
           borderWidth: 2,
           borderDash: [5, 4],
@@ -7740,7 +7856,7 @@ function renderGradeChart(grade) {
           spanGaps: true,
           pointRadius: 3.5,
           pointHoverRadius: 6,
-          pointBackgroundColor: '#15803d',
+          pointBackgroundColor: '#2f6bff',
           pointBorderColor: '#fff',
           pointBorderWidth: 1.5,
           fill: false
@@ -7748,14 +7864,14 @@ function renderGradeChart(grade) {
         {
           label: '평균',
           data: avgs,
-          borderColor: '#b5924f',
+          borderColor: '#ff6a1a',
           backgroundColor: avgGradient,
           borderWidth: 3.5,
           tension: 0.35,
           spanGaps: true,
           pointRadius: 5,
           pointHoverRadius: 8,
-          pointBackgroundColor: '#b5924f',
+          pointBackgroundColor: '#ff6a1a',
           pointBorderColor: '#fff',
           pointBorderWidth: 2.5,
           fill: true
@@ -7763,7 +7879,7 @@ function renderGradeChart(grade) {
         {
           label: '최저',
           data: mins,
-          borderColor: '#b91c3c',
+          borderColor: '#e5484d',
           backgroundColor: 'transparent',
           borderWidth: 2,
           borderDash: [5, 4],
@@ -7771,7 +7887,7 @@ function renderGradeChart(grade) {
           spanGaps: true,
           pointRadius: 3.5,
           pointHoverRadius: 6,
-          pointBackgroundColor: '#b91c3c',
+          pointBackgroundColor: '#e5484d',
           pointBorderColor: '#fff',
           pointBorderWidth: 1.5,
           fill: false
@@ -7787,7 +7903,7 @@ function renderGradeChart(grade) {
           position: 'top',
           align: 'end',
           labels: {
-            color: '#2d2d4a',
+            color: '#0b1f3f',
             font: { size: 11.5, weight: '600', family: "Pretendard, sans-serif" },
             padding: 12,
             usePointStyle: true,
@@ -7797,8 +7913,8 @@ function renderGradeChart(grade) {
           }
         },
         tooltip: {
-          backgroundColor: 'rgba(15, 39, 66, 0.96)',
-          titleColor: '#d9bd82',
+          backgroundColor: 'rgba(11, 31, 63, 0.96)',
+          titleColor: '#ffb23f',
           titleFont: { size: 12.5, weight: '700' },
           bodyColor: '#fff',
           bodyFont: { size: 12 },
@@ -7813,13 +7929,13 @@ function renderGradeChart(grade) {
       },
       scales: {
         x: {
-          ticks: { color: '#555570', font: { size: 11, weight: '600' } },
+          ticks: { color: '#5d6878', font: { size: 11, weight: '600' } },
           grid: { display: false },
-          border: { color: '#d8cdb3' }
+          border: { color: '#e3e8ef' }
         },
         y: {
-          ticks: { color: '#9090a8', font: { size: 10.5, family: "JetBrains Mono, monospace" }, callback: v => v + '점', stepSize: 20 },
-          grid: { color: 'rgba(184, 168, 122, 0.18)', lineWidth: 1 },
+          ticks: { color: '#8a93a3', font: { size: 10.5, family: "JetBrains Mono, monospace" }, callback: v => v + '점', stepSize: 20 },
+          grid: { color: 'rgba(11, 31, 63, 0.06)', lineWidth: 1 },
           border: { display: false },
           min: 0, max: 100
         }
@@ -7836,78 +7952,83 @@ function renderTeacherStatsTab() {
     container.appendChild(el('div', { className: 'empty' }, el('div', { className: 'empty-text' }, '선생님 정보가 없습니다')));
     return container;
   }
+  const openReport = t => { ui.teacherReportName = t; navigate('teacher-report'); };
+  // 응시 기록이 있는 회차만 열로 쓴다
+  let rounds = []; for (let r = 1; r <= ROUNDS; r++) if (GRADES.some(g => gradeRoundStats(g, r).count)) rounds.push(r);
+  if (!rounds.length) rounds = roundNumbers();
 
-  teachers.forEach(t => {
+  const info = teachers.map(t => {
     const ts = state.students.filter(s => s.teacher === t && GRADES.includes(s.grade));
-    if (ts.length === 0) return;
-    const teacherGrades = Array.from(new Set(ts.map(s => s.grade))).sort();
+    const grades = Array.from(new Set(ts.map(s => s.grade))).sort((a, b) => GRADES.indexOf(a) - GRADES.indexOf(b));
+    const rows = grades.map(g => {
+      const cells = rounds.map(r => {
+        const tSt = teacherRoundStats(t, g, r), gSt = gradeRoundStats(g, r);
+        return { r, t: tSt, g: gSt, d: (tSt.avg != null && gSt.avg != null) ? tSt.avg - gSt.avg : null };
+      });
+      const ds = cells.filter(c => c.d != null);
+      return { g, n: ts.filter(s => s.grade === g).length, cells, taken: ds.length, avgD: ds.length ? ds.reduce((a, c) => a + c.d, 0) / ds.length : null };
+    });
+    return { t, n: ts.length, grades, rows, has: rows.some(x => x.taken) };
+  }).filter(x => x.n);
 
-    const card = el('div', { className: 'card mb-18' },
-      el('div', { className: 'flex-between mb-12 flex-wrap', style: { gap: '8px' } },
-        el('div', null,
-          el('span', { style: { fontSize: '17px', fontWeight: 800, fontFamily: 'Noto Serif KR, serif' } }, t),
-          el('span', { className: 'muted text-sm', style: { marginLeft: '10px' } }, `${ts.length}명 · ${teacherGrades.join(', ')}`)
-        ),
-        el('button', {
-          className: 'btn btn-sm btn-ghost',
-          onClick: () => { ui.teacherReportName = t; navigate('teacher-report'); }
-        }, '📋 리포트 보기')
-      )
-    );
-
-    // Compare table - 회차별 담당 vs 전체
-    const compareTbl = el('div', { className: 'table-wrap mb-12' },
-      el('table', { className: 'dt' },
-        el('thead', null,
-          el('tr', null,
-            el('th', null, '학년'),
-            ...roundLabels().map(lb => el('th', null, lb))
-          )
-        ),
-        el('tbody', null,
-          ...teacherGrades.map(g => {
-            const cells = [el('td', null, el('span', { className: 'badge badge-grade-' + g }, g))];
-            for (let r = 1; r <= ROUNDS; r++) {
-              const tSt = teacherRoundStats(t, g, r);
-              const gSt = gradeRoundStats(g, r);
-              const diff = (tSt.avg != null && gSt.avg != null) ? tSt.avg - gSt.avg : null;
-              const rate = attendanceRate(tSt);
-              const level = attendanceLevel(rate);
-              const rateColor = level === 'low' ? '#b91c1c' : level === 'mid' ? '#b45309' : '#047857';
-              cells.push(el('td', { className: 'num' },
-                tSt.avg != null ?
-                  el('div', null,
-                    el('div', { className: scoreClass(tSt.avg) }, fmt(tSt.avg)),
-                    el('div', { className: 'text-sm muted' }, '(' + (gSt.avg != null ? fmt(gSt.avg) : '—') + ')'),
-                    diff != null ? el('div', {
-                      className: diff > 0 ? 'delta-up' : diff < 0 ? 'delta-down' : 'delta-flat',
-                      style: { fontSize: '10.5px' }
-                    }, (diff >= 0 ? '▲' : '▼') + Math.abs(diff).toFixed(1)) : null,
-                    rate != null ? el('div', {
-                      style: { 
-                        fontSize: '10px',
-                        marginTop: '2px',
-                        color: rateColor,
-                        fontWeight: 700,
-                        fontFamily: 'JetBrains Mono, monospace'
-                      }
-                    }, `${tSt.count}/${tSt.total}`) : null
-                  ) : '—'
-              ));
-            }
-            return el('tr', null, ...cells);
-          })
-        )
-      )
-    );
-
-    card.appendChild(compareTbl);
-    card.appendChild(el('div', { className: 'text-sm muted', style: { fontStyle: 'italic' } },
-      '* 값: 담당 평균 / (학년 전체 평균) / 차이'
+  // ① 비교판 — 학년 평균보다 높으면 초록, 낮으면 빨강
+  const heatBg = d => {
+    if (d == null) return '#f5f7fa';
+    const a = (Math.min(Math.abs(d), 15) / 15 * 0.42 + 0.08).toFixed(2);
+    return Math.abs(d) < 0.05 ? '#eef1f5' : d > 0 ? 'rgba(24,160,88,' + a + ')' : 'rgba(229,72,77,' + a + ')';
+  };
+  const heatRows = [];
+  info.filter(x => x.has).forEach(x => x.rows.filter(rw => rw.taken).forEach(rw => {
+    heatRows.push(el('tr', null,
+      el('td', { className: 'nm', title: '리포트 보기', onClick: () => openReport(x.t) }, x.t, el('span', { className: 'badge badge-grade-' + rw.g }, rw.g)),
+      ...rw.cells.map(c => c.t.avg == null
+        ? el('td', { className: 'c na' }, '·')
+        : el('td', { className: 'c', style: { background: heatBg(c.d) }, title: c.r + '회 · 담당 ' + fmt(c.t.avg) + '점 / 학년 ' + fmt(c.g.avg) + '점 · 응시 ' + c.t.count + '/' + c.t.total + '명' },
+            el('b', null, fmt(c.t.avg)),
+            el('small', null, c.d == null ? '' : (Math.abs(c.d) < 0.05 ? '±0' : (c.d > 0 ? '+' : '−') + Math.abs(c.d).toFixed(1))))),
+      el('td', { className: 'c', style: { background: heatBg(rw.avgD), fontWeight: 800 } }, el('b', null, (rw.avgD >= 0 ? '+' : '−') + Math.abs(rw.avgD).toFixed(1)), el('small', null, rw.taken + '회'))
     ));
-    container.appendChild(card);
-  });
+  }));
+  container.appendChild(el('section', { className: 'st-sec' },
+    el('div', { className: 'st-st' }, el('h3', null, '선생님 비교판'), el('span', null, '칸 = 담당 반 평균 · 아래 숫자 = 학년 평균과의 차이 · 이름을 누르면 리포트')),
+    heatRows.length
+      ? el('div', { className: 'st-heat-wrap' },
+          el('table', { className: 'st-heat' },
+            el('thead', null, el('tr', null, el('th', { className: 'l' }, '선생님 · 학년'), ...rounds.map(r => el('th', null, r + '회')), el('th', null, '평균 차이'))),
+            el('tbody', null, ...heatRows)),
+          el('div', { className: 'st-legend' },
+            el('span', null, el('i', { style: { background: 'rgba(24,160,88,.45)' } }), '학년 평균보다 높음'),
+            el('span', null, el('i', { style: { background: 'rgba(229,72,77,.45)' } }), '학년 평균보다 낮음'),
+            el('span', null, '색이 진할수록 차이가 큽니다 (15점 이상이면 가장 진함)')))
+      : el('div', { className: 'st-none' }, '아직 응시 기록이 없습니다')
+  ));
 
+  // ② 선생님 카드 — 기록 있는 학년만
+  const card = x => {
+    const head = el('div', { className: 'hd' },
+      el('div', { className: 'nm' }, x.t, el('small', null, x.n + '명 · ' + x.grades.join(', '))),
+      el('button', { className: 'btn btn-sm btn-ghost', onClick: () => openReport(x.t) }, '📋 리포트 보기'));
+    if (!x.has) return el('div', { className: 'st-tc empty' }, head, el('div', { className: 'note' }, '아직 응시 기록 없음'));
+    return el('div', { className: 'st-tc' }, head,
+      ...x.rows.filter(rw => rw.taken).map(rw => el('div', { className: 'gr' },
+        el('div', { className: 'gr-h' },
+          el('span', { className: 'badge badge-grade-' + rw.g }, rw.g),
+          el('span', { className: 'st-chip ' + (Math.abs(rw.avgD) < 0.05 ? 'eq' : rw.avgD > 0 ? 'up' : 'dn') }, '학년 평균 대비 ' + (rw.avgD >= 0 ? '+' : '−') + Math.abs(rw.avgD).toFixed(1) + '점'),
+          el('span', { className: 'st-chip at' }, '응시 ' + rw.taken + '/' + ROUNDS + '회')),
+        el('div', { className: 'bars' }, ...rw.cells.map(c => el('div', { className: 'b', title: c.t.avg != null ? c.r + '회 담당 ' + fmt(c.t.avg) + ' / 학년 ' + fmt(c.g.avg) : c.r + '회 기록 없음' },
+          el('em', null, c.t.avg != null ? Math.round(c.t.avg) : ''),
+          el('div', { className: 'col' },
+            c.t.avg != null ? el('i', { className: c.d == null ? '' : c.d >= 0 ? 'up' : 'dn', style: { height: Math.max(3, c.t.avg) + '%' } }) : null,
+            c.g.avg != null ? el('s', { style: { bottom: c.g.avg + '%' } }) : null),
+          el('u', null, c.r + '회'))))
+      )),
+      el('div', { className: 'note' }, el('i'), '주황 점선 = 학년 평균 · 막대 = 담당 반 평균 (초록 높음 / 빨강 낮음)')
+    );
+  };
+  container.appendChild(el('section', { className: 'st-sec' },
+    el('div', { className: 'st-st' }, el('h3', null, '선생님별 카드'), el('span', null, '기록이 있는 학년만 표시')),
+    el('div', { className: 'st-tcards' }, ...info.filter(x => x.has).map(card), ...info.filter(x => !x.has).map(card))
+  ));
   return container;
 }
 
