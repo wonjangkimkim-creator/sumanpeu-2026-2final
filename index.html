@@ -3127,6 +3127,118 @@ html, body { overflow-x: clip; }
   .st-charts { grid-template-columns: 1fr; }
   .st-rt .rbar { display: none; }
 }
+/* ---------- 학부모 리포트 (pr-) : 남색 · 주황, 숫자 크게, 그래프 한 장 ---------- */
+.report-page.pr { background: #eef2f7; background-image: none; font-family: Pretendard, 'Malgun Gothic', sans-serif; color: #1d2433; }
+.pr .report-wrap { max-width: 880px; padding: 28px 20px 56px; }
+.pr .report-topbar-inner { max-width: 880px; }
+.pr-hero { position: relative; overflow: hidden; border-radius: 22px; color: #fff; padding: 30px 34px 28px;
+  background: radial-gradient(120% 160% at 92% 0%, #2a4f95 0%, #0b1f3f 56%, #07142b 100%); box-shadow: 0 18px 40px rgba(11,31,63,.22); }
+.pr-hero::before { content: ''; position: absolute; right: -150px; top: -190px; width: 520px; height: 520px; border-radius: 50%; opacity: .45;
+  background: repeating-radial-gradient(circle, rgba(255,255,255,.14) 0 1px, transparent 1px 40px); }
+.pr-hero::after { content: ''; position: absolute; right: 90px; top: -80px; width: 280px; height: 280px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,106,26,.38), rgba(255,106,26,0) 66%); }
+.pr-hero > * { position: relative; z-index: 1; }
+.pr-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.pr-ey { font-size: 11.5px; font-weight: 800; letter-spacing: 3px; color: #ffb23f; }
+.pr-title { font-size: 30px; font-weight: 800; letter-spacing: -1.2px; margin: 8px 0 4px; }
+.pr-sub { font-size: 13.5px; color: #c7d2e6; }
+.pr-issue { text-align: right; font-size: 12px; color: #b8c4da; line-height: 1.7; }
+.pr-issue b { color: #fff; font-weight: 700; }
+.pr-who { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.16); }
+.pr-name { font-size: 26px; font-weight: 800; letter-spacing: -.8px; }
+.pr-grade { font-size: 12.5px; font-weight: 800; background: #ff6a1a; color: #fff; border-radius: 999px; padding: 3px 11px; }
+.pr-meta { font-size: 13.5px; color: #c7d2e6; }
+.pr-kpis { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 10px; margin-top: 18px; align-items: stretch; }
+.pr-kpi.lead > div { min-width: 0; } .pr-kpi b { white-space: nowrap; }
+.pr-kpi { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 16px; padding: 14px 16px; }
+.pr-kpi small { display: block; font-size: 12px; font-weight: 700; color: #b8c4da; }
+.pr-kpi b { display: block; font-size: 30px; font-weight: 800; letter-spacing: -1px; margin-top: 4px; line-height: 1.1; }
+.pr-kpi b span { font-size: 14px; font-weight: 700; color: #b8c4da; margin-left: 2px; letter-spacing: 0; }
+.pr-kpi em { display: block; font-style: normal; font-size: 12px; color: #b8c4da; margin-top: 4px; }
+.pr-kpi .up { color: #5ee08f; } .pr-kpi .dn { color: #ff9d9d; }
+.pr-kpi.lead { display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,.12); }
+.pr-ring { flex: none; width: 64px; height: 64px; }
+.pr-headline { margin-top: 16px; background: #fff; border-radius: 18px; padding: 16px 20px; display: flex; gap: 14px; align-items: center; border: 1px solid #e3e8ef; box-shadow: 0 6px 18px rgba(11,31,63,.05); }
+.pr-headline i { flex: none; width: 42px; height: 42px; border-radius: 12px; background: #fff1e6; color: #ff6a1a; display: flex; align-items: center; justify-content: center; font-style: normal; font-size: 20px; font-weight: 900; }
+.pr-headline b { display: block; font-size: 17px; font-weight: 800; letter-spacing: -.4px; color: #0b1f3f; }
+.pr-headline span { font-size: 13px; color: #5d6878; }
+.pr-sec { margin-top: 16px; background: #fff; border-radius: 20px; padding: 22px 24px; border: 1px solid #e3e8ef; box-shadow: 0 6px 18px rgba(11,31,63,.05); }
+.pr-sh { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.pr-sh h3 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -.5px; color: #0b1f3f; display: flex; align-items: center; gap: 10px; }
+.pr-sh h3 em { font-style: normal; font-size: 12px; font-weight: 800; color: #fff; background: #0b1f3f; border-radius: 7px; padding: 2px 8px; letter-spacing: .5px; }
+.pr-sh span { font-size: 12.5px; color: #8a93a3; }
+.pr-chart { position: relative; height: 300px; }
+.pr-legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: #5d6878; margin: 2px 0 10px; }
+.pr-legend i { display: inline-block; vertical-align: -1px; margin-right: 6px; }
+.pr-legend .bar { width: 12px; height: 12px; border-radius: 3px; background: #14305e; }
+.pr-legend .ln { width: 18px; border-top: 3px dashed #ff6a1a; vertical-align: 3px; }
+.pr-legend .gl { width: 18px; border-top: 2px dashed #18a058; vertical-align: 3px; }
+.pr-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.pr-table th { font-size: 12px; color: #8a93a3; font-weight: 700; padding: 8px 6px; border-bottom: 1px solid #e3e8ef; text-align: center; }
+.pr-table th:first-child, .pr-table td:first-child { text-align: left; }
+.pr-table td { padding: 9px 6px; border-bottom: 1px solid #f0f2f6; text-align: center; }
+.pr-table tr:last-child td { border-bottom: 0; }
+.pr-table td.me { font-weight: 800; color: #0b1f3f; font-size: 15px; }
+.pr-table .ab { color: #8a93a3; font-weight: 700; }
+.pr-d { font-weight: 800; font-size: 12.5px; } .pr-d.up { color: #13804a; } .pr-d.dn { color: #c0353a; } .pr-d.eq { color: #8a93a3; }
+.pr-note { font-size: 12px; color: #8a93a3; margin-top: 10px; }
+.pr-goals { display: grid; gap: 12px; }
+.pr-goal { display: grid; grid-template-columns: 110px 1fr 70px; align-items: center; gap: 12px; font-size: 13.5px; }
+.pr-goal .lb { font-weight: 700; color: #5d6878; }
+.pr-goal .tr { position: relative; height: 12px; border-radius: 6px; background: #eef1f5; }
+.pr-goal .tr i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: linear-gradient(90deg, #14305e, #2f6bff); }
+.pr-goal .tr s { position: absolute; top: -5px; bottom: -5px; border-left: 3px solid #ff6a1a; }
+.pr-goal .vl { font-weight: 800; text-align: right; color: #0b1f3f; }
+.pr-weak-top { display: flex; gap: 14px; align-items: center; background: #fff6ef; border: 1px solid #ffd9c2; border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; }
+.pr-weak-top b { font-size: 18px; font-weight: 800; color: #0b1f3f; letter-spacing: -.4px; }
+.pr-weak-top small { display: block; font-size: 12px; font-weight: 800; color: #d9530c; }
+.pr-weak-top span { margin-left: auto; text-align: right; font-size: 12.5px; color: #5d6878; } .pr-weak-top span strong { display: block; font-size: 24px; color: #ff6a1a; }
+.pr-bars { display: grid; gap: 9px; }
+.pr-bar { display: grid; grid-template-columns: 170px 1fr 52px; gap: 12px; align-items: center; font-size: 13.5px; }
+.pr-bar .lb { font-weight: 700; color: #1d2433; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pr-bar .tr { height: 14px; border-radius: 7px; background: #eef1f5; overflow: hidden; }
+.pr-bar .tr i { display: block; height: 100%; border-radius: 7px; background: #14305e; } .pr-bar .tr i.hi { background: #ff6a1a; }
+.pr-bar .vl { font-weight: 800; text-align: right; }
+.pr-two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; padding-top: 16px; border-top: 1px dashed #e3e8ef; }
+.pr-two h4 { margin: 0 0 10px; font-size: 13px; font-weight: 800; color: #5d6878; }
+.pr-stack { display: flex; height: 26px; border-radius: 8px; overflow: hidden; font-size: 12px; font-weight: 800; color: #fff; }
+.pr-stack div { display: flex; align-items: center; justify-content: center; min-width: 28px; }
+.pr-stack-l { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: #5d6878; margin-top: 8px; }
+.pr-stack-l i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+.pr-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pr-chip { font-size: 12.5px; font-weight: 700; background: #f3f6fb; border: 1px solid #e3e8ef; border-radius: 999px; padding: 4px 11px; color: #1d2433; }
+.pr-chip b { color: #ff6a1a; margin-left: 5px; }
+.pr-wt { width: 100%; border-collapse: collapse; font-size: 13px; }
+.pr-wt th { font-size: 12px; color: #8a93a3; font-weight: 700; text-align: left; padding: 8px 8px; border-bottom: 1px solid #e3e8ef; }
+.pr-wt td { padding: 10px 8px; border-bottom: 1px solid #f0f2f6; vertical-align: top; }
+.pr-wt tr.rh td { border-top: 2px solid #e3e8ef; }
+.pr-wt .rn { font-weight: 800; color: #0b1f3f; white-space: nowrap; }
+.pr-wt .rn small { display: block; font-size: 11.5px; color: #8a93a3; font-weight: 700; margin-top: 2px; }
+.pr-wt .un { font-weight: 700; white-space: nowrap; }
+.pr-wt .nums { display: flex; flex-wrap: wrap; gap: 4px; }
+.pr-wt .nums span { font-size: 11.5px; font-weight: 800; color: #c0353a; background: #fdecec; border-radius: 6px; padding: 2px 7px; }
+.pr-wt .df { color: #ffb23f; letter-spacing: 1px; white-space: nowrap; font-size: 12px; }
+.pr-pdf { border: 0; background: none; color: #2f6bff; font-weight: 800; font-size: 11.5px; cursor: pointer; padding: 0; font-family: inherit; }
+.pr-com { display: grid; gap: 10px; }
+.pr-com div { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.6; background: #f8fafc; border-radius: 12px; padding: 11px 14px; }
+.pr-com div i { flex: none; width: 8px; height: 8px; border-radius: 50%; margin-top: 8px; background: #14305e; }
+.pr-com div.good i { background: #18a058; } .pr-com div.warn i { background: #e5484d; } .pr-com div.tip i { background: #ff6a1a; }
+.pr-foot { margin-top: 18px; text-align: center; font-size: 11.5px; color: #8a93a3; line-height: 1.8; }
+.pr-foot b { color: #0b1f3f; }
+@media (max-width: 720px) {
+  .pr .report-wrap { padding: 16px 12px 40px; }
+  .pr-hero { padding: 22px 18px 20px; border-radius: 18px; }
+  .pr-title { font-size: 24px; } .pr-issue { text-align: left; }
+  .pr-kpis { grid-template-columns: repeat(3, 1fr); gap: 8px; } .pr-kpi.lead { grid-column: 1 / -1; }
+  .pr-kpi { padding: 11px 10px; } .pr-kpi b { font-size: 21px; } .pr-kpi.lead b { font-size: 28px; } .pr-kpi em { font-size: 11px; }
+  .pr .report-topbar { padding: 10px 12px; } .pr .report-topbar-title { display: none; }
+  .pr-sec { padding: 18px 14px; border-radius: 16px; }
+  .pr-chart { height: 240px; }
+  .pr-bar { grid-template-columns: 110px 1fr 40px; } .pr-goal { grid-template-columns: 84px 1fr 54px; }
+  .pr-two { grid-template-columns: 1fr; }
+  .pr-table { font-size: 12.5px; } .pr-wt .df { display: none; }
+}
+@media print { .report-page.pr { background: #fff; } .pr-sec, .pr-hero, .pr-headline { break-inside: avoid; box-shadow: none; } }
 @media print { .page-header.st-hero { background: none; color: inherit; } .st-hero .ring, .st-hero .orb, .st-kpis { display: none; } .st-hero .page-title { color: var(--ink) !important; } }
 
 /* ---------- 오답 티칭 리포트 ---------- */
@@ -9108,7 +9220,7 @@ async function saveReportImage(sid) {
   const holder = el('div', {
     style: {
       position: 'fixed', left: '-12000px', top: '0',
-      width: '1000px', background: '#faf9f5', padding: '0', zIndex: '-1'
+      width: '1000px', background: '#eef2f7', padding: '0', zIndex: '-1'
     }
   });
   const dom = buildSharedReportDOM(sid);
@@ -9122,7 +9234,7 @@ async function saveReportImage(sid) {
     const target = dom.querySelector('.report-wrap') || dom;
     const canvas = await html2canvas(target, {
       scale: 2,
-      backgroundColor: '#faf9f5',
+      backgroundColor: '#eef2f7',
       useCORS: true,
       logging: false,
       windowWidth: 1000
@@ -9154,669 +9266,313 @@ async function saveReportImageWithToast(sid) {
   if (ok) showToast(s.name + ' 리포트 이미지를 저장했습니다 ✓', 'success');
 }
 
-function buildSharedReportDOM(sid) {
+// ============================================================
+// 학부모 리포트 — 한눈에 보이는 요약 · 막대+선 그래프 한 장 · 단원 약점 · 선생님 의견
+//   화면 / 이미지(PNG) / HTML 다운로드가 모두 이 DOM 과 reportChartConfig 를 같이 쓴다
+// ============================================================
+function reportData(sid) {
   const s = getStudent(sid);
-
-  // 데이터 수집
-  const myRounds = [];
-  const gradeAvgs = [];  // 값만 (차트/계산용)
-  const gradeStats = []; // 전체 stat (응시율 표시용)
-  const wrongs = [];
+  const rows = [];
   for (let r = 1; r <= ROUNDS; r++) {
     const rd = getRoundData(sid, r);
-    myRounds.push(rd);
     const gs = gradeRoundStats(s.grade, r);
-    gradeAvgs.push(gs.avg);
-    gradeStats.push(gs);
-    if (rd && !isAbsent(rd) && rd.errors) {
-      const errList = parseErrors(rd.errors);
-      if (errList.length > 0) {
-        wrongs.push({ round: r, errors: errList, version: rd.version || '' });
-      }
-    }
-    // 추가 응시(다른 버전)의 오답도 그 시험지 기준으로 함께 분석
-    const sub = getSubRoundData(sid, r);
-    if (sub && !isAbsent(sub) && sub.errors) {
-      const subList = parseErrors(sub.errors);
-      if (subList.length > 0) {
-        wrongs.push({ round: r, errors: subList, version: sub.version || '', isSub: true });
-      }
-    }
+    const score = rd && !isAbsent(rd) ? getScore(rd) : null;
+    rows.push({ r, rd, absent: !!(rd && isAbsent(rd)), score, gavg: gs.avg, gst: gs });
   }
-  const validScores = myRounds.map(rd => getScore(rd)).filter(x => x != null);
-  const myAvg = avg(validScores);
-  // 본인 응시 현황 (전체 학생 수는 노출하지 않고 회차 기준으로만 계산)
-  const myTaken = validScores.length;
-  const myAbsent = myRounds.filter(rd => isAbsent(rd)).length;
-  const myRate = ROUNDS > 0 ? Math.round(myTaken / ROUNDS * 100) : null;
-  const firstScore = validScores[0];
-  const lastScore = validScores[validScores.length - 1];
+  const taken = rows.filter(x => x.score != null);
+  const myAvg = taken.length ? taken.reduce((a, x) => a + x.score, 0) / taken.length : null;
+  const cmp = taken.filter(x => x.gavg != null);
+  const diff = cmp.length ? cmp.reduce((a, x) => a + (x.score - x.gavg), 0) / cmp.length : null;
+  const best = taken.length ? taken.reduce((a, x) => x.score > a.score ? x : a, taken[0]) : null;
+  const last = taken[taken.length - 1] || null, prev = taken[taken.length - 2] || null;
+  return { s, rows, taken, myAvg, diff, best, last, prev, absent: rows.filter(x => x.absent).length };
+}
 
-  const page = el('div', { className: 'report-page' });
+// 막대(내 점수) + 점선(학년 평균) + 목표선. 값은 막대 위에 숫자로 표시
+//   ※ HTML 다운로드 파일에도 그대로 들어가므로 이 함수 안에서는 바깥 변수를 쓰지 않는다
+function reportChartConfig(d) {
+  var lastIdx = -1;
+  d.my.forEach(function (v, i) { if (v != null) lastIdx = i; });
+  var values = {
+    id: 'prValues',
+    afterDatasetsDraw: function (chart) {
+      var c = chart.ctx, meta = chart.getDatasetMeta(0);
+      c.save(); c.textAlign = 'center'; c.textBaseline = 'bottom';
+      meta.data.forEach(function (bar, i) {
+        var v = d.my[i];
+        if (v == null) {
+          if (d.absent && d.absent[i]) { c.font = '700 12px Pretendard, sans-serif'; c.fillStyle = '#8a93a3'; c.fillText('결시', bar.x, chart.scales.y.getPixelForValue(0) - 6); }
+          return;
+        }
+        // 숫자는 막대 안쪽 위에 흰 글씨로 (학년 평균 점과 겹치지 않게). 막대가 너무 짧으면 위에 표시
+        c.font = '800 ' + (i === lastIdx ? 15 : 14) + 'px Pretendard, sans-serif';
+        var h = chart.scales.y.getPixelForValue(0) - bar.y;
+        if (h > 26) { c.textBaseline = 'middle'; c.fillStyle = '#fff'; c.fillText(String(Math.round(v * 10) / 10), bar.x, bar.y + Math.min(h / 2, Math.max(16, h * 0.32))); }
+        else { c.textBaseline = 'bottom'; c.fillStyle = '#0b1f3f'; c.fillText(String(Math.round(v * 10) / 10), bar.x, bar.y - 4); }
+      });
+      c.restore();
+    }
+  };
+  var ds = [
+    { type: 'bar', label: '내 점수', data: d.my, order: 3,
+      backgroundColor: d.my.map(function (v, i) { return i === lastIdx ? '#2f6bff' : '#14305e'; }),
+      borderRadius: 8, borderSkipped: false, maxBarThickness: 48, categoryPercentage: 0.62, barPercentage: 0.9 },
+    { type: 'line', label: d.grade + ' 학년 평균', data: d.avg, order: 1, borderColor: '#ff6a1a', borderWidth: 2.5, borderDash: [6, 5],
+      pointRadius: 4.5, pointHoverRadius: 6, pointBackgroundColor: '#fff', pointBorderColor: '#ff6a1a', pointBorderWidth: 2.5, tension: 0.3, spanGaps: true, fill: false }
+  ];
+  if (d.goal != null) ds.push({ type: 'line', label: d.goalLabel, data: d.labels.map(function () { return d.goal; }), order: 2,
+    borderColor: '#18a058', borderWidth: 2, borderDash: [10, 6], pointRadius: 0, pointHoverRadius: 0, fill: false });
+  return {
+    type: 'bar', data: { labels: d.labels, datasets: ds }, plugins: [values],
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: { duration: 600 },
+      layout: { padding: { top: 6 } },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: { backgroundColor: 'rgba(11,31,63,.96)', titleColor: '#ffb23f', bodyColor: '#fff', padding: 12, cornerRadius: 10, boxPadding: 5,
+          callbacks: { label: function (c) { return c.dataset.label + ': ' + (c.parsed.y != null ? (Math.round(c.parsed.y * 10) / 10) + '점' : '—'); } } }
+      },
+      scales: {
+        x: { grid: { display: false }, border: { color: '#d5dce6' }, ticks: { color: '#1d2433', font: { size: 13, weight: '700', family: 'Pretendard, sans-serif' } } },
+        y: { min: 0, max: 110, border: { display: false },
+          grid: { color: function (c) { return c.tick.value > 100 ? 'transparent' : 'rgba(11,31,63,.07)'; } },
+          ticks: { stepSize: 20, color: '#8a93a3', font: { size: 11.5 }, callback: function (v) { return v <= 100 ? v : ''; } } }
+      }
+    }
+  };
+}
 
-  // 상단 바 (학부모용)
+function reportChartData(R) {
+  const s = R.s;
+  const sg = Number(s.studentGoal), tg = Number(s.teacherGoal);
+  const goal = s.teacherGoal && !isNaN(tg) ? tg : (s.studentGoal && !isNaN(sg) ? sg : null);
+  return {
+    labels: R.rows.map(x => x.r + '회'),
+    my: R.rows.map(x => x.score),
+    absent: R.rows.map(x => x.absent),
+    avg: R.rows.map(x => x.gavg != null ? Math.round(x.gavg * 10) / 10 : null),
+    grade: s.grade, goal,
+    goalLabel: goal == null ? '' : (s.teacherGoal && !isNaN(tg) ? '목표 ' : '학생 목표 ') + goal + '점'
+  };
+}
+
+function prRing(v) {
+  const C = 2 * Math.PI * 32, p = Math.max(0, Math.min(100, v || 0)) / 100;
+  return svgEl('<svg class="pr-ring" viewBox="0 0 78 78"><circle cx="39" cy="39" r="32" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="8"/>'
+    + '<circle cx="39" cy="39" r="32" fill="none" stroke="#ff6a1a" stroke-width="8" stroke-linecap="round" stroke-dasharray="' + (C * p).toFixed(1) + ' ' + C.toFixed(1) + '" transform="rotate(-90 39 39)"/>'
+    + '<text x="39" y="44" text-anchor="middle" font-size="15" font-weight="800" fill="#fff" font-family="Pretendard, sans-serif">' + (v != null ? Math.round(v) : '–') + '</text></svg>');
+}
+
+function prSec(no, title, sub, ...body) {
+  return el('section', { className: 'pr-sec' },
+    el('div', { className: 'pr-sh' }, el('h3', null, el('em', null, no), title), sub ? el('span', null, sub) : null),
+    ...body);
+}
+
+function prDiff(d) {
+  if (d == null) return el('span', { className: 'pr-d eq' }, '—');
+  const c = Math.abs(d) < 0.05 ? 'eq' : d > 0 ? 'up' : 'dn';
+  return el('span', { className: 'pr-d ' + c }, (c === 'eq' ? '±0' : (d > 0 ? '+' : '−') + Math.abs(d).toFixed(1)));
+}
+
+function buildSharedReportDOM(sid) {
+  const R = reportData(sid), s = R.s;
+  const page = el('div', { className: 'report-page pr' });
+
   page.appendChild(el('div', { className: 'report-topbar' },
     el('div', { className: 'report-topbar-inner' },
       el('div', { className: 'report-topbar-brand' },
         el('img', { className: 'report-topbar-logo', src: KLADI_LOGO, alt: 'Kladi' }),
-        el('div', { className: 'report-topbar-title' }, '클라디수학학원')
-      ),
+        el('div', { className: 'report-topbar-title' }, '클라디수학학원')),
       el('div', { className: 'report-topbar-actions' },
-        el('button', {
-          className: 'btn btn-sm btn-ghost',
-          onClick: () => saveReportImageWithToast(sid)
-        }, '🖼 이미지 저장'),
-        el('button', { className: 'btn btn-sm btn-orange', onClick: () => window.print() }, '🖨 인쇄')
-      )
-    )
-  ));
+        el('button', { className: 'btn btn-sm btn-ghost', onClick: () => saveReportImageWithToast(sid) }, '🖼 이미지 저장'),
+        el('button', { className: 'btn btn-sm btn-orange', onClick: () => window.print() }, '🖨 인쇄'))
+    )));
 
   const wrap = el('div', { className: 'report-wrap' });
 
-  // === Hero (다크 배경 + 학생 정보) ===
-  wrap.appendChild(el('div', { className: 'report-hero' },
-    el('div', { className: 'report-monogram' }, 'KLADI MATH ACADEMY'),
-    el('div', { className: 'report-hero-tag' }, '2026 · 2학기 기말고사 대비'),
-    el('div', { className: 'report-hero-title' }, '수만프 분석 리포트'),
-    el('div', { className: 'report-hero-sub' }, ROUNDS + '회에 걸친 모의고사 결과를 종합 분석한 개인 리포트입니다'),
-    el('div', { className: 'report-hero-rule' }),
-    el('div', { className: 'report-hero-student' },
-      el('div', { className: 'report-hero-meta' },
-        el('div', { className: 'report-hero-meta-name' }, s.name,
-          el('span', {
-            style: {
-              fontSize: '11.5px',
-              padding: '3px 10px',
-              background: 'rgba(181,146,79,0.2)',
-              border: '1px solid rgba(181,146,79,0.4)',
-              borderRadius: '12px',
-              color: 'var(--orange-light)',
-              fontWeight: '700',
-              fontFamily: 'Pretendard, sans-serif',
-              letterSpacing: '0.3px'
-            }
-          }, s.grade)
-        ),
-        el('div', { className: 'report-hero-meta-info' }, `${s.school || ''}${s.school && s.teacher ? ' · ' : ''}${s.teacher ? '담당: ' + s.teacher : ''}`)
-      ),
-      el('div', { className: 'report-hero-stat' },
-        el('div', { className: 'report-hero-stat-label' }, '평균 점수'),
-        el('div', { className: 'report-hero-stat-value' }, myAvg != null ? fmt(myAvg) : '—',
-          myAvg != null ? el('span', { style: { fontSize: '14px', opacity: '0.8', marginLeft: '2px' } }, '점') : null
-        ),
-        el('div', { className: 'report-hero-stat-rate' },
-          '응시율 ', el('strong', null, myRate != null ? myRate + '%' : '—'),
-          el('span', { style: { opacity: '0.75' } }, `  (${ROUNDS}회 중 ${myTaken}회 응시${myAbsent > 0 ? ' · 결시 ' + myAbsent + '회' : ''})`)
-        )
-      )
+  // ── 머리 · 핵심 숫자
+  const d = R.diff;
+  wrap.appendChild(el('header', { className: 'pr-hero' },
+    el('div', { className: 'pr-top' },
+      el('div', null,
+        el('div', { className: 'pr-ey' }, 'KLADI MATH ACADEMY · 성적 분석 리포트'),
+        el('div', { className: 'pr-title' }, '수만프 모의고사 분석 리포트'),
+        el('div', { className: 'pr-sub' }, '2026학년도 2학기 기말고사 대비 · 모의고사 ' + ROUNDS + '회 과정')),
+      el('div', { className: 'pr-issue' }, '발행일 ', el('b', null, dateStr()), el('br'), '클라디수학학원')),
+    el('div', { className: 'pr-who' },
+      el('span', { className: 'pr-name' }, s.name),
+      el('span', { className: 'pr-grade' }, s.grade),
+      el('span', { className: 'pr-meta' }, [s.school, s.teacher ? '담당 ' + s.teacher : ''].filter(Boolean).join(' · '))),
+    el('div', { className: 'pr-kpis' },
+      el('div', { className: 'pr-kpi lead' }, prRing(R.myAvg),
+        el('div', null, el('small', null, '평균 점수'), el('b', null, R.myAvg != null ? fmt(R.myAvg) : '–', el('span', null, '점')), el('em', null, R.taken.length + '회 응시 평균'))),
+      el('div', { className: 'pr-kpi' }, el('small', null, '학년 평균 대비'),
+        el('b', { className: d == null ? '' : d >= 0 ? 'up' : 'dn' }, d == null ? '–' : (d >= 0 ? '+' : '−') + Math.abs(d).toFixed(1), el('span', null, '점')),
+        el('em', null, '응시한 회차 기준')),
+      el('div', { className: 'pr-kpi' }, el('small', null, '최고 점수'),
+        el('b', null, R.best ? fmt(R.best.score) : '–', el('span', null, '점')), el('em', null, R.best ? R.best.r + '회' : '')),
+      el('div', { className: 'pr-kpi' }, el('small', null, '응시'),
+        el('b', null, R.taken.length, el('span', null, '/ ' + ROUNDS + '회')), el('em', null, R.absent ? '결시 ' + R.absent + '회' : '결시 없음'))
     )
   ));
 
-  // === 1. 목표 점수 ===
-  wrap.appendChild(el('div', { className: 'report-section' },
-    el('div', { className: 'report-section-header' },
-      el('div', { className: 'report-section-icon' }, '🎯'),
-      el('div', { className: 'report-section-title' }, '목표 점수')
-    ),
-    el('div', { className: 'goals-row' },
-      goalBox('전학기', s.prevScore, 'muted'),
-      goalBox('학생 목표', s.studentGoal, 'navy'),
-      goalBox('가능 (강사)', s.teacherPossible, 'green'),
-      goalBox('목표 (강사)', s.teacherGoal, 'orange')
-    )
-  ));
-
-  // === 2. 회차별 점수 ===
-  const roundCards = [];
-  for (let r = 1; r <= ROUNDS; r++) {
-    const rd = myRounds[r-1];
-    const ga = gradeAvgs[r-1];
-    const gst = gradeStats[r-1];
-    let scoreClass = 'empty', scoreText = '—', deltaNode = null, avgNode = null, rateNode = null;
-    let hasData = false;
-
-    if (rd) {
-      if (isAbsent(rd)) {
-        scoreClass = 'absent';
-        scoreText = '결시';
-        hasData = true;
-      } else {
-        const n = Number(rd.score);
-        if (!isNaN(n) && rd.score !== '' && rd.score != null) {
-          hasData = true;
-          scoreText = fmt(n);
-          scoreClass = n >= 80 ? 'high' : n >= 60 ? 'mid' : 'low';
-          if (ga != null) {
-            const d = n - ga;
-            deltaNode = el('div', {
-              className: 'round-card-delta ' + (d >= 0 ? 'delta-up' : 'delta-down')
-            }, (d >= 0 ? '▲' : '▼') + Math.abs(d).toFixed(1));
-            avgNode = el('div', { className: 'round-card-avg' }, '평균 ' + fmt(ga));
-            const gRate = attendanceRate(gst);
-            if (gRate != null) {
-              rateNode = el('div', { className: 'round-card-rate' }, '학년 응시율 ' + Math.round(gRate * 100) + '%');
-            }
-          }
-        }
-      }
-    }
-
-    roundCards.push(el('div', { className: 'round-card' + (hasData ? ' has-data' : '') },
-      el('div', { className: 'round-card-no' }, `${r}회`),
-      el('div', { className: 'round-card-score ' + scoreClass },
-        scoreText,
-        (hasData && scoreClass !== 'absent' && scoreClass !== 'empty') ?
-          el('span', { style: { fontSize: '12px', opacity: '0.8', marginLeft: '1px' } }, '점') : null
-      ),
-      avgNode,
-      deltaNode,
-      rateNode
-    ));
+  // ── 한 줄 요약
+  if (R.taken.length) {
+    let icon = '=', head = s.grade + ' 학년 평균과 비슷한 수준입니다';
+    // 기준 ±5점 — 아래 '종합 의견'과 같은 기준
+    if (d != null && d > 5) { icon = '▲'; head = '학년 평균보다 평균 ' + d.toFixed(1) + '점 높습니다'; }
+    else if (d != null && d > 0) { icon = '▲'; head = '학년 평균보다 조금 높은 수준입니다'; }
+    else if (d != null && d <= -5) { icon = '!'; head = '학년 평균보다 평균 ' + Math.abs(d).toFixed(1) + '점 낮습니다 — 약점 단원 보완이 필요합니다'; }
+    let sub = '최근 ' + R.last.r + '회 ' + fmt(R.last.score) + '점';
+    if (R.prev) { const t = R.last.score - R.prev.score; sub += ' · ' + R.prev.r + '회 대비 ' + (Math.abs(t) < 0.05 ? '변화 없음' : (t > 0 ? '▲' : '▼') + Math.abs(t).toFixed(1) + '점'); }
+    wrap.appendChild(el('div', { className: 'pr-headline' }, el('i', null, icon), el('div', null, el('b', null, head), el('span', null, sub))));
   }
 
-  wrap.appendChild(el('div', { className: 'report-section' },
-    el('div', { className: 'report-section-header' },
-      el('div', { className: 'report-section-icon' }, '📊'),
-      el('div', { className: 'report-section-title' }, '회차별 점수'),
-      el('div', { className: 'report-section-sub' }, '학년 평균 대비 추이')
-    ),
-    el('div', { className: 'rounds-grid' }, ...roundCards)
-  ));
-
-  // === 2-1. 추가 응시 기록 (다른 버전 시험지를 함께 본 경우) ===
-  const subs = subEntryList(sid);
-  if (subs.length > 0) {
-    const subVer = (subs.find(x => x.version) || {}).version || '';
-    const taken = subs.filter(x => !x.absent);
-    const subAvg = taken.length ? taken.reduce((a, b) => a + b.score, 0) / taken.length : null;
-    wrap.appendChild(el('div', { className: 'report-section' },
-      el('div', { className: 'report-section-header' },
-        el('div', { className: 'report-section-icon' }, '📐'),
-        el('div', { className: 'report-section-title' }, '추가 응시 기록'),
-        el('div', { className: 'report-section-sub' },
-          (subVer ? subVer + ' · ' : '') + taken.length + '회 응시' + (subAvg != null ? ' · 평균 ' + fmt(subAvg) + '점' : ''))
-      ),
-      el('div', { className: 'sub-note' },
-        '위 추이와는 범위가 다른 시험지를 추가로 응시한 기록입니다. 위의 학년 평균 비교에는 포함되지 않습니다.'),
-      el('div', { className: 'sub-chips' },
-        ...subs.map(x => el('div', { className: 'sub-chip' + (x.absent ? ' absent' : '') },
-          el('b', null, x.round + '회'),
-          el('span', null, x.absent ? '결시' : fmt(x.score) + '점')
-        ))
-      )
-    ));
-  }
-
-  // === 3. 추이 차트 ===
+  // ── 1. 회차별 성적 (그래프 + 표)
   const chartId = 'shared-trend-' + sid + '-' + (++_sharedChartSeq);
-  wrap.appendChild(el('div', { className: 'report-section' },
-    el('div', { className: 'report-section-header' },
-      el('div', { className: 'report-section-icon' }, '📈'),
-      el('div', { className: 'report-section-title' }, '추이 분석'),
-      firstScore != null && lastScore != null ?
-        el('div', { className: 'report-section-sub' },
-          `${fmt(firstScore)}점 → ${fmt(lastScore)}점 (${lastScore - firstScore >= 0 ? '▲' : '▼'}${Math.abs(lastScore - firstScore).toFixed(1)})`
-        ) : null
-    ),
-    el('div', { className: 'chart-box' }, el('canvas', { id: chartId }))
+  const CD = reportChartData(R);
+  const shown = R.rows.filter(x => x.rd || x.gavg != null);
+  wrap.appendChild(prSec('01', '회차별 성적', '막대 안 숫자 = 내 점수',
+    el('div', { className: 'pr-legend' },
+      el('span', null, el('i', { className: 'bar' }), '내 점수 (파란 막대 = 최근)'),
+      el('span', null, el('i', { className: 'ln' }), s.grade + ' 학년 평균'),
+      CD.goal != null ? el('span', null, el('i', { className: 'gl' }), CD.goalLabel) : null),
+    el('div', { className: 'pr-chart' }, el('canvas', { id: chartId })),
+    shown.length ? el('div', { style: { overflowX: 'auto' } }, el('table', { className: 'pr-table' },
+      el('thead', null, el('tr', null, el('th', null, '회차'), ...shown.map(x => el('th', null, x.r + '회')))),
+      el('tbody', null,
+        el('tr', null, el('td', null, '내 점수'), ...shown.map(x => x.score != null ? el('td', { className: 'me' }, fmt(x.score)) : el('td', { className: 'ab' }, x.absent ? '결시' : '–'))),
+        el('tr', null, el('td', null, '학년 평균'), ...shown.map(x => el('td', null, x.gavg != null ? fmt(x.gavg) : '–'))),
+        el('tr', null, el('td', null, '차이'), ...shown.map(x => el('td', null, x.score != null && x.gavg != null ? prDiff(x.score - x.gavg) : '')))
+      ))) : null,
+    shown.length < ROUNDS ? el('div', { className: 'pr-note' }, (shown.length ? (shown[shown.length - 1].r + 1) + '~' : '') + ROUNDS + '회는 앞으로 응시할 회차입니다.') : null
   ));
 
-  // === 4. 오답 분석 ===
-  const wrongSection = el('div', { className: 'report-section' },
-    el('div', { className: 'report-section-header' },
-      el('div', { className: 'report-section-icon' }, '🔍'),
-      el('div', { className: 'report-section-title' }, '회차별 오답 분석')
-    )
-  );
+  // ── 추가 응시 기록
+  const subs = subEntryList(sid);
+  if (subs.length) {
+    const subVer = (subs.find(x => x.version) || {}).version || '';
+    const st = subs.filter(x => !x.absent);
+    wrap.appendChild(prSec('+', '추가 응시 기록', (subVer ? subVer + ' · ' : '') + st.length + '회 응시',
+      el('div', { className: 'pr-note', style: { marginTop: 0, marginBottom: '10px' } }, '범위가 다른 시험지를 추가로 본 기록입니다. 위 학년 평균 비교에는 포함되지 않습니다.'),
+      el('div', { className: 'pr-chips' }, ...subs.map(x => el('span', { className: 'pr-chip' }, x.round + '회', el('b', null, x.absent ? '결시' : fmt(x.score) + '점'))))));
+  }
 
-  if (wrongs.length === 0) {
-    wrongSection.appendChild(el('div', { className: 'muted', style: { padding: '20px 0', textAlign: 'center' } },
-      '아직 오답 데이터가 없습니다.'
+  // ── 2. 목표 점수 (입력된 경우만)
+  const goals = [['전학기 점수', s.prevScore], ['학생 목표', s.studentGoal], ['가능 점수 (강사)', s.teacherPossible], ['목표 점수 (강사)', s.teacherGoal]]
+    .map(g => [g[0], Number(g[1]), g[1]]).filter(g => g[2] !== '' && g[2] != null && !isNaN(g[1]));
+  let secNo = 2;
+  if (goals.length) {
+    wrap.appendChild(prSec('0' + (secNo++), '목표 점수', '주황 세로선 = 현재 평균 ' + (R.myAvg != null ? fmt(R.myAvg) + '점' : ''),
+      el('div', { className: 'pr-goals' }, ...goals.map(g => el('div', { className: 'pr-goal' },
+        el('span', { className: 'lb' }, g[0]),
+        el('div', { className: 'tr' }, el('i', { style: { width: Math.min(100, g[1]) + '%' } }), R.myAvg != null ? el('s', { style: { left: Math.min(100, R.myAvg) + '%' } }) : null),
+        el('span', { className: 'vl' }, g[1] + '점'))))));
+  }
+
+  // ── 3. 약점 단원 분석
+  const unitC = {}, typeC = {}, diffC = {};
+  let nAn = 0;
+  R.rows.forEach(x => {
+    if (!x.rd || x.absent || !x.rd.errors) return;
+    const paper = getPaperForStudent(s.grade, x.r, x.rd.version);
+    if (!paper || !paper.problems) return;
+    parseErrors(x.rd.errors).forEach(n => {
+      const p = paper.problems[n - 1];
+      if (!p || (!p.unit && !p.type && !p.difficulty)) return;
+      nAn++;
+      if (p.unit) unitC[p.unit] = (unitC[p.unit] || 0) + 1;
+      if (p.type) typeC[p.type] = (typeC[p.type] || 0) + 1;
+      if (p.difficulty) diffC[p.difficulty] = (diffC[p.difficulty] || 0) + 1;
+    });
+  });
+  if (nAn) {
+    const units = Object.entries(unitC).sort((a, b) => b[1] - a[1]).slice(0, 6);
+    const types = Object.entries(typeC).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const DORD = ['최하', '하', '중', '상', '최상'], DCOL = { '최하': '#8fd3aa', '하': '#18a058', '중': '#ffb23f', '상': '#ff6a1a', '최상': '#c0353a' };
+    const diffs = DORD.filter(k => diffC[k]).map(k => [k, diffC[k]]);
+    const top = units[0];
+    wrap.appendChild(prSec('0' + (secNo++), '약점 단원 분석', '틀린 문항 ' + nAn + '개를 단원·난이도별로 정리',
+      top ? el('div', { className: 'pr-weak-top' },
+        el('div', null, el('small', null, '집중 보완이 필요한 단원'), el('b', null, top[0])),
+        el('span', null, '전체 오답 중', el('strong', null, Math.round(top[1] / nAn * 100) + '%'))) : null,
+      el('div', { className: 'pr-bars' }, ...units.map(([u, c], i) => el('div', { className: 'pr-bar' },
+        el('span', { className: 'lb', title: u }, u),
+        el('div', { className: 'tr' }, el('i', { className: i === 0 ? 'hi' : '', style: { width: (c / units[0][1] * 100) + '%' } })),
+        el('span', { className: 'vl' }, c + '문항')))),
+      el('div', { className: 'pr-two' },
+        el('div', null, el('h4', null, '난이도별 오답'),
+          el('div', { className: 'pr-stack' }, ...diffs.map(([k, c]) => el('div', { style: { width: (c / nAn * 100) + '%', background: DCOL[k] } }, c))),
+          el('div', { className: 'pr-stack-l' }, ...diffs.map(([k, c]) => el('span', null, el('i', { style: { background: DCOL[k] } }), k + ' ' + Math.round(c / nAn * 100) + '%')))),
+        types.length ? el('div', null, el('h4', null, '유형별 오답'),
+          el('div', { className: 'pr-chips' }, ...types.map(([t, c]) => el('span', { className: 'pr-chip' }, t, el('b', null, c))))) : null)
     ));
-  } else {
+  }
+
+  // ── 4. 회차별 오답 상세
+  const wrongs = [];
+  R.rows.forEach(x => {
+    allRoundEntries(sid, x.r).forEach(rd => {
+      if (isAbsent(rd) || !rd.errors) return;
+      const list = parseErrors(rd.errors);
+      if (list.length) wrongs.push({ round: x.r, errors: list, version: rd.version || '', isSub: rd !== x.rd });
+    });
+  });
+  if (wrongs.length) {
+    const trs = [];
     wrongs.forEach(w => {
       const paper = getPaperForStudent(s.grade, w.round, w.version);
-      const hasPaperProblems = paper && paper.problems && paper.problems.length > 0 &&
-                               paper.problems.some(p => p.unit || p.type || p.difficulty);
-      // 통합 PDF (구버전 testPdf도 호환)
-      const paperPdf = paper && (paper.paperPdf || paper.testPdf);
-      const hasPdf = !!paperPdf;
-
-      const roundCard = el('div', { className: 'wrong-round-card' },
-        el('div', { className: 'wrong-round-head' },
-          el('div', { className: 'wrong-round-title' },
-            el('span', { className: 'wrong-round-title-num' }, `${w.round}회`),
-            `오답 ${w.errors.length}문항`,
-            w.isSub ? el('span', { className: 'wrong-sub-tag' }, '추가 응시') : null
-          ),
-          el('div', { className: 'wrong-badges' },
-            ...w.errors.map(n => el('span', { className: 'wrong-num-badge' }, n + '번'))
-          )
-        )
-      );
-
-      // 주제 + PDF 링크
-      if (paper) {
-        const metaBar = el('div', { className: 'wrong-round-meta' });
-        if (paper.topic) {
-          metaBar.appendChild(el('div', { className: 'wrong-round-topic' },
-            el('span', { className: 'wrong-round-topic-label' }, '주제'),
-            el('span', { className: 'wrong-round-topic-value' }, paper.topic)
-          ));
-        }
-        if (hasPdf) {
-          const pdfLinks = el('div', { className: 'wrong-round-pdf-links' });
-          pdfLinks.appendChild(el('button', {
-            className: 'pdf-link-btn',
-            onClick: () => openPdfBlob(paperPdf, pdfKey(s.grade, w.round))
-          }, '📄 시험지 · 해설지 PDF'));
-          metaBar.appendChild(pdfLinks);
-        }
-        if (paper.topic || hasPdf) roundCard.appendChild(metaBar);
-      }
-
-      // 학부모 친화적 요약: 회차별로 단원만 묶어서 간결하게 표시
-      if (hasPaperProblems) {
-        // 회차 내 단원별 그룹핑 (대단원 기준)
-        const unitGroups = {};  // unit → [번호 리스트]
-        const unanalyzedNums = [];
-        
-        w.errors.forEach(n => {
-          const p = paper.problems[n - 1];
-          if (!p) { unanalyzedNums.push(n); return; }
-          if (!p.unit && !p.type && !p.difficulty) {
-            unanalyzedNums.push(n);
-            return;
-          }
-          // 대단원 키 (없으면 기타로)
-          const unitKey = p.unit || '기타';
-          if (!unitGroups[unitKey]) unitGroups[unitKey] = [];
-          unitGroups[unitKey].push({ n, p });
-        });
-        
-        const unitKeys = Object.keys(unitGroups);
-        if (unitKeys.length > 0) {
-          const summaryList = el('div', { className: 'wrong-summary-list' });
-          unitKeys.forEach(unitKey => {
-            const items = unitGroups[unitKey];
-            const nums = items.map(it => it.n).sort((a, b) => a - b);
-            
-            // 이 단원에서 가장 자주 나오는 난이도 표시
-            const diffCount = {};
-            items.forEach(it => {
-              if (it.p.difficulty) diffCount[it.p.difficulty] = (diffCount[it.p.difficulty] || 0) + 1;
-            });
-            const topDiff = Object.entries(diffCount).sort((a, b) => b[1] - a[1])[0];
-            
-            summaryList.appendChild(el('div', { className: 'wrong-unit-row' },
-              el('div', { className: 'wrong-unit-info' },
-                el('div', { className: 'wrong-unit-name' }, unitKey),
-                el('div', { className: 'wrong-unit-count' }, items.length + '문항 오답')
-              ),
-              el('div', { className: 'wrong-unit-nums' },
-                ...nums.map(n => el('span', { className: 'wrong-num-chip' }, n + '번'))
-              ),
-              topDiff ? el('div', { className: 'wrong-unit-diff' },
-                (() => {
-                  const d = TAG_SYSTEM.difficulties.find(x => x.level === topDiff[0]);
-                  return d ? d.symbol : topDiff[0];
-                })()
-              ) : null
-            ));
-          });
-          roundCard.appendChild(summaryList);
-        }
-        
-        if (unanalyzedNums.length > 0 && unitKeys.length === 0) {
-          roundCard.appendChild(el('div', { className: 'wrong-unanalyzed-note' },
-            `${unanalyzedNums.join('번, ')}번 문항`
-          ));
-        }
-      } else if (paper) {
-        roundCard.appendChild(el('div', { className: 'wrong-unanalyzed-note' },
-          '※ 시험지 문항 분류가 입력되면 상세 약점 분석이 표시됩니다.'
-        ));
-      } else {
-        roundCard.appendChild(el('div', { className: 'wrong-unanalyzed-note' },
-          '※ 시험지가 업로드되면 문항별 상세 분석이 자동으로 표시됩니다.'
-        ));
-      }
-
-      wrongSection.appendChild(roundCard);
+      const probs = paper && paper.problems ? paper.problems : [];
+      const total = probs.length;
+      const groups = {}, rest = [];
+      w.errors.forEach(n => { const p = probs[n - 1]; if (p && p.unit) (groups[p.unit] = groups[p.unit] || []).push({ n, p }); else rest.push(n); });
+      const lines = Object.entries(groups).sort((a, b) => b[1].length - a[1].length).map(([u, its]) => {
+        const dc = {}; its.forEach(it => { if (it.p.difficulty) dc[it.p.difficulty] = (dc[it.p.difficulty] || 0) + 1; });
+        const td = Object.entries(dc).sort((a, b) => b[1] - a[1])[0];
+        const dInfo = td ? TAG_SYSTEM.difficulties.find(x => x.level === td[0]) : null;
+        return [u, its.map(it => it.n).sort((a, b) => a - b), dInfo ? dInfo.symbol : ''];
+      });
+      if (rest.length) lines.push([total ? '분류 준비 중' : '문항', rest, '']);
+      const pdf = paper && (paper.paperPdf || paper.testPdf);
+      lines.forEach((ln, i) => {
+        const cells = [];
+        if (i === 0) cells.push(el('td', { className: 'rn', rowSpan: lines.length },
+          w.round + '회' + (w.isSub ? ' (추가)' : ''),
+          el('small', null, '오답 ' + w.errors.length + (total ? '/' + total + ' · 정답률 ' + Math.round((total - w.errors.length) / total * 100) + '%' : '문항')),
+          pdf ? el('button', { className: 'pr-pdf', onClick: () => openPdfBlob(pdf, pdfKey(s.grade, w.round)) }, '시험지·해설 PDF') : null));
+        cells.push(el('td', { className: 'un' }, ln[0]),
+          el('td', null, el('div', { className: 'nums' }, ...ln[1].map(n => el('span', null, n + '번')))),
+          el('td', { className: 'df' }, ln[2]));
+        trs.push(el('tr', { className: i === 0 ? 'rh' : '' }, ...cells));
+      });
     });
+    wrap.appendChild(prSec('0' + (secNo++), '회차별 오답 상세', '★ 많을수록 어려운 문항',
+      el('div', { style: { overflowX: 'auto' } }, el('table', { className: 'pr-wt' },
+        el('thead', null, el('tr', null, el('th', null, '회차'), el('th', null, '단원'), el('th', null, '틀린 문항'), el('th', null, '난이도'))),
+        el('tbody', null, ...trs)))));
   }
-  wrap.appendChild(wrongSection);
 
-  // === 5. 약점 영역 분석 ===
-  const weakSec = buildWeaknessSection(sid);
-  if (weakSec) wrap.appendChild(weakSec);
+  // ── 5. 선생님 종합 의견
+  const tone = l => /^(📈|💪|💎|✅|👍)/u.test(l) ? 'good' : /^(⚠|📉|🔍)/u.test(l) ? 'warn' : /^(📚|🎯)/u.test(l) ? 'tip' : '';
+  wrap.appendChild(prSec('0' + (secNo++), '종합 의견', s.teacher ? '담당 ' + s.teacher : '',
+    el('div', { className: 'pr-com' }, ...generateStudentAnalysisLines(sid).map(l =>
+      el('div', { className: tone(l) }, el('i'), el('span', null, l.replace(/^[^0-9A-Za-z가-힣(]+/u, '').trim()))))));
 
-  // === 6. 종합 분석 ===
-  wrap.appendChild(el('div', { className: 'report-section' },
-    el('div', { className: 'report-section-header' },
-      el('div', { className: 'report-section-icon' }, '💬'),
-      el('div', { className: 'report-section-title' }, '종합 분석')
-    ),
-    el('div', { className: 'analysis-list' },
-      ...generateStudentAnalysisLines(sid).map(l => el('div', { className: 'analysis-item' }, l))
-    )
-  ));
-
-  // 푸터
-  wrap.appendChild(el('div', {
-    style: {
-      textAlign: 'center',
-      padding: '24px 20px',
-      color: 'var(--ink-mute)',
-      fontSize: '11.5px',
-      letterSpacing: '0.5px',
-      marginTop: '8px'
-    }
-  },
-    el('div', { style: { marginBottom: '4px' } }, `생성일: ${dateStr()}`),
-    el('div', null, '클라디수학학원 · 수만프 분석 시스템')
-  ));
+  wrap.appendChild(el('footer', { className: 'pr-foot' },
+    el('div', null, '본 리포트는 ', el('b', null, '클라디수학학원'), ' 수만프 모의고사 채점 결과를 바탕으로 작성되었습니다.'),
+    el('div', null, '발행일 ' + dateStr() + ' · 학년 평균은 같은 학년 응시생 전체 기준입니다.')));
 
   page.appendChild(wrap);
-  setTimeout(() => renderSharedTrendChart(sid, myRounds, gradeAvgs, chartId), 60);
+  setTimeout(() => {
+    const cv = document.getElementById(chartId);
+    if (!cv || typeof Chart === 'undefined') return;
+    if (_charts[chartId]) _charts[chartId].destroy();
+    _charts[chartId] = new Chart(cv, reportChartConfig(CD));
+  }, 60);
+  page._chartData = CD; page._chartId = chartId;
   return page;
-}
-
-// 약점 영역 분석 섹션
-function buildWeaknessSection(sid) {
-  const s = getStudent(sid);
-  const unitCounter = {}, typeCounter = {}, diffCounter = {};
-  let totalAnalyzed = 0;
-
-  for (let r = 1; r <= ROUNDS; r++) {
-    const rd = getRoundData(sid, r);
-    if (!rd || isAbsent(rd) || !rd.errors) continue;
-    const paper = getPaperForStudent(s.grade, r, rd.version);
-    if (!paper || !paper.problems) continue;
-    const errors = parseErrors(rd.errors);
-    errors.forEach(n => {
-      const p = paper.problems[n - 1];
-      if (!p) return;
-      if (!p.unit && !p.type && !p.difficulty) return;
-      totalAnalyzed++;
-      if (p.unit) {
-        const key = p.unit;  // 대단원만 (학부모용 요약)
-        unitCounter[key] = (unitCounter[key] || 0) + 1;
-      }
-      if (p.type) typeCounter[p.type] = (typeCounter[p.type] || 0) + 1;
-      if (p.difficulty) diffCounter[p.difficulty] = (diffCounter[p.difficulty] || 0) + 1;
-    });
-  }
-
-  if (totalAnalyzed === 0) return null;
-
-  const topUnits = Object.entries(unitCounter).sort((a,b) => b[1] - a[1]).slice(0, 5);
-  const topTypes = Object.entries(typeCounter).sort((a,b) => b[1] - a[1]).slice(0, 4);
-  const diffEntries = Object.entries(diffCounter).sort((a,b) => {
-    const order = ['최하','하','중','상','최상'];
-    return order.indexOf(a[0]) - order.indexOf(b[0]);
-  });
-  
-  // 가장 약한 단원 1개 (강조)
-  const topUnit = topUnits[0];
-  const topUnitRatio = topUnit ? (topUnit[1] / totalAnalyzed * 100) : 0;
-
-  const sec = el('div', { className: 'report-section' },
-    el('div', { className: 'report-section-header' },
-      el('div', { className: 'report-section-icon' }, '🎯'),
-      el('div', { className: 'report-section-title' }, '약점 영역 분석'),
-      el('div', { className: 'report-section-sub' }, `총 ${totalAnalyzed}개 오답 분석`)
-    )
-  );
-
-  // 핵심 메시지 (가장 약한 단원 강조)
-  if (topUnit) {
-    sec.appendChild(el('div', { className: 'weakness-headline' },
-      el('div', { className: 'weakness-headline-icon' }, '⚠️'),
-      el('div', { className: 'weakness-headline-content' },
-        el('div', { className: 'weakness-headline-label' }, '집중 보완이 필요한 단원'),
-        el('div', { className: 'weakness-headline-unit' }, topUnit[0]),
-        el('div', { className: 'weakness-headline-stat' },
-          `오답 ${topUnit[1]}개 · 전체 오답의 `,
-          el('strong', null, topUnitRatio.toFixed(0) + '%')
-        )
-      )
-    ));
-  }
-
-  // 단원별 오답 분포 (진행률 바)
-  if (topUnits.length > 0) {
-    const unitChart = el('div', { className: 'weakness-bar-group' },
-      el('div', { className: 'weakness-bar-title' }, '단원별 오답 분포')
-    );
-    const maxCount = topUnits[0][1];
-    topUnits.forEach(([u, c]) => {
-      const pct = (c / maxCount) * 100;
-      const ratio = c / totalAnalyzed;
-      const colorClass = ratio > 0.35 ? 'bar-high' : ratio > 0.20 ? 'bar-mid' : 'bar-low';
-      unitChart.appendChild(el('div', { className: 'weakness-bar-row' },
-        el('div', { className: 'weakness-bar-label' }, u),
-        el('div', { className: 'weakness-bar-track' },
-          el('div', { className: 'weakness-bar-fill ' + colorClass, style: { width: pct + '%' } })
-        ),
-        el('div', { className: 'weakness-bar-value' }, c + '개')
-      ));
-    });
-    sec.appendChild(unitChart);
-  }
-
-  // 유형별·난이도별은 작은 칩 형식으로 (한눈에)
-  const subBox = el('div', { className: 'weakness-sub-box' });
-  
-  if (topTypes.length > 0) {
-    subBox.appendChild(el('div', { className: 'weakness-sub-col' },
-      el('div', { className: 'weakness-sub-title' }, '유형별 오답'),
-      el('div', { className: 'weakness-chips' },
-        ...topTypes.map(([t, c]) => el('span', { className: 'weakness-chip' },
-          t,
-          el('span', { className: 'weakness-chip-count' }, c)
-        ))
-      )
-    ));
-  }
-
-  if (diffEntries.length > 0) {
-    subBox.appendChild(el('div', { className: 'weakness-sub-col' },
-      el('div', { className: 'weakness-sub-title' }, '난이도별 오답'),
-      el('div', { className: 'weakness-chips' },
-        ...diffEntries.map(([d, c]) => {
-          const dInfo = TAG_SYSTEM.difficulties.find(x => x.level === d);
-          return el('span', { className: 'weakness-chip' },
-            (dInfo ? dInfo.symbol + ' ' : '') + d,
-            el('span', { className: 'weakness-chip-count' }, c)
-          );
-        })
-      )
-    ));
-  }
-  
-  if (subBox.children.length > 0) sec.appendChild(subBox);
-
-  return sec;
-}
-
-// goalBox 헬퍼
-function goalBox(label, value, color) {
-  const disp = (value != null && value !== '' && value !== 'X' && value !== 'x') ?
-    value + '점' :
-    (value === 'X' || value === 'x' ? '해당없음' : '—');
-  return el('div', { className: 'goal-box ' + color },
-    el('div', { className: 'goal-box-label' }, label),
-    el('div', { className: 'goal-box-value' }, disp)
-  );
-}
-
-function renderSharedTrendChart(sid, myRounds, gradeAvgs, chartId) {
-  const ctx = document.getElementById(chartId);
-  if (!ctx || typeof Chart === 'undefined') return;
-  if (_charts[chartId]) _charts[chartId].destroy();
-
-  const s = getStudent(sid);
-  const myData = myRounds.map(rd => {
-    if (!rd || isAbsent(rd)) return null;
-    const n = Number(rd.score);
-    return isNaN(n) ? null : n;
-  });
-  const goalLine = s.studentGoal && !isNaN(Number(s.studentGoal)) ? Number(s.studentGoal) : null;
-  const teacherGoal = s.teacherGoal && !isNaN(Number(s.teacherGoal)) ? Number(s.teacherGoal) : null;
-
-  // 그라데이션 만들기
-  const chartCtx = ctx.getContext('2d');
-  const orangeGradient = chartCtx.createLinearGradient(0, 0, 0, 280);
-  orangeGradient.addColorStop(0, 'rgba(181, 146, 79, 0.32)');
-  orangeGradient.addColorStop(0.5, 'rgba(181, 146, 79, 0.12)');
-  orangeGradient.addColorStop(1, 'rgba(181, 146, 79, 0.01)');
-
-  const navyGradient = chartCtx.createLinearGradient(0, 0, 0, 280);
-  navyGradient.addColorStop(0, 'rgba(15, 39, 66, 0.08)');
-  navyGradient.addColorStop(1, 'rgba(15, 39, 66, 0)');
-
-  const datasets = [
-    {
-      label: s.name + ' 점수',
-      data: myData,
-      borderColor: '#b5924f',
-      backgroundColor: orangeGradient,
-      borderWidth: 3.5,
-      pointRadius: 6,
-      pointHoverRadius: 9,
-      pointBackgroundColor: '#b5924f',
-      pointBorderColor: '#fff',
-      pointBorderWidth: 3,
-      pointHoverBackgroundColor: '#8c6c33',
-      pointHoverBorderColor: '#fff',
-      pointHoverBorderWidth: 3,
-      tension: 0.35,
-      spanGaps: true,
-      fill: true,
-      order: 1
-    },
-    {
-      label: s.grade + ' 학년 평균',
-      data: gradeAvgs,
-      borderColor: '#0f2742',
-      backgroundColor: 'transparent',
-      borderWidth: 2.5,
-      borderDash: [6, 5],
-      pointRadius: 4,
-      pointHoverRadius: 7,
-      pointBackgroundColor: '#0f2742',
-      pointBorderColor: '#fff',
-      pointBorderWidth: 2,
-      tension: 0.35,
-      spanGaps: true,
-      fill: false,
-      order: 2
-    }
-  ];
-
-  if (goalLine != null) {
-    datasets.push({
-      label: '학생 목표 ' + goalLine + '점',
-      data: Array(8).fill(goalLine),
-      borderColor: 'rgba(21, 128, 61, 0.85)',
-      backgroundColor: 'transparent',
-      borderWidth: 2,
-      borderDash: [10, 6],
-      pointRadius: 0,
-      pointHoverRadius: 0,
-      tension: 0,
-      fill: false,
-      order: 3
-    });
-  }
-  if (teacherGoal != null && teacherGoal !== goalLine) {
-    datasets.push({
-      label: '강사 목표 ' + teacherGoal + '점',
-      data: Array(8).fill(teacherGoal),
-      borderColor: 'rgba(140, 108, 51, 0.7)',
-      backgroundColor: 'transparent',
-      borderWidth: 1.8,
-      borderDash: [4, 4],
-      pointRadius: 0,
-      pointHoverRadius: 0,
-      tension: 0,
-      fill: false,
-      order: 4
-    });
-  }
-
-  _charts[chartId] = new Chart(ctx, {
-    type: 'line',
-    data: { labels: roundLabels(), datasets },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: {
-          position: 'top',
-          align: 'end',
-          labels: {
-            color: '#2d2d4a',
-            font: { size: 12.5, family: "Pretendard, sans-serif", weight: '600' },
-            padding: 14,
-            usePointStyle: true,
-            pointStyle: 'circle',
-            boxWidth: 8,
-            boxHeight: 8
-          }
-        },
-        tooltip: {
-          backgroundColor: 'rgba(15, 39, 66, 0.96)',
-          titleColor: '#d9bd82',
-          titleFont: { size: 13, weight: '700', family: "Pretendard, sans-serif" },
-          titleMarginBottom: 8,
-          bodyColor: '#ffffff',
-          bodyFont: { size: 12.5, family: "Pretendard, sans-serif" },
-          bodySpacing: 6,
-          padding: 14,
-          cornerRadius: 10,
-          displayColors: true,
-          boxPadding: 6,
-          borderColor: 'rgba(181, 146, 79, 0.35)',
-          borderWidth: 1,
-          callbacks: {
-            label: function(context) {
-              const v = context.parsed.y;
-              if (v == null) return context.dataset.label + ': —';
-              return context.dataset.label + ': ' + (Math.round(v * 10) / 10) + '점';
-            }
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: '#555570',
-            font: { size: 12, weight: '600', family: "Pretendard, sans-serif" }
-          },
-          grid: { display: false },
-          border: { color: '#d8cdb3' }
-        },
-        y: {
-          ticks: {
-            color: '#9090a8',
-            font: { size: 11.5, family: "JetBrains Mono, monospace" },
-            callback: v => v + '점',
-            stepSize: 20
-          },
-          grid: { color: 'rgba(184, 168, 122, 0.18)', lineWidth: 1 },
-          border: { display: false },
-          min: 0, max: 100
-        }
-      },
-      animation: {
-        duration: 800,
-        easing: 'easeOutQuart'
-      }
-    }
-  });
 }
 
 function generateStudentAnalysisLines(sid) {
@@ -9833,16 +9589,13 @@ function generateStudentAnalysisLines(sid) {
   if (validScores.length === 0) return ['아직 응시한 시험이 없어 분석이 어렵습니다.'];
 
   const myAvg = avg(validScores.map(v => v.score));
-  const gradeAvgScores = [];
-  for (let r = 1; r <= ROUNDS; r++) {
-    const ga = gradeRoundStats(s.grade, r).avg;
-    if (ga != null) gradeAvgScores.push(ga);
-  }
-  const gradeAvg = avg(gradeAvgScores);
+  // 학년 평균은 학생이 응시한 회차만으로 비교 (리포트 상단 '학년 평균 대비'와 같은 기준)
+  const pairs = validScores.map(v => ({ my: v.score, ga: gradeRoundStats(s.grade, v.round).avg })).filter(p => p.ga != null);
+  const gradeAvg = pairs.length ? avg(pairs.map(p => p.ga)) : null;
 
   // 전체 위치
   if (gradeAvg != null && myAvg != null) {
-    const diff = myAvg - gradeAvg;
+    const diff = avg(pairs.map(p => p.my - p.ga));
     if (diff > 5) lines.push(`📈 ${s.name} 학생은 ${s.grade} 평균(${fmt(gradeAvg)}점)보다 ${fmt(diff)}점 높은 우수한 수준입니다.`);
     else if (diff > 0) lines.push(`📊 ${s.name} 학생은 ${s.grade} 평균(${fmt(gradeAvg)}점)을 약간 상회하고 있습니다.`);
     else if (diff > -5) lines.push(`📊 ${s.name} 학생은 ${s.grade} 평균(${fmt(gradeAvg)}점)에 근접한 점수를 유지하고 있습니다.`);
@@ -9899,7 +9652,7 @@ function generateStudentAnalysisLines(sid) {
   }
   const topWeakUnits = Object.entries(unitWrong).sort((a,b) => b[1] - a[1]).slice(0, 2);
   if (topWeakUnits.length > 0) {
-    lines.push(`📚 주요 약점 단원: ${topWeakUnits.map(([u,c]) => `${u} (${c}회 오답)`).join(', ')} — 해당 단원 복습 권장`);
+    lines.push(`📚 주요 약점 단원: ${topWeakUnits.map(([u,c]) => `${u} (${c}문항 오답)`).join(', ')} — 해당 단원 복습 권장`);
   }
 
   // 종합 코멘트
@@ -9916,88 +9669,20 @@ function generateStudentAnalysisLines(sid) {
 function buildStandaloneReportHTML(sid) {
   const s = getStudent(sid);
   const dom = buildSharedReportDOM(sid);
-  const styles = $('style') ? $('style').textContent : '';
-
-  // 차트 데이터를 미리 계산
-  const myData = [];
-  const gradeAvgs = [];
-  for (let r = 1; r <= ROUNDS; r++) {
-    const rd = getRoundData(sid, r);
-    if (!rd || isAbsent(rd)) myData.push(null);
-    else {
-      const n = Number(rd.score);
-      myData.push(isNaN(n) ? null : n);
-    }
-    gradeAvgs.push(gradeRoundStats(s.grade, r).avg);
-  }
-  const goalLine = s.studentGoal && !isNaN(Number(s.studentGoal)) ? Number(s.studentGoal) : null;
-  const chartCanvasId = dom.querySelector('canvas')?.id || 'shared-trend';
-
-  return `<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${s.name} 수만프 리포트 | 클라디수학학원</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"><\/script>
-<style>${styles}</style>
-</head>
-<body>
-${dom.outerHTML}
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  if (typeof Chart === 'undefined') return;
-  const ctx = document.getElementById(${JSON.stringify(chartCanvasId)});
-  if (!ctx) return;
-  const chartCtx = ctx.getContext('2d');
-  const orangeGrad = chartCtx.createLinearGradient(0, 0, 0, 280);
-  orangeGrad.addColorStop(0, 'rgba(181, 146, 79, 0.32)');
-  orangeGrad.addColorStop(0.5, 'rgba(181, 146, 79, 0.12)');
-  orangeGrad.addColorStop(1, 'rgba(181, 146, 79, 0.01)');
-  const datasets = [
-    { label: ${JSON.stringify(s.name + ' 점수')}, data: ${JSON.stringify(myData)},
-      borderColor: '#b5924f', backgroundColor: orangeGrad,
-      borderWidth: 3.5, pointRadius: 6, pointHoverRadius: 9,
-      pointBackgroundColor: '#b5924f', pointBorderColor: '#fff', pointBorderWidth: 3,
-      tension: 0.35, spanGaps: true, fill: true },
-    { label: ${JSON.stringify(s.grade + ' 학년 평균')}, data: ${JSON.stringify(gradeAvgs)},
-      borderColor: '#0f2742', backgroundColor: 'transparent',
-      borderWidth: 2.5, borderDash: [6, 5], pointRadius: 4, pointHoverRadius: 7,
-      pointBackgroundColor: '#0f2742', pointBorderColor: '#fff', pointBorderWidth: 2,
-      tension: 0.35, spanGaps: true, fill: false }
-  ];
-  ${goalLine != null ? `datasets.push({ label: '학생 목표 ${goalLine}점', data: Array(8).fill(${goalLine}),
-    borderColor: 'rgba(21, 128, 61, 0.85)', borderWidth: 2, borderDash: [10, 6], pointRadius: 0, fill: false });` : ''}
-  new Chart(ctx, {
-    type: 'line',
-    data: { labels: roundLabels(), datasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { position: 'top', align: 'end',
-          labels: { color: '#2d2d4a', font: { size: 12.5, weight: '600' }, padding: 14, usePointStyle: true, pointStyle: 'circle', boxWidth: 8, boxHeight: 8 } },
-        tooltip: {
-          backgroundColor: 'rgba(15, 39, 66, 0.96)', titleColor: '#d9bd82',
-          titleFont: { size: 13, weight: '700' }, bodyColor: '#fff', bodyFont: { size: 12.5 },
-          padding: 14, cornerRadius: 10, displayColors: true, boxPadding: 6,
-          callbacks: { label: c => c.dataset.label + ': ' + (c.parsed.y != null ? (Math.round(c.parsed.y*10)/10) + '점' : '—') }
-        }
-      },
-      scales: {
-        x: { ticks: { color: '#555570', font: { size: 12, weight: '600' } }, grid: { display: false } },
-        y: { ticks: { color: '#9090a8', callback: v => v + '점', stepSize: 20 },
-             grid: { color: 'rgba(184, 168, 122, 0.18)' }, min: 0, max: 100 }
-      },
-      animation: { duration: 800, easing: 'easeOutQuart' }
-    }
-  });
-});
-<\/script>
-</body>
-</html>`;
+  const tb = dom.querySelector('.report-topbar'); if (tb) tb.remove();
+  const styles = Array.from(document.querySelectorAll('style')).map(x => x.textContent).join('\n');
+  return '<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
+    + '<title>' + s.name + ' 수만프 리포트 | 클라디수학학원</title>\n'
+    + '<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">\n'
+    + '<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">\n'
+    + '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"><\/script>\n'
+    + '<style>' + styles + '</style>\n</head>\n<body>\n' + dom.outerHTML + '\n<script>\n'
+    + reportChartConfig.toString() + '\n'
+    + 'window.addEventListener("DOMContentLoaded", function () { if (typeof Chart === "undefined") return; var cv = document.getElementById(' + JSON.stringify(dom._chartId) + '); if (cv) new Chart(cv, reportChartConfig(' + JSON.stringify(dom._chartData) + ')); });\n'
+    + '<\/script>\n</body>\n</html>';
 }
+
+
 
 // ============================================================
 // 시험지 관리
