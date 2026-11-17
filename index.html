@@ -3142,7 +3142,14 @@ html, body { overflow-x: clip; }
 .pr-ey { font-size: 11.5px; font-weight: 800; letter-spacing: 3px; color: #ffb23f; }
 .pr-title { font-size: 30px; font-weight: 800; letter-spacing: -1.2px; margin: 8px 0 4px; }
 .pr-sub { font-size: 13.5px; color: #c7d2e6; }
-.pr-issue { text-align: right; font-size: 12px; color: #b8c4da; line-height: 1.7; }
+.pr-issue { margin-left: auto; font-size: 12px; color: #b8c4da; }
+.pr-slogan { position: relative; flex: none; width: 330px; height: 128px; margin: -6px 4px -10px 0; pointer-events: none; user-select: none;
+  font-family: 'Kaushan Script', 'Brush Script MT', cursive; font-weight: 400; line-height: 1; transform: rotate(-5deg); transform-origin: right center; }
+.pr-slogan span { position: absolute; white-space: nowrap; font-size: 42px; text-shadow: 0 4px 14px rgba(0,0,0,.3); }
+.pr-slogan .w1 { left: 0; top: 0; color: #fff; }
+.pr-slogan .w2 { left: 98px; top: 40px; font-size: 47px; color: #ff6a1a; }
+.pr-slogan .w3 { left: 176px; top: 84px; color: #dfe8ff; }
+.pr-slogan .sw { position: absolute; left: 168px; top: 122px; width: 140px; height: 12px; }
 .pr-issue b { color: #fff; font-weight: 700; }
 .pr-who { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.16); }
 .pr-name { font-size: 26px; font-weight: 800; letter-spacing: -.8px; }
@@ -3228,7 +3235,10 @@ html, body { overflow-x: clip; }
 @media (max-width: 720px) {
   .pr .report-wrap { padding: 16px 12px 40px; }
   .pr-hero { padding: 22px 18px 20px; border-radius: 18px; }
-  .pr-title { font-size: 24px; } .pr-issue { text-align: left; }
+  .pr-title { font-size: 24px; } .pr-issue { margin-left: 0; flex: 0 0 100%; }
+  .pr-slogan { width: 240px; height: 96px; margin: 6px 0 -4px 2px; transform-origin: left center; }
+  .pr-slogan span { font-size: 31px; } .pr-slogan .w2 { left: 72px; top: 30px; font-size: 35px; } .pr-slogan .w3 { left: 130px; top: 62px; }
+  .pr-slogan .sw { left: 124px; top: 92px; width: 100px; height: 9px; }
   .pr-kpis { grid-template-columns: repeat(3, 1fr); gap: 8px; } .pr-kpi.lead { grid-column: 1 / -1; }
   .pr-kpi { padding: 11px 10px; } .pr-kpi b { font-size: 21px; } .pr-kpi.lead b { font-size: 28px; } .pr-kpi em { font-size: 11px; }
   .pr .report-topbar { padding: 10px 12px; } .pr .report-topbar-title { display: none; }
@@ -9230,7 +9240,13 @@ async function saveReportImage(sid) {
   if (topbar) topbar.remove();
 
   try {
-    await new Promise(r => setTimeout(r, 950));   // 차트 그려질 시간
+    await new Promise(r => setTimeout(r, 400));   // 차트 만들어질 시간
+    // 애니메이션을 기다리지 않고 바로 그린다 (창이 뒤에 있으면 애니메이션이 멈춰 그래프가 비는 문제 방지)
+    dom.querySelectorAll('canvas').forEach(cv => {
+      const ch = _charts[cv.id];
+      if (ch) { ch.stop(); ch.options.animation = false; ch.update('none'); ch.draw(); }
+    });
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
     const target = dom.querySelector('.report-wrap') || dom;
     const canvas = await html2canvas(target, {
       scale: 2,
@@ -9400,11 +9416,15 @@ function buildSharedReportDOM(sid) {
         el('div', { className: 'pr-ey' }, 'KLADI MATH ACADEMY · 성적 분석 리포트'),
         el('div', { className: 'pr-title' }, '수만프 모의고사 분석 리포트'),
         el('div', { className: 'pr-sub' }, '2026학년도 2학기 기말고사 대비 · 모의고사 ' + ROUNDS + '회 과정')),
-      el('div', { className: 'pr-issue' }, '발행일 ', el('b', null, dateStr()), el('br'), '클라디수학학원')),
+      // 홈 화면과 같은 슬로건 (이미지 저장에서도 그대로 보이도록 단색 글자 + 회전만 사용)
+      el('div', { className: 'pr-slogan', 'aria-label': 'Challenge, Raise, Make' },
+        el('span', { className: 'w1' }, 'Challenge'), el('span', { className: 'w2' }, 'Raise'), el('span', { className: 'w3' }, 'Make'),
+        svgEl('<svg class="sw" viewBox="0 0 250 22" preserveAspectRatio="none"><path d="M4 15 C 60 4, 140 3, 246 9 C 170 9, 90 13, 30 20 Z" fill="#ff6a1a" opacity=".9"/></svg>'))),
     el('div', { className: 'pr-who' },
       el('span', { className: 'pr-name' }, s.name),
       el('span', { className: 'pr-grade' }, s.grade),
-      el('span', { className: 'pr-meta' }, [s.school, s.teacher ? '담당 ' + s.teacher : ''].filter(Boolean).join(' · '))),
+      el('span', { className: 'pr-meta' }, [s.school, s.teacher ? '담당 ' + s.teacher : ''].filter(Boolean).join(' · ')),
+      el('span', { className: 'pr-issue' }, '발행일 ', el('b', null, dateStr()), ' · 클라디수학학원')),
     el('div', { className: 'pr-kpis' },
       el('div', { className: 'pr-kpi lead' }, prRing(R.myAvg),
         el('div', null, el('small', null, '평균 점수'), el('b', null, R.myAvg != null ? fmt(R.myAvg) : '–', el('span', null, '점')), el('em', null, R.taken.length + '회 응시 평균'))),
@@ -9673,7 +9693,7 @@ function buildStandaloneReportHTML(sid) {
   const styles = Array.from(document.querySelectorAll('style')).map(x => x.textContent).join('\n');
   return '<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
     + '<title>' + s.name + ' 수만프 리포트 | 클라디수학학원</title>\n'
-    + '<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">\n'
+    + '<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">\n'
     + '<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">\n'
     + '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"><\/script>\n'
     + '<style>' + styles + '</style>\n</head>\n<body>\n' + dom.outerHTML + '\n<script>\n'
