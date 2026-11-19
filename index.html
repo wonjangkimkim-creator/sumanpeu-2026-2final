@@ -6911,6 +6911,7 @@ function renderNotes() {
   const wrap = el('div');
   if (!ui.noteF) ui.noteF = { grade: GRADES[0], teacher: 'all', from: 1, to: ROUNDS, picked: null, withVar: true, withSol: true, withMark: true };
   const f = ui.noteF;
+  if (f.varN == null) f.varN = f.withVar === false ? 0 : 3;   // 유사문제 개수 (0~3)
   if (!GRADES.includes(f.grade)) f.grade = GRADES[0];
 
   wrap.appendChild(el('div', { className: 'page-header' },
@@ -6947,7 +6948,12 @@ function renderNotes() {
     el('input', { type: 'checkbox', checked: !!f[key], onChange: e => { f[key] = e.target.checked; } }),
     el('span', { className: 'text-sm' }, label));
   wrap.appendChild(el('div', { className: 'card', style: { display: 'flex', gap: '18px', flexWrap: 'wrap', alignItems: 'center' } },
-    opt('withVar', '유사 변형문제 3개 포함 (준비된 문항만)'),
+    el('div', { className: 'flex gap-8', style: { alignItems: 'center' } },
+      el('span', { className: 'text-sm', style: { fontWeight: 700 } }, '유사 문제'),
+      el('div', { className: 'filter-chips' }, ...[0, 1, 2, 3].map(n => el('button', {
+        className: 'chip' + (f.varN === n ? ' active' : ''),
+        onClick: () => { f.varN = n; f.withVar = n > 0; render(); }
+      }, n ? '문항당 ' + n + '개' : '넣지 않음')))),
     opt('withSol', '정답 · 해설 포함 (노트 뒤쪽)'),
     opt('withMark', '학생이 고른 답 표시')
   ));
@@ -6992,7 +6998,7 @@ function renderNotes() {
     if (!win) { showToast('팝업이 차단되었습니다. 브라우저에서 팝업을 허용해 주세요.', 'error'); return; }
     win.document.write('<p style="font-family:sans-serif;padding:30px">오답 노트를 만드는 중입니다… (' + targets.length + '명)</p>');
     try {
-      const html = await buildNoteHTML(targets, { withVar: f.withVar, withSol: f.withSol, withMark: f.withMark, from: f.from, to: f.to });
+      const html = await buildNoteHTML(targets, { withVar: f.varN > 0, varN: f.varN, withSol: f.withSol, withMark: f.withMark, from: f.from, to: f.to });
       win.document.open(); win.document.write(html); win.document.close();
     } catch (e) {
       console.error(e);
@@ -7034,6 +7040,8 @@ async function buildNoteHTML(targets, o) {
   // 학원 오답노트 양식: 표지 → (빈 면) → 문제 쪽(2단 x 2줄, 한 칸에 한 문제 + 넉넉한 풀이 공간) → 정답 및 해설(2단)
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const CH = ['①', '②', '③', '④', '⑤'];
+  const varN = o.withVar ? Math.max(0, Math.min(3, o.varN == null ? 3 : o.varN)) : 0;
+  const pickVars = v => Array.isArray(v) && varN ? v.slice(0, varN) : null;
   const need = new Set();
   targets.forEach(t => t.items.forEach(it => {
     if (!it.vKey) return;
@@ -7080,7 +7088,7 @@ async function buildNoteHTML(targets, o) {
       const b = it.vKey ? `${s.grade}/${it.vKey}/r${it.round}` : '';
       const q = it.q || {};
       const qimg = b ? res[`img/${b}/q${it.no}`] : null;
-      const vars = b && o.withVar ? res[`var/${b}/${it.no}`] : null;
+      const vars = b ? pickVars(res[`var/${b}/${it.no}`]) : null;
       let mark = '';
       if (o.withMark && it.mark) {
         if (/^[①②③④⑤]+$/.test(it.mark)) mark = '내가 고른 답 ' + it.mark;
@@ -7088,13 +7096,13 @@ async function buildNoteHTML(targets, o) {
         else if (!isNaN(parseFloat(it.mark)) && it.mark !== 'X') mark = `받은 점수 ${it.mark}/${q.points || '?'}`;
       }
       const tag = `${it.round}회 V${(it.vKey || '?').replace('v', '')} · ${it.no}번`;
-      cells.push(`<div class="cell"><div class="chd"><span class="pill o">원문제</span><b>${esc(tag)}</b>${q.difficulty ? `<span class="lv">${esc(q.difficulty)}</span>` : ''}${mark ? `<span class="mk">${esc(mark)}</span>` : ''}</div>
-        ${qimg ? `<img class="qi" src="${qimg}" alt="">` : `<div class="miss">문제 이미지 없음${it.vKey ? '' : ' (버전 미입력)'}</div>`}</div>`);
-      if (Array.isArray(vars)) vars.forEach((v, k) => {
-        cells.push(`<div class="cell var"><div class="chd"><span class="pill v">유사 ${k + 1}</span><b>${esc(tag)}-${k + 1}</b></div>
+      cells.push(`<div class="cell"><div class="ci"><div class="chd"><span class="pill o">원문제</span><b>${esc(tag)}</b>${q.difficulty ? `<span class="lv">${esc(q.difficulty)}</span>` : ''}${mark ? `<span class="mk">${esc(mark)}</span>` : ''}</div>
+        ${qimg ? `<img class="qi" src="${qimg}" alt="">` : `<div class="miss">문제 이미지 없음${it.vKey ? '' : ' (버전 미입력)'}</div>`}</div></div>`);
+      if (vars) vars.forEach((v, k) => {
+        cells.push(`<div class="cell var"><div class="ci"><div class="chd"><span class="pill v">유사 ${k + 1}</span><b>${esc(tag)}-${k + 1}</b></div>
           <div class="vq">${noteTextHTML(v.q)}</div>
           ${v.fig ? `<div class="vfig">${v.fig}</div>` : ''}
-          ${Array.isArray(v.choices) ? `<div class="vc">${v.choices.map((c, ci) => `<span>${CH[ci]} ${noteTextHTML(c)}</span>`).join('')}</div>` : ''}</div>`);
+          ${Array.isArray(v.choices) ? `<div class="vc">${v.choices.map((c, ci) => `<span>${CH[ci]} ${noteTextHTML(c)}</span>`).join('')}</div>` : ''}</div></div>`);
       });
     });
     for (let i = 0; i < cells.length; i += 4) {
@@ -7105,15 +7113,17 @@ async function buildNoteHTML(targets, o) {
 
     // ---- 정답 및 해설 블록 (페이지 나눔은 창에서 높이를 재서 처리) ----
     if (o.withSol) {
-      const blocks = items.map(it => {
+      // 원문제 해설 · 유사문제 해설을 각각 따로 된 조각으로 → 길면 다음 단 · 다음 쪽으로 넘어간다
+      const blocks = [];
+      items.forEach(it => {
         const b = it.vKey ? `${s.grade}/${it.vKey}/r${it.round}` : '';
         const q = it.q || {};
         const simg = b ? res[`img/${b}/s${it.no}`] : null;
-        const vars = b && o.withVar ? res[`var/${b}/${it.no}`] : null;
+        const vars = b ? pickVars(res[`var/${b}/${it.no}`]) : null;
         const tag = `${it.round}회 V${(it.vKey || '?').replace('v', '')} · ${it.no}번`;
-        return `<div class="sb"><div class="sbh"><b>${esc(tag)}</b><span>정답 ${esc(q.answer || '')}</span></div>
-          ${simg ? `<img class="si" src="${simg}" alt="">` : '<div class="miss">해설 이미지 없음</div>'}
-          ${Array.isArray(vars) ? vars.map((v, k) => `<div class="vs"><b>${esc(tag)}-${k + 1}</b> &nbsp;정답 ${noteTextHTML(v.answer)}<div>${noteTextHTML(v.sol)}</div></div>`).join('') : ''}</div>`;
+        blocks.push(`<div class="sb"><div class="sbh"><b>${esc(tag)}</b><span>정답 ${esc(q.answer || '')}</span></div>
+          ${simg ? `<img class="si" src="${simg}" alt="">` : '<div class="miss">해설 이미지 없음</div>'}</div>`);
+        if (vars) vars.forEach((v, k) => blocks.push(`<div class="sb vs"><b>${esc(tag)}-${k + 1}</b> &nbsp;정답 ${noteTextHTML(v.answer)}<div>${noteTextHTML(v.sol)}</div></div>`));
       });
       html += `<div class="solsrc" data-name="${esc(s.name)}">${blocks.join('')}</div>`;
     }
@@ -7191,7 +7201,10 @@ ${html}
     after.parentNode.insertBefore(pg, after.nextSibling);
     return pg;
   }
+  // 한 단보다 큰 조각(아주 긴 해설)은 잘리지 않도록 비율대로 줄인다
   function paginate(){
+    // 문제 칸: 유사문제 그림 · 보기가 길면 칸 안에 맞게 줄이기
+    document.querySelectorAll('.cell').forEach(function(c){ var i=c.querySelector('.ci'); if(i && i.scrollHeight>c.clientHeight+1) i.style.zoom=Math.max(.5, c.clientHeight/i.scrollHeight*.97); });
     document.querySelectorAll('.solsrc').forEach(function(src){
       var blocks=[].slice.call(src.children), pg=newSolPage(src.previousElementSibling||src, src.getAttribute('data-name'));
       var cols=pg.querySelectorAll('.col'), ci=0, last=pg;
@@ -7202,6 +7215,8 @@ ${html}
           if(ci>1){ last=pg; pg=newSolPage(pg); cols=pg.querySelectorAll('.col'); ci=0; }
           cols[ci].appendChild(b);
         }
+        col=cols[ci];
+        if(col.scrollHeight>col.clientHeight+1 && col.children.length===1){ b.style.zoom=Math.max(.45, col.clientHeight/b.scrollHeight*.98); }
       });
       src.parentNode.removeChild(src);
     });
@@ -7213,7 +7228,9 @@ ${html}
       if(ft){ ft.innerHTML=(LOGO?'<img src="'+LOGO+'" alt="">':'Kladi')+'<span>☎ 594-3222</span><span class="pn">'+n+'</span>'; }
     });
   }
-  if(document.readyState==='complete') setTimeout(paginate,50); else window.addEventListener('load',function(){setTimeout(paginate,50);});
+  // 수식 글꼴이 다 내려온 뒤에 높이를 재야 단 끝이 잘리지 않는다
+  function start(){ var f=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve(); f.then(function(){setTimeout(paginate,80);}); }
+  if(document.readyState==='complete') start(); else window.addEventListener('load',start);
 })();
 <\/script>
 </body></html>`;
