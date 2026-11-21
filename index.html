@@ -3249,6 +3249,47 @@ html, body { overflow-x: clip; }
   .pr-table { font-size: 12.5px; } .pr-wt .df { display: none; }
 }
 @media print { .report-page.pr { background: #fff; } .pr-sec, .pr-hero, .pr-headline { break-inside: avoid; box-shadow: none; } }
+/* ---------- 선생님 종합 리포트 (tp-) : 학부모 리포트(pr-) 디자인 재사용 ---------- */
+.tp { max-width: 980px; font-family: Pretendard, 'Malgun Gothic', sans-serif; color: #1d2433; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.tp .pr-headline { margin-top: 12px; }
+.tp-gh { display: flex; align-items: center; gap: 10px; margin: 30px 2px 0; font-size: 21px; color: #0b1f3f; letter-spacing: -.5px; }
+.tp-gh b { font-weight: 800; }
+.tp-gh::after { content: ''; flex: 1; height: 2px; background: rgba(11,31,63,.14); }
+.tp-at { font-weight: 800; font-size: 12.5px; } .tp-at.hi { color: #13804a; } .tp-at.mid { color: #b45309; } .tp-at.low { color: #c0353a; }
+.tp .pr-d.up, .tp-mv .up { color: #13804a; } .tp-mv .dn { color: #c0353a; }
+.tp-ver { margin-top: 16px; padding-top: 14px; border-top: 1px dashed #e3e8ef; }
+.tp-ver h4 { margin: 0 0 10px; font-size: 13px; font-weight: 800; color: #5d6878; }
+.tp-pri { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.tp-pc { border: 1px solid #e3e8ef; border-left: 4px solid var(--c); border-radius: 14px; padding: 12px 14px; background: #fbfcfe; }
+.tp-pc .hd { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tp-pc .no { width: 22px; height: 22px; border-radius: 6px; background: #0b1f3f; color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.tp-pc .nm { font-weight: 800; font-size: 15.5px; color: #0b1f3f; }
+.tp-pc .sc { font-size: 12px; color: #8a93a3; }
+.tp-pc .bd { margin-left: auto; font-size: 11.5px; font-weight: 800; border-radius: 999px; padding: 2px 9px; }
+.tp-pc .sm { margin-top: 7px; font-size: 13.5px; font-weight: 700; }
+.tp-pc .tg { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.tp-pc .tg span { font-size: 11px; font-weight: 800; background: #fdecec; color: #c0353a; border-radius: 6px; padding: 1px 7px; }
+.tp-pc .ac { margin-top: 7px; font-size: 12.5px; color: #5d6878; line-height: 1.5; } .tp-pc .ac b { color: #d9530c; }
+.tp-mv { display: grid; gap: 6px; }
+.tp-mv > div { display: flex; justify-content: space-between; align-items: center; gap: 8px; background: #f8fafc; border-radius: 10px; padding: 8px 12px; font-size: 13.5px; }
+.tp-mv b { color: #0b1f3f; } .tp-mv strong { font-weight: 800; white-space: nowrap; }
+.tp-cw { display: flex; gap: 10px; align-items: flex-start; margin-top: 8px; }
+.tp-cw .vt { flex: none; min-width: 34px; font-size: 12px; font-weight: 800; color: #fff; background: #14305e; border-radius: 6px; padding: 3px 8px; text-align: center; }
+.tp-cw .nums { display: flex; flex-wrap: wrap; gap: 5px; }
+.tp-cw .nums span { font-size: 12.5px; font-weight: 800; color: #c0353a; background: #fdecec; border-radius: 7px; padding: 3px 9px; }
+.tp-cw .nums small { font-size: 11px; color: #8a93a3; font-weight: 700; margin-left: 5px; }
+.tp .pr-sec .table-wrap { margin: 0; }
+@media (max-width: 720px) {
+  .tp-gh { font-size: 18px; margin-top: 22px; }
+  .tp-pri { grid-template-columns: 1fr; }
+}
+@media print {
+  .tp .pr-sec, .tp .pr-hero, .tp .pr-headline { break-inside: avoid; box-shadow: none; }
+  .tp .pr-sec.tp-free { break-inside: auto; }
+  .tp-pick { display: none !important; }
+  .tp-grade.tp-nb { break-before: page; }
+  .tp .pr-chart canvas { max-width: 100%; }
+}
 @media print { .page-header.st-hero { background: none; color: inherit; } .st-hero .ring, .st-hero .orb, .st-kpis { display: none; } .st-hero .page-title { color: var(--ink) !important; } }
 
 /* ---------- 오답 티칭 리포트 ---------- */
@@ -8472,7 +8513,7 @@ function renderTeacherReport() {
   const teachers = getAllTeachers();
   const selected = ui.teacherReportName || (teachers.length > 0 ? teachers[0] : null);
 
-  wrap.appendChild(el('div', { className: 'page-header flex-between flex-wrap', style: { gap: '12px' } },
+  wrap.appendChild(el('div', { className: 'page-header flex-between flex-wrap tp-pick', style: { gap: '12px' } },
     el('div', null,
       el('div', { className: 'page-title' }, '선생님 종합 리포트'),
       el('div', { className: 'page-subtitle' }, '담당 학생 회차별 성적 변화 및 분석 리포트')
@@ -8484,7 +8525,7 @@ function renderTeacherReport() {
   ));
 
   // 선생님 선택
-  wrap.appendChild(el('div', { className: 'filter-bar' },
+  wrap.appendChild(el('div', { className: 'filter-bar tp-pick' },
     el('div', { className: 'filter-label' }, '선생님'),
     el('div', { className: 'filter-chips flex-wrap' },
       ...teachers.map(t =>
@@ -8505,188 +8546,203 @@ function renderTeacherReport() {
   return wrap;
 }
 
+// 선생님 리포트 공통 — 학년 평균과 비교할 회차 (학년 응시자가 있는 회차만)
+function tpRows(teacher, grade) {
+  return roundNumbers().map(r => ({ r, t: teacherRoundStats(teacher, grade, r), g: gradeRoundStats(grade, r) })).filter(x => x.g.count > 0);
+}
+function tpGoal(s) { const g = Number(s.teacherGoal) || Number(s.studentGoal); return g > 0 ? g : null; }
+// 응시 인원 가중 평균: 담당 평균, 학년 평균 대비 차이, 응시율
+function tpSummary(teacher, grade) {
+  let sum = 0, n = 0, dsum = 0, dn = 0, taken = 0, slots = 0;
+  tpRows(teacher, grade).forEach(x => {
+    if (x.t.avg == null) return;   // 담당 반이 아직 안 본(입력 전) 회차는 응시율에서 뺀다
+    slots += x.t.total; taken += x.t.count;
+    sum += x.t.avg * x.t.count; n += x.t.count;
+    if (x.g.avg != null) { dsum += (x.t.avg - x.g.avg) * x.t.count; dn += x.t.count; }
+  });
+  return { sum, n, dsum, dn, taken, slots, avg: n ? sum / n : null, diff: dn ? dsum / dn : null, rate: slots ? taken / slots : null };
+}
+function tpRateCls(rate) { const l = attendanceLevel(rate); return l === 'low' ? 'low' : l === 'mid' ? 'mid' : 'hi'; }
+
 function renderTeacherReportBody(teacher) {
   const ts = state.students.filter(s => s.teacher === teacher && GRADES.includes(s.grade));
-  const teacherGrades = Array.from(new Set(ts.map(s => s.grade))).sort((a,b) => GRADES.indexOf(a) - GRADES.indexOf(b));
-  const container = el('div');
+  const grades = Array.from(new Set(ts.map(s => s.grade))).sort((a, b) => GRADES.indexOf(a) - GRADES.indexOf(b));
+  const box = el('div', { className: 'tp' });
 
-  // Report header (printable)
-  container.appendChild(el('div', { className: 'card mb-18', style: { textAlign: 'center', padding: '28px' } },
-    el('div', { className: 'report-brand' },
-      el('div', { className: 'report-brand-text' }, '클라디수학학원')
-    ),
-    el('div', { style: { fontSize: '26px', fontWeight: 900, fontFamily: 'Noto Serif KR, serif', color: 'var(--ink)' } },
-      `📋 ${teacher} 종합 성적 리포트`
-    ),
-    el('div', { className: 'mt-12 muted text-sm' }, `${PROGRAM} · 1~${ROUNDS}회 분석`),
-    el('div', { className: 'mt-12 flex gap-12', style: { justifyContent: 'center', flexWrap: 'wrap' } },
-      el('span', { className: 'badge' }, `담당 ${ts.length}명`),
-      el('span', { className: 'badge' }, teacherGrades.join(' · ')),
-      el('span', { className: 'badge' }, `생성: ${dateStr()}`)
-    )
-  ));
+  // 전체(담당 학년 합산) 핵심 숫자
+  const S = grades.map(g => tpSummary(teacher, g)).reduce((a, b) => ({ sum: a.sum + b.sum, n: a.n + b.n, dsum: a.dsum + b.dsum, dn: a.dn + b.dn, taken: a.taken + b.taken, slots: a.slots + b.slots }),
+    { sum: 0, n: 0, dsum: 0, dn: 0, taken: 0, slots: 0 });
+  const tAvg = S.n ? S.sum / S.n : null, dAvg = S.dn ? S.dsum / S.dn : null, rate = S.slots ? S.taken / S.slots : null;
+  const withGoal = ts.map(s => ({ s, a: analyzeStudent(s.id), g: tpGoal(s) })).filter(x => x.g != null && x.a.latestScore != null);
+  const hit = withGoal.filter(x => x.a.latestScore >= x.g).length;
 
-  teacherGrades.forEach(g => {
-    const gradeStudents = ts.filter(s => s.grade === g);
-    container.appendChild(renderTeacherGradeSection(teacher, g, gradeStudents));
-  });
+  box.appendChild(el('header', { className: 'pr-hero' },
+    el('div', { className: 'pr-top' },
+      el('div', null,
+        el('div', { className: 'pr-ey' }, 'KLADI MATH ACADEMY · 선생님 종합 리포트'),
+        el('div', { className: 'pr-title' }, '담당 반 성적 분석 리포트'),
+        el('div', { className: 'pr-sub' }, PROGRAM + ' · 모의고사 ' + ROUNDS + '회 과정')),
+      el('div', { className: 'pr-slogan', 'aria-label': 'Challenge, Raise, Make' },
+        el('span', { className: 'w1' }, 'Challenge'), el('span', { className: 'w2' }, 'Raise'), el('span', { className: 'w3' }, 'Make'),
+        svgEl('<svg class="sw" viewBox="0 0 250 22" preserveAspectRatio="none"><path d="M4 15 C 60 4, 140 3, 246 9 C 170 9, 90 13, 30 20 Z" fill="#ff6a1a" opacity=".9"/></svg>'))),
+    el('div', { className: 'pr-who' },
+      el('span', { className: 'pr-name' }, teacher + ' 선생님'),
+      ...grades.map(g => el('span', { className: 'pr-grade' }, g)),
+      el('span', { className: 'pr-meta' }, '담당 ' + ts.length + '명'),
+      el('span', { className: 'pr-issue' }, '발행일 ', el('b', null, dateStr()), ' · 클라디수학학원')),
+    el('div', { className: 'pr-kpis' },
+      el('div', { className: 'pr-kpi lead' }, prRing(tAvg),
+        el('div', null, el('small', null, '담당 반 평균'), el('b', null, tAvg != null ? fmt(tAvg) : '–', el('span', null, '점')), el('em', null, '응시한 회차 전체 · 결시 제외'))),
+      el('div', { className: 'pr-kpi' }, el('small', null, '학년 평균 대비'),
+        el('b', { className: dAvg == null ? '' : dAvg >= 0 ? 'up' : 'dn' }, dAvg == null ? '–' : (dAvg >= 0 ? '+' : '−') + Math.abs(dAvg).toFixed(1), el('span', null, '점')),
+        el('em', null, '같은 회차 학년 평균과 비교')),
+      el('div', { className: 'pr-kpi' }, el('small', null, '응시율'),
+        el('b', null, rate != null ? Math.round(rate * 100) : '–', el('span', null, '%')), el('em', null, '응시 ' + S.taken + ' / ' + S.slots + '건')),
+      el('div', { className: 'pr-kpi' }, el('small', null, '목표 달성'),
+        el('b', null, hit, el('span', null, '/ ' + withGoal.length + '명')), el('em', null, '최근 점수 ≥ 목표 점수'))
+    )));
 
-  return container;
+  if (!ts.length) {
+    box.appendChild(el('div', { className: 'pr-sec' }, el('div', { className: 'pr-note', style: { marginTop: 0 } }, '담당 학생이 없습니다.')));
+    return box;
+  }
+  grades.forEach((g, i) => box.appendChild(renderTeacherGradeSection(teacher, g, ts.filter(s => s.grade === g), i)));
+  box.appendChild(el('footer', { className: 'pr-foot' },
+    el('div', null, '본 리포트는 ', el('b', null, '클라디수학학원'), ' 수만프 모의고사 채점 결과를 바탕으로 작성되었습니다.'),
+    el('div', null, '발행일 ' + dateStr() + ' · 학년 평균은 같은 학년 응시생 전체 기준 · 학생 이름이 있으니 학원 안에서만 사용해 주세요.')));
+  return box;
 }
 
-function renderTeacherGradeSection(teacher, grade, students) {
-  const section = el('div', { className: 'card mb-18' },
-    el('div', { className: 'card-title' },
-      el('div', { className: 'card-title-accent' }),
-      el('span', { className: 'badge badge-grade-' + grade, style: { marginRight: '8px' } }, grade),
-      `${grade} 담당 (${students.length}명)`
-    )
-  );
+function renderTeacherGradeSection(teacher, grade, students, idx) {
+  const sec = el('div', { className: 'tp-grade' + (idx ? ' tp-nb' : '') });
+  sec.appendChild(el('div', { className: 'tp-gh' }, el('span', { className: 'pr-grade' }, grade), el('b', null, '담당 ' + students.length + '명')));
+  const rows = tpRows(teacher, grade);
+  const done = rows.filter(x => x.t.avg != null);
+  const last = done[done.length - 1], prev = done[done.length - 2];
+  let no = 1; const N = () => '0' + (no++);
 
-  // ============================================================
-  // 1. 우선 관리 대상 추천 (가장 위, 가장 중요)
-  // ============================================================
-  const priority = getPriorityStudents(teacher, grade, 5);
-  if (priority.length > 0) {
-    const priorityBox = el('div', { className: 'priority-box mb-18' },
-      el('div', { className: 'priority-header' },
-        el('span', { className: 'priority-icon' }, '🎯'),
-        el('div', { className: 'priority-title' }, '다음 회차 우선 관리 대상'),
-        el('div', { className: 'priority-sub' }, `${priority.length}명 추천`)
-      )
-    );
-    
-    priority.forEach((item, idx) => {
-      const { student, analysis } = item;
-      const cat = STUDENT_CATEGORIES[analysis.category] || STUDENT_CATEGORIES.pending;
-      const actions = getRecommendedActions(analysis);
-      
-      // 학생 상태 요약 문구
-      let summary = '';
-      if (analysis.latestScore != null) {
-        summary = `최근 ${fmt(analysis.latestScore, 0)}점`;
-        if (analysis.gap != null) {
-          summary += analysis.gap >= 0 ? ` (목표 +${fmt(analysis.gap, 0)})` : ` (목표 ${fmt(analysis.gap, 0)})`;
-        }
-        if (analysis.delta !== 0 && analysis.firstScore != null) {
-          summary += ` · 첫 응시 대비 ${analysis.delta >= 0 ? '▲' : '▼'}${Math.abs(analysis.delta).toFixed(0)}점`;
-        }
-      }
-      
-      priorityBox.appendChild(el('div', { className: 'priority-item' },
-        el('div', { className: 'priority-num' }, idx + 1),
-        el('div', { className: 'priority-content' },
-          el('div', { className: 'priority-name-row' },
-            el('div', { className: 'priority-name' }, student.name,
-              el('span', { className: 'priority-school' }, ` · ${student.school || ''}`)
-            ),
-            el('span', { className: 'priority-badge', style: { background: cat.color + '18', color: cat.color, border: '1px solid ' + cat.color + '40' } },
-              cat.icon + ' ' + cat.label
-            ),
-            ...analysis.tags.slice(0, 2).map(t => el('span', { className: 'priority-tag' }, t))
-          ),
-          summary ? el('div', { className: 'priority-summary' }, summary) : null,
-          actions.length > 0 ? el('div', { className: 'priority-actions' },
-            el('strong', null, '추천: '),
-            actions.join(' · ')
-          ) : null
-        )
-      ));
-    });
-    section.appendChild(priorityBox);
+  // ── 한 줄 요약
+  if (last) {
+    const d = last.g.avg != null ? last.t.avg - last.g.avg : null;
+    let icon = '=', head = '최근 ' + last.r + '회 담당 평균 ' + fmt(last.t.avg) + '점 — 학년 평균과 비슷합니다';
+    if (d != null && d >= 3) { icon = '▲'; head = '최근 ' + last.r + '회 담당 평균 ' + fmt(last.t.avg) + '점 — 학년 평균보다 ' + d.toFixed(1) + '점 높습니다'; }
+    else if (d != null && d <= -3) { icon = '!'; head = '최근 ' + last.r + '회 담당 평균 ' + fmt(last.t.avg) + '점 — 학년 평균보다 ' + Math.abs(d).toFixed(1) + '점 낮습니다'; }
+    let sub = grade + ' 학년 평균 ' + (last.g.avg != null ? fmt(last.g.avg) + '점' : '–') + ' · 응시 ' + last.t.count + '/' + last.t.total + '명';
+    if (prev) { const t = last.t.avg - prev.t.avg; sub += ' · ' + prev.r + '회 대비 ' + (Math.abs(t) < 0.05 ? '변화 없음' : (t > 0 ? '▲' : '▼') + Math.abs(t).toFixed(1) + '점'); }
+    sec.appendChild(el('div', { className: 'pr-headline' }, el('i', null, icon), el('div', null, el('b', null, head), el('span', null, sub))));
   }
 
-  // ============================================================
-  // 2. 공통 약점 단원 (Excel 가져오기로 단원 정보가 있을 때만)
-  // ============================================================
-  const weakUnits = getCommonWeakUnits(teacher, grade, 5);
-  if (weakUnits.length > 0) {
-    const weakBox = el('div', { className: 'weak-units-box mb-18' },
-      el('div', { className: 'weak-units-header' },
-        el('span', { style: { fontSize: '20px' } }, '📚'),
-        el('div', { className: 'weak-units-title' }, '우리 반 공통 약점 단원'),
-        el('div', { className: 'weak-units-sub' }, '오답 빈도 기준 · 다음 수업에서 보강 권장')
-      )
-    );
-    
-    const maxCount = weakUnits[0].errorCount;
-    weakUnits.forEach((w, idx) => {
-      const pct = (w.errorCount / maxCount) * 100;
-      const errorRateText = w.errorRate > 0 ? ` · 오답률 ${Math.round(w.errorRate * 100)}%` : '';
-      weakBox.appendChild(el('div', { className: 'weak-unit-row' },
-        el('div', { className: 'weak-unit-rank' }, idx + 1),
-        el('div', { className: 'weak-unit-info' },
-          el('div', { className: 'weak-unit-name' }, w.unit),
-          el('div', { className: 'weak-unit-stat' },
-            `오답 ${w.errorCount}개 · ${w.studentCount}명${errorRateText}`
-          )
-        ),
-        el('div', { className: 'weak-unit-bar-wrap' },
-          el('div', { className: 'weak-unit-bar', style: { width: pct + '%' } })
-        )
-      ));
-    });
-    section.appendChild(weakBox);
+  // ── 1. 회차별 담당 평균 vs 학년 평균
+  if (rows.length) {
+    const chartId = 'tp-trend-' + (++_sharedChartSeq);
+    const CD = {
+      labels: rows.map(x => x.r + '회'), my: rows.map(x => x.t.avg != null ? Math.round(x.t.avg * 10) / 10 : null),
+      absent: rows.map(() => false), avg: rows.map(x => x.g.avg != null ? Math.round(x.g.avg * 10) / 10 : null),
+      grade, goal: null, myLabel: '담당 반 평균'
+    };
+    const vsum = getVersionsForGrade(grade).length >= 2 ? teacherVersionSummary(teacher, grade) : [];
+    sec.appendChild(prSec(N(), '회차별 담당 반 평균', '막대 = 담당 반 · 점선 = 학년 평균',
+      el('div', { className: 'pr-legend' },
+        el('span', null, el('i', { className: 'bar' }), '담당 반 평균 (파란 막대 = 최근)'),
+        el('span', null, el('i', { className: 'ln' }), grade + ' 학년 평균')),
+      el('div', { className: 'pr-chart' }, el('canvas', { id: chartId })),
+      el('div', { style: { overflowX: 'auto' } }, el('table', { className: 'pr-table' },
+        el('thead', null, el('tr', null, el('th', null, '회차'), ...rows.map(x => el('th', null, x.r + '회')))),
+        el('tbody', null,
+          el('tr', null, el('td', null, '담당 반'), ...rows.map(x => x.t.avg != null ? el('td', { className: 'me' }, fmt(x.t.avg)) : el('td', { className: 'ab' }, '–'))),
+          el('tr', null, el('td', null, '학년 평균'), ...rows.map(x => el('td', null, x.g.avg != null ? fmt(x.g.avg) : '–'))),
+          el('tr', null, el('td', null, '차이'), ...rows.map(x => el('td', null, x.t.avg != null && x.g.avg != null ? prDiff(x.t.avg - x.g.avg) : ''))),
+          el('tr', null, el('td', null, '응시'), ...rows.map(x => { if (!x.t.count) return el('td', { className: 'ab' }, '입력 전'); const rt = attendanceRate(x.t); return el('td', null, el('span', { className: 'tp-at ' + tpRateCls(rt) }, x.t.count + '/' + x.t.total)); }))
+        ))),
+      vsum.length ? el('div', { className: 'tp-ver' }, el('h4', null, '버전별 담당 평균 (전체 회차 · 결시 제외)'),
+        el('div', { className: 'pr-chips' }, ...vsum.map(v => el('span', { className: 'pr-chip', title: v.label || '버전 미지정' }, v.tag + ' ' + fmt(v.avg) + '점', el('b', null, v.n + '건'))))) : null
+    ));
+    setTimeout(() => {
+      const cv = document.getElementById(chartId);
+      if (!cv || typeof Chart === 'undefined') return;
+      if (_charts[chartId]) _charts[chartId].destroy();
+      _charts[chartId] = new Chart(cv, reportChartConfig(CD));
+    }, 60);
   }
 
-  // ============================================================
-  // 3. 회차별 담당 vs 전체 비교 한 줄 요약 (응시율 포함)
-  // ============================================================
-  const compareRow = el('div', { className: 'mb-12', style: { padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', fontSize: '13px', lineHeight: '1.9' } });
-  const summaryItems = [];
-  for (let r = 1; r <= ROUNDS; r++) {
-    const tSt = teacherRoundStats(teacher, grade, r);
-    if (tSt.avg == null) continue;
-    const gSt = gradeRoundStats(grade, r);
-    const diff = gSt.avg != null ? tSt.avg - gSt.avg : null;
-    const diffStr = diff != null ? ` ${diff >= 0 ? '▲' : '▼'}${Math.abs(diff).toFixed(1)}` : '';
-    const tRate = attendanceRate(tSt);
-    const tLevel = attendanceLevel(tRate);
-    const rateColor = tLevel === 'low' ? '#b91c1c' : tLevel === 'mid' ? '#b45309' : '#047857';
-    summaryItems.push(el('span', { style: { display: 'inline-block', marginRight: '14px' } },
-      el('strong', null, `${r}회: `),
-      `${fmt(tSt.avg)}점${diffStr} `,
-      el('span', { style: { color: rateColor, fontSize: '11px', fontFamily: 'JetBrains Mono, monospace', fontWeight: 700 } },
-        `(${tSt.count}/${tSt.total} · ${Math.round(tRate*100)}%)`
-      )
+  // ── 2. 우선 관리 대상
+  const priority = getPriorityStudents(teacher, grade, 6);
+  if (priority.length) {
+    sec.appendChild(prSec(N(), '다음 회차 우선 관리 대상', priority.length + '명 · 목표 미달·하락·결시 순',
+      el('div', { className: 'tp-pri' }, ...priority.map((item, i) => {
+        const { student, analysis } = item;
+        const cat = STUDENT_CATEGORIES[analysis.category] || STUDENT_CATEGORIES.pending;
+        const actions = getRecommendedActions(analysis);
+        let sm = '';
+        if (analysis.latestScore != null) {
+          sm = '최근 ' + fmt(analysis.latestScore, 0) + '점';
+          if (analysis.gap != null) sm += ' · 목표 ' + (analysis.gap >= 0 ? '+' : '') + fmt(analysis.gap, 0);
+          if (analysis.delta && analysis.firstScore != null) sm += ' · 첫 응시 대비 ' + (analysis.delta > 0 ? '▲' : '▼') + Math.abs(analysis.delta).toFixed(0);
+        } else sm = '아직 응시 기록 없음';
+        return el('div', { className: 'tp-pc', style: { '--c': cat.color } },
+          el('div', { className: 'hd' },
+            el('span', { className: 'no' }, i + 1),
+            el('span', { className: 'nm' }, student.name),
+            el('span', { className: 'sc' }, student.school || ''),
+            el('span', { className: 'bd', style: { background: cat.color + '18', color: cat.color } }, cat.label)),
+          el('div', { className: 'sm' }, sm),
+          analysis.tags.length ? el('div', { className: 'tg' }, ...analysis.tags.slice(0, 3).map(t => el('span', null, t))) : null,
+          actions.length ? el('div', { className: 'ac' }, el('b', null, '추천 '), actions.join(' · ')) : null);
+      }))));
+  }
+
+  // ── 3. 성적 변화가 큰 학생
+  const movers = students.map(s => ({ s, a: analyzeStudent(s.id) })).filter(x => x.a.firstScore != null && x.a.latestScore != null && getStudentScores(x.s.id).length >= 2);
+  const ups = movers.filter(x => x.a.delta >= 5).sort((a, b) => b.a.delta - a.a.delta).slice(0, 5);
+  const downs = movers.filter(x => x.a.delta <= -5).sort((a, b) => a.a.delta - b.a.delta).slice(0, 5);
+  if (movers.length) {
+    const list = (arr, cls, empty) => arr.length
+      ? el('div', { className: 'tp-mv' }, ...arr.map(x => el('div', null,
+          el('span', null, el('b', null, x.s.name), ' ', fmt(x.a.firstScore, 0) + ' → ' + fmt(x.a.latestScore, 0) + '점'),
+          el('strong', { className: cls }, (x.a.delta > 0 ? '▲' : '▼') + Math.abs(x.a.delta).toFixed(0)))))
+      : el('div', { className: 'pr-note', style: { marginTop: 0 } }, empty);
+    sec.appendChild(prSec(N(), '성적 변화가 큰 학생', '첫 응시 → 최근 응시 · 5점 이상',
+      el('div', { className: 'pr-two', style: { marginTop: 0, paddingTop: 0, borderTop: 0 } },
+        el('div', null, el('h4', null, '📈 오른 학생'), list(ups, 'up', '5점 이상 오른 학생이 아직 없습니다.')),
+        el('div', null, el('h4', null, '📉 내려간 학생'), list(downs, 'dn', '5점 이상 내려간 학생이 없습니다.')))));
+  }
+
+  // ── 4. 공통 약점 단원 · 최근 회차 많이 틀린 문항 (담당 반 기준)
+  const weak = getCommonWeakUnits(teacher, grade, 6);
+  const cw = {};
+  if (last) students.forEach(s => allRoundEntries(s.id, last.r).forEach(rd => {
+    if (isAbsent(rd) || getScore(rd) == null) return;
+    const v = rd.version || '', m = cw[v] || (cw[v] = { n: 0, c: {} });
+    m.n++; parseErrors(rd.errors).forEach(q => { m.c[q] = (m.c[q] || 0) + 1; });
+  }));
+  const cwList = Object.keys(cw).map(v => ({ v, n: cw[v].n, top: Object.entries(cw[v].c).sort((a, b) => b[1] - a[1] || a[0] - b[0]).slice(0, 6) })).filter(x => x.top.length);
+  if (weak.length || cwList.length) {
+    const top = weak[0], totalErr = weak.reduce((a, w) => a + w.errorCount, 0);
+    sec.appendChild(prSec(N(), '우리 반 약점', '담당 학생 오답 기준 · 다음 수업 보강 권장',
+      top ? el('div', { className: 'pr-weak-top' },
+        el('div', null, el('small', null, '가장 많이 틀린 단원'), el('b', null, top.unit)),
+        el('span', null, top.studentCount + '명 · 오답', el('strong', null, top.errorCount + '개'))) : null,
+      weak.length ? el('div', { className: 'pr-bars' }, ...weak.map((w, i) => el('div', { className: 'pr-bar' },
+        el('span', { className: 'lb', title: w.unit }, w.unit),
+        el('div', { className: 'tr' }, el('i', { className: i === 0 ? 'hi' : '', style: { width: (w.errorCount / weak[0].errorCount * 100) + '%' } })),
+        el('span', { className: 'vl' }, w.errorCount + '개')))) : null,
+      cwList.length ? el('div', { className: 'tp-ver' }, el('h4', null, last.r + '회 담당 반에서 많이 틀린 문항'),
+        ...cwList.map(x => el('div', { className: 'tp-cw' },
+          el('span', { className: 'vt' }, x.v ? versionTag(grade, x.v) : '버전 미지정'),
+          el('div', { className: 'nums' }, ...x.top.map(([q, c]) => el('span', null, q + '번', el('small', null, c + '/' + x.n + '명'))))))) : null
     ));
   }
-  if (summaryItems.length > 0) {
-    compareRow.appendChild(el('div', { style: { marginBottom: '6px' } },
-      el('strong', { style: { color: 'var(--orange-deep)' } }, '📊 회차별 담당 평균 (vs 전체 · 응시율)')
-    ));
-    summaryItems.forEach(s => compareRow.appendChild(s));
-    section.appendChild(compareRow);
-  }
 
-  // 3-1. 버전별 담당 평균 (버전이 2개 이상인 학년만)
-  if (getVersionsForGrade(grade).length >= 2) {
-    const vsum = teacherVersionSummary(teacher, grade);
-    if (vsum.length > 0) {
-      const vBox = el('div', { className: 'mb-12', style: { padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px' } },
-        el('div', { style: { marginBottom: '2px', fontSize: '13px' } },
-          el('strong', { style: { color: 'var(--orange-deep)' } }, '\ud83c\udfaf 버전별 담당 평균'),
-          el('span', { style: { fontSize: '11px', color: '#78716c', marginLeft: '8px' } }, '1~' + ROUNDS + '회 전체 · 결시 제외')
-        ),
-        el('div', { className: 'ver-tsum' },
-          ...vsum.map(v => el('span', { className: 'ver-tchip', title: v.label || '버전 미지정' },
-            el('b', null, v.tag),
-            el('span', { className: scoreClass(v.avg) }, fmt(v.avg) + '점'),
-            el('span', { style: { color: '#78716c', fontWeight: 600 } }, v.n + '건')
-          ))
-        )
-      );
-      section.appendChild(vBox);
-    }
-  }
+  // ── 5. 학생별 성적
+  sec.appendChild(prSec(N(), '학생별 성적', '목표 막대: 초록 달성 · 노랑 80% 이상 · 빨강 미만', renderStudentDetailTable(students, grade)));
+  sec.lastChild.classList.add('tp-free');
 
-  // 학생 상세표
-  section.appendChild(renderStudentDetailTable(students, grade));
-
-  // 분석 코멘트
-  section.appendChild(renderTeacherGradeComment(teacher, grade, students));
-
-  return section;
+  // ── 6. 종합 분석
+  const tone = l => /^(📈|💪|✅|👍)/u.test(l) ? 'good' : /^(⚠|📉|🔍)/u.test(l) ? 'warn' : /^(📚|🎯)/u.test(l) ? 'tip' : '';
+  sec.appendChild(prSec(N(), '종합 분석', '자동 작성 · 참고용',
+    el('div', { className: 'pr-com' }, ...teacherGradeCommentLines(teacher, grade, students).map(l =>
+      el('div', { className: tone(l) }, el('i'), el('span', null, l.replace(/^[^0-9A-Za-z가-힣(]+/u, '').trim()))))));
+  return sec;
 }
 
 function renderStudentDetailTable(students, grade) {
@@ -8785,89 +8841,54 @@ function renderStudentDetailTable(students, grade) {
   );
 }
 
-function renderTeacherGradeComment(teacher, grade, students) {
+function teacherGradeCommentLines(teacher, grade, students) {
   const lines = [];
+  const S = tpSummary(teacher, grade);
+  const done = tpRows(teacher, grade).filter(x => x.t.avg != null);
+  if (!done.length) return ['아직 응시 기록이 없어 분석할 수 없습니다.'];
 
-  // 회차별 평균 변화 분석
-  const tAvgs = [], gAvgs = [];
-  for (let r = 1; r <= ROUNDS; r++) {
-    tAvgs.push(teacherRoundStats(teacher, grade, r).avg);
-    gAvgs.push(gradeRoundStats(grade, r).avg);
+  // 학년 평균 대비 위치
+  if (S.diff != null) {
+    if (S.diff >= 3) lines.push(`📈 담당 반 평균 ${fmt(S.avg)}점으로, 같은 회차 ${grade} 학년 평균보다 ${fmt(S.diff)}점 높습니다.`);
+    else if (S.diff > -3) lines.push(`📊 담당 반 평균 ${fmt(S.avg)}점으로, ${grade} 학년 평균과 비슷한 수준입니다 (차이 ${S.diff >= 0 ? '+' : ''}${fmt(S.diff)}점).`);
+    else lines.push(`📉 담당 반 평균 ${fmt(S.avg)}점으로, ${grade} 학년 평균보다 ${fmt(Math.abs(S.diff))}점 낮습니다. 공통 약점 단원 보강을 권장합니다.`);
   }
 
-  // 첫 회차 비교
-  if (tAvgs[0] != null && gAvgs[0] != null) {
-    const diff = tAvgs[0] - gAvgs[0];
-    lines.push(`📊 1회 담당 평균 ${fmt(tAvgs[0])}점 — 학년 전체(${fmt(gAvgs[0])}점) 대비 ${diff >= 0 ? '+' : ''}${fmt(diff)}점`);
-  }
-
-  // 추세 분석 (n회 → n+1회)
-  for (let r = 1; r < ROUNDS; r++) {
-    if (tAvgs[r-1] != null && tAvgs[r] != null) {
-      const d = tAvgs[r] - tAvgs[r-1];
-      const arrow = d >= 0 ? '📈' : '📉';
-      lines.push(`${arrow} ${r}→${r+1}회 담당 평균 변화: ${d >= 0 ? '+' : ''}${fmt(d)}점`);
+  // 회차 흐름 (첫 회차 → 최근 회차)
+  if (done.length >= 2) {
+    const f = done[0], l = done[done.length - 1];
+    const fd = f.g.avg != null ? f.t.avg - f.g.avg : null, ld = l.g.avg != null ? l.t.avg - l.g.avg : null;
+    if (fd != null && ld != null) {
+      const ch = ld - fd;
+      if (ch >= 3) lines.push(`💪 학년 평균과의 차이가 ${f.r}회 ${fd >= 0 ? '+' : ''}${fmt(fd)}점 → ${l.r}회 ${ld >= 0 ? '+' : ''}${fmt(ld)}점으로 좋아지고 있습니다.`);
+      else if (ch <= -3) lines.push(`⚠ 학년 평균과의 차이가 ${f.r}회 ${fd >= 0 ? '+' : ''}${fmt(fd)}점 → ${l.r}회 ${ld >= 0 ? '+' : ''}${fmt(ld)}점으로 벌어졌습니다. 최근 회차 오답 점검이 필요합니다.`);
+      else lines.push(`✅ ${f.r}회부터 ${l.r}회까지 학년 평균 대비 위치가 안정적으로 유지되고 있습니다.`);
     }
   }
 
-  // 목표 달성률 (1회)
-  const goalSet = students.filter(s => s.studentGoal && !isNaN(Number(s.studentGoal)));
-  if (goalSet.length > 0) {
-    const r1Achieved = goalSet.filter(s => {
-      const sc = getScore(getRoundData(s.id, 1));
-      return sc != null && sc >= Number(s.studentGoal);
-    }).length;
-    lines.push(`🎯 1회 목표 달성: ${r1Achieved}/${goalSet.length}명 (${Math.round(r1Achieved/goalSet.length*100)}%)`);
+  // 응시율
+  if (S.rate != null) {
+    const absentees = students.filter(s => countAbsent(s.id) >= 2).map(s => s.name);
+    if (S.rate >= 0.9) lines.push(`✅ 응시율 ${Math.round(S.rate * 100)}% — 꾸준히 응시하고 있습니다.`);
+    else lines.push(`⚠ 응시율 ${Math.round(S.rate * 100)}%${absentees.length ? ` — 결시 2회 이상: ${absentees.slice(0, 5).join(', ')}${absentees.length > 5 ? ' 외 ' + (absentees.length - 5) + '명' : ''}` : ''}. 학부모 연락으로 남은 회차 응시를 챙겨 주세요.`);
   }
 
-  // 상승/하락 학생
-  const movers = students.map(s => {
-    let first = null, last = null;
-    for (let r = 1; r <= ROUNDS; r++) {
-      const sc = getScore(getRoundData(s.id, r));
-      if (sc == null) continue;
-      if (first == null) first = sc;
-      last = sc;
-    }
-    if (first == null || last == null) return null;
-    return { name: s.name, diff: last - first };
-  }).filter(Boolean);
-
-  const upMovers = movers.filter(m => m.diff >= 10).sort((a,b) => b.diff - a.diff).slice(0, 3);
-  const downMovers = movers.filter(m => m.diff <= -10).sort((a,b) => a.diff - b.diff).slice(0, 3);
-  if (upMovers.length > 0) lines.push(`📈 상승 학생: ${upMovers.map(m => `${m.name} (+${m.diff.toFixed(1)})`).join(', ')}`);
-  if (downMovers.length > 0) lines.push(`📉 하락 학생: ${downMovers.map(m => `${m.name} (${m.diff.toFixed(1)})`).join(', ')} — 추가 점검 권장`);
-
-  // 공통 오답 TOP 3 (1회 기준) — 버전별로 나눠서 표시
-  versionsUsedInRound(grade, 1).forEach(v => {
-    const w1 = commonWrongs(grade, 1, 3, v.label);
-    if (!w1.entries.length) return;
-    const tag = v.label ? ` [${v.label}]` : ' [버전 미선택]';
-    lines.push(`🔴 1회 공통 오답 TOP3${tag}: ${w1.entries.map(([n,c]) => `${n}번(${c}/${w1.total}명)`).join(', ')}`);
-  });
-
-  // 종합 코멘트
-  const overallAvg = avg(tAvgs);
-  if (overallAvg != null) {
-    if (overallAvg >= 80) lines.push('💬 전반적으로 우수한 수준입니다. 목표 달성률 향상에 집중하세요.');
-    else if (overallAvg >= 65) lines.push('💬 안정적인 수준입니다. 약점 보완으로 한 단계 상승 가능합니다.');
-    else lines.push('💬 기초 보강이 필요합니다. 공통 오답 유형 집중 학습을 권장합니다.');
+  // 목표 달성 (최근 점수 기준)
+  const wg = students.map(s => ({ s, a: analyzeStudent(s.id), g: tpGoal(s) })).filter(x => x.g != null && x.a.latestScore != null);
+  if (wg.length) {
+    const hit = wg.filter(x => x.a.latestScore >= x.g).length;
+    const near = wg.filter(x => x.a.latestScore < x.g && x.a.latestScore >= x.g - 5).map(x => x.s.name);
+    lines.push(`🎯 최근 점수 기준 목표 달성 ${hit}/${wg.length}명 (${Math.round(hit / wg.length * 100)}%)` + (near.length ? ` · 5점 이내 근접: ${near.slice(0, 5).join(', ')}` : ''));
   }
 
-  return el('div', {
-    style: {
-      background: 'var(--orange-soft)',
-      border: '1px solid var(--line-2)',
-      borderLeft: '3px solid var(--orange-deep)',
-      borderRadius: '8px',
-      padding: '14px 16px',
-      fontSize: '13px',
-      lineHeight: '1.9'
-    }
-  },
-    el('div', { style: { fontWeight: 700, color: 'var(--orange-deep)', marginBottom: '8px', fontFamily: 'Noto Serif KR, serif', fontSize: '14px' } }, '💬 종합 분석'),
-    ...lines.map(l => el('div', null, l))
-  );
+  // 우선 관리
+  const pr = getPriorityStudents(teacher, grade, 6).filter(x => x.analysis.category === 'crisis' || x.analysis.tags.includes('급하락'));
+  if (pr.length) lines.push(`🔍 개별 면담 우선: ${pr.slice(0, 5).map(x => x.student.name).join(', ')} — 목표 대비 크게 미달이거나 최근 하락했습니다.`);
+
+  // 약점 단원
+  const weak = getCommonWeakUnits(teacher, grade, 2);
+  if (weak.length) lines.push(`📚 공통 약점 단원: ${weak.map(w => `${w.unit}(${w.studentCount}명)`).join(', ')} — 다음 수업 보강 단원으로 추천합니다.`);
+  return lines;
 }
 
 function exportTeacherReport(teacher) {
@@ -9356,7 +9377,7 @@ function reportChartConfig(d) {
     }
   };
   var ds = [
-    { type: 'bar', label: '내 점수', data: d.my, order: 3,
+    { type: 'bar', label: d.myLabel || '내 점수', data: d.my, order: 3,
       backgroundColor: d.my.map(function (v, i) { return i === lastIdx ? '#2f6bff' : '#14305e'; }),
       borderRadius: 8, borderSkipped: false, maxBarThickness: 48, categoryPercentage: 0.62, barPercentage: 0.9 },
     { type: 'line', label: d.grade + ' 학년 평균', data: d.avg, order: 1, borderColor: '#ff6a1a', borderWidth: 2.5, borderDash: [6, 5],
