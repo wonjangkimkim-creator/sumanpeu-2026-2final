@@ -7207,6 +7207,7 @@ ${html}
     document.querySelectorAll('.cell').forEach(function(c){ var i=c.querySelector('.ci'); if(i && i.scrollHeight>c.clientHeight+1) i.style.zoom=Math.max(.5, c.clientHeight/i.scrollHeight*.97); });
     document.querySelectorAll('.solsrc').forEach(function(src){
       var blocks=[].slice.call(src.children), pg=newSolPage(src.previousElementSibling||src, src.getAttribute('data-name'));
+      pg.classList.add('sstart');
       var cols=pg.querySelectorAll('.col'), ci=0, last=pg;
       blocks.forEach(function(b){
         var col=cols[ci]; col.appendChild(b);
@@ -7219,6 +7220,14 @@ ${html}
         if(col.scrollHeight>col.clientHeight+1 && col.children.length===1){ b.style.zoom=Math.max(.45, col.clientHeight/b.scrollHeight*.98); }
       });
       src.parentNode.removeChild(src);
+    });
+    // 양면 인쇄: 학생 표지와 정답·해설 첫 쪽은 항상 홀수 쪽에서 시작 → 앞이 홀수 쪽으로 끝나면 빈 쪽을 끼운다
+    var k=0;
+    [].slice.call(document.querySelectorAll('.pg')).forEach(function(pg){
+      if((pg.classList.contains('cover')||pg.classList.contains('sstart')) && k%2===1){
+        var b=document.createElement('div'); b.className='pg blank pad'; pg.parentNode.insertBefore(b,pg); k++;
+      }
+      k++;
     });
     // 쪽 번호 · 머리글 방향 · 바닥글
     var n=0;
