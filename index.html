@@ -7215,7 +7215,7 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;color:#111;bac
 /* 해설 쪽 */
 .sp .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 9mm;height:calc(297mm - 14mm - 16mm - 11mm - 14mm);margin-top:3mm;position:relative}
 .sp .cols::before{content:'';position:absolute;left:50%;top:0;bottom:0;border-left:.6pt solid #999}
-.sp .col{overflow:hidden}
+.sp .col{overflow:visible;min-width:0}
 .sb{margin-bottom:4mm}
 .sbh{display:flex;justify-content:space-between;font-size:9pt;border-bottom:.6pt solid #ccc;margin-bottom:1.5mm;color:#1b2a4a}
 .sbh span{color:#b91c1c;font-weight:700}
@@ -7250,15 +7250,19 @@ ${html}
       var blocks=[].slice.call(src.children), pg=newSolPage(src.previousElementSibling||src, src.getAttribute('data-name'));
       pg.classList.add('sstart');
       var cols=pg.querySelectorAll('.col'), ci=0, last=pg;
+      // 인쇄할 때 줄바꿈이 화면과 조금 달라도 단 끝이 잘리지 않도록 여유(약 7mm)를 남기고 채운다
+      var SAFE=26;
+      function used(col){ var l=col.lastElementChild; if(!l) return 0; var cr=col.getBoundingClientRect(); return l.getBoundingClientRect().bottom-cr.top; }
+      function over(col){ return used(col)>col.clientHeight-SAFE; }
       blocks.forEach(function(b){
         var col=cols[ci]; col.appendChild(b);
-        if(col.scrollHeight>col.clientHeight+1 && col.children.length>1){
+        if(over(col) && col.children.length>1){
           col.removeChild(b); ci++;
           if(ci>1){ last=pg; pg=newSolPage(pg); cols=pg.querySelectorAll('.col'); ci=0; }
           cols[ci].appendChild(b);
         }
         col=cols[ci];
-        if(col.scrollHeight>col.clientHeight+1 && col.children.length===1){ b.style.zoom=Math.max(.45, col.clientHeight/b.scrollHeight*.98); }
+        if(over(col) && col.children.length===1){ b.style.zoom=Math.max(.45, (col.clientHeight-SAFE)/b.offsetHeight*.98); }
       });
       src.parentNode.removeChild(src);
     });
@@ -7279,7 +7283,12 @@ ${html}
     });
   }
   // 수식 글꼴이 다 내려온 뒤에 높이를 재야 단 끝이 잘리지 않는다
-  function start(){ var f=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve(); f.then(function(){setTimeout(paginate,80);}); }
+  // 해설 이미지가 모두 그려지고(폭 지정 포함) 글꼴이 다 내려온 뒤에 잰다
+  function imgsReady(){ return Promise.all([].slice.call(document.images).map(function(i){
+    var p=i.complete?Promise.resolve():new Promise(function(r){i.addEventListener('load',r);i.addEventListener('error',r);});
+    return p.then(function(){ if(i.classList.contains('si')&&i.naturalWidth) i.style.width=Math.min(i.naturalWidth/2,999)+'pt'; });
+  })); }
+  function start(){ var f=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve(); Promise.all([f,imgsReady()]).then(function(){setTimeout(paginate,80);}); }
   if(document.readyState==='complete') start(); else window.addEventListener('load',start);
 })();
 <\/script>
