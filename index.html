@@ -3855,6 +3855,17 @@ function getScore(rd) {
 }
 
 function getStudent(id) { return state.students.find(s => s.id === id); }
+// 학부모 링크용 주소 — 학생 번호(차례대로 늘어남) 대신 짐작할 수 없는 임의 문자열을 쓴다
+function makeShareToken() {
+  const a = new Uint8Array(12);
+  (window.crypto || window.msCrypto).getRandomValues(a);
+  return 'r' + Array.from(a, b => b.toString(36).padStart(2, '0')).join('');
+}
+function ensureShareToken(s) {
+  if (!s.shareToken) { s.shareToken = makeShareToken(); saveState(); }
+  return s.shareToken;
+}
+function getStudentByShareToken(t) { return t ? state.students.find(s => s.shareToken === t) : null; }
 
 function getAllTeachers() {
   const set = new Set();
@@ -4357,9 +4368,10 @@ function defaultLandingPage() {
 
 function checkSharedReport() {
   const hash = location.hash || '';
-  const m = hash.match(/^#\/share\/(.+)$/);
+  // #/share 로 시작하면 (뒤가 비었거나 틀려도) 리포트 화면으로만 간다 — 관리 화면으로 넘어가지 않는다
+  const m = hash.match(/^#\/share(?:\/(.*))?$/);
   if (m) {
-    ui.reportStudentId = decodeURIComponent(m[1]);
+    ui.shareToken = decodeURIComponent(m[1] || '');
     ui.currentPage = 'shared-report';
     return true;
   }
@@ -4375,6 +4387,13 @@ function render() {
     return;
   }
   const app = $('#app');
+  // 학부모 링크에서 주소만 바꿔 들어오는 경우 등 — 비밀번호를 넣지 않았으면 어떤 화면도 그리지 않는다
+  if (!isUnlocked()) {
+    if (document.getElementById('gate')) return;
+    app.innerHTML = '';
+    renderGate(() => { render(); installScoreShortcuts(); });
+    return;
+  }
   app.innerHTML = '';
   app.appendChild(renderTopbar());
   const main = el('main', { className: 'main' });
@@ -9132,9 +9151,9 @@ function openParentReportModal(studentId) {
           className: 'btn btn-ghost',
           onClick: () => {
             closeModal();
-            ui.reportStudentId = studentId;
+            ui.shareToken = ensureShareToken(s);
             ui.currentPage = 'shared-report';
-            location.hash = '#/share/' + encodeURIComponent(studentId);
+            location.hash = '#/share/' + encodeURIComponent(ui.shareToken);
             renderSharedReport();
           }
         }, '👁 리포트 미리보기'),
@@ -9248,15 +9267,15 @@ function renderSharedReport() {
   const app = $('#app');
   app.innerHTML = '';
 
-  const s = getStudent(ui.reportStudentId);
+  // 학생 번호로는 열리지 않고, 리포트마다 따로 만든 링크 주소로만 열린다
+  const s = getStudentByShareToken(ui.shareToken);
   if (!s) {
     app.appendChild(el('div', { className: 'report-page' },
       el('div', { className: 'report-wrap' },
         el('div', { className: 'report-section center', style: { padding: '60px 24px' } },
           el('div', { className: 'empty-icon' }, '😕'),
-          el('div', { style: { fontSize: '18px', fontWeight: 800, marginBottom: '12px', fontFamily: 'Noto Serif KR, serif' } }, '학생을 찾을 수 없습니다'),
-          el('div', { className: 'muted' }, '링크를 다시 확인해 주세요'),
-          el('button', { className: 'btn btn-orange mt-18', onClick: () => navigate('home') }, '홈으로 돌아가기')
+          el('div', { style: { fontSize: '18px', fontWeight: 800, marginBottom: '12px', fontFamily: 'Noto Serif KR, serif' } }, '리포트를 찾을 수 없습니다'),
+          el('div', { className: 'muted' }, '받으신 링크 주소를 다시 확인해 주세요')
         )
       )
     ));
@@ -11425,6 +11444,7 @@ function renderGate(onSuccess) {
   pw.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
 
   const gateWrap = el('div', {
+    id: 'gate',
     style: {
       position: 'fixed', inset: '0', zIndex: '9999', background: 'var(--bg)',
       display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
@@ -11454,7 +11474,10 @@ function renderGate(onSuccess) {
 }
 
 // Ctrl+S 저장 · 브라우저 종료 시 경고
+let _shortcutsOn = false;
 function installScoreShortcuts() {
+  if (_shortcutsOn) return;
+  _shortcutsOn = true;
   document.addEventListener('keydown', e => {
     if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
       if (ui.currentPage === 'scores') {
